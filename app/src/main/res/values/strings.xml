@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">radionews</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="description_splash">广告图</string>
+    <string name="label_copyright">All Rights Reserved. Copyright © 2009-2018 Gamecores</string>
+</resources>
