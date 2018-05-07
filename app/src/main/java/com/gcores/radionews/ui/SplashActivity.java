@@ -51,7 +51,7 @@ public class SplashActivity extends AppCompatActivity implements Animator.Animat
     public void onAnimationEnd(Animator animator) {
         Intent intent = new Intent(SplashActivity.this,HomeActivity.class);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
-        finish();
+        finishAfterTransition();
     }
 
     @Override
@@ -62,5 +62,10 @@ public class SplashActivity extends AppCompatActivity implements Animator.Animat
     @Override
     public void onAnimationRepeat(Animator animator) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
