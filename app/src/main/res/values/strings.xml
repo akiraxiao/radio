@@ -8,4 +8,7 @@
     <string name="action_settings">Settings</string>
     <string name="description_splash">广告图</string>
     <string name="label_copyright">All Rights Reserved. Copyright © 2009-2018 Gamecores</string>
+    <string name="account_balance">Account Balance</string>
+    <string name="balance_currency">$</string>
+    <string name="balance_amount">524.99</string>
 </resources>
