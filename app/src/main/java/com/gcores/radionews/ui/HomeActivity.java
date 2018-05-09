@@ -35,7 +35,7 @@ public class HomeActivity extends BaseActivity {
         GAppBar gbar =  initThemeToolBar();
 //        Toolbar toolbar =  findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
-        coordinatorLayout = findViewById(R.id.container_bottom);
+        coordinatorLayout = findViewById(R.id.container);
 
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withToolbarMenuToggle(gbar)

@@ -1,15 +1,16 @@
 <resources>
 
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="AppTheme.Immersive" parent="AppTheme.NoActionBarBase">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
-    <style name="AppTheme.Full" parent="AppTheme">
+    <!--<style name="AppTheme.Full" parent="AppTheme">
         <item name="android:windowNoTitle">true</item>w
         <item name="android:windowFullscreen">true</item>
         <item name="android:background">#ffffff</item>
-    </style>
+    </style>-->
 
     <!--animation-->
     <style name="anim_slide_bottom_in_out">

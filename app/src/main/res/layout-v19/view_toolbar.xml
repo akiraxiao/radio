@@ -17,6 +17,8 @@
         app:statusBarScrim="@android:color/transparent"
         app:titleEnabled="false">
 
+
+
         <ImageView
             app:layout_collapseMode="parallax"
             app:layout_collapseParallaxMultiplier="0.7"
@@ -26,6 +28,9 @@
             android:scaleType="centerCrop"
             />
 
+
+
+
     <com.gcores.radionews.ui.wedget.GAppBar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -34,7 +39,6 @@
         app:layout_collapseMode="pin"
         app:theme="@style/AppTheme.ThemeToolbar"
         app:titleMarginTop="15dp"
-        android:minHeight="100dp"
         >
 
         <TextView
@@ -47,6 +51,8 @@
             android:visibility="visible"/>
 
     </com.gcores.radionews.ui.wedget.GAppBar>
+
+
     </android.support.design.widget.CollapsingToolbarLayout>
 
 </android.support.design.widget.AppBarLayout>
