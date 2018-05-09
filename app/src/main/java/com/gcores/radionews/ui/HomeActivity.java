@@ -5,15 +5,13 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.gcores.radionews.R;
 import com.gcores.radionews.ui.bean.MenuBean;
 import com.gcores.radionews.ui.view.base.BaseActivity;
 import com.gcores.radionews.ui.view.base.adapter.LeftMenuAdapter;
+import com.gcores.radionews.ui.wedget.GAppBar;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
@@ -34,14 +32,13 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar =  initThemeToolBar();
-
+        GAppBar gbar =  initThemeToolBar();
 //        Toolbar toolbar =  findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
         coordinatorLayout = findViewById(R.id.container_bottom);
 
         slidingRootNav = new SlidingRootNavBuilder(this)
-                .withToolbarMenuToggle(toolbar)
+                .withToolbarMenuToggle(gbar)
                 .withMenuOpened(false)
                 .withContentClickableWhenMenuOpened(false)
                 .withSavedState(savedInstanceState)
@@ -97,25 +94,9 @@ public class HomeActivity extends BaseActivity {
         }
     }*/
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 
     @Override
@@ -126,6 +107,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             exitApplication(HomeActivity.this);
         }
@@ -138,7 +120,10 @@ public class HomeActivity extends BaseActivity {
      * @param homeActivity
      */
     protected void exitApplication(HomeActivity homeActivity) {
-
+        if (slidingRootNav.isMenuOpened()){
+            slidingRootNav.closeMenu();
+            return;
+        }
         long currentTime = System.currentTimeMillis();
         if (currentTime - exitTime >= COUNT) {
             exitTime = currentTime;
@@ -146,8 +131,6 @@ public class HomeActivity extends BaseActivity {
         } else {
             HomeActivity.this.finishAffinity();
         }
-
-
     }
 
 }

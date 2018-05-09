@@ -8,16 +8,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.gcores.radionews.R;
+import com.gcores.radionews.ui.wedget.GAppBar;
 
 public class BaseActivity extends AppCompatActivity {
 
     private Context mContext;
-    private View mStatusBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,10 +36,14 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    protected Toolbar initThemeToolBar() {
+    protected GAppBar initThemeToolBar() {
 //        initStatusBar();
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        GAppBar toolbar = findViewById(R.id.toolbar);
+        TextView titleMain = toolbar.findViewById(R.id.txt_main_title);
+        toolbar.setTitle("主页");
         setSupportActionBar(toolbar);
+        titleMain.setText(toolbar.getTitle());
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         return toolbar;
     }
 
