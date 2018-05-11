@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcores.radionews.R;
-import com.gcores.radionews.ui.bean.MenuBean;
+import com.gcores.radionews.ui.model.MenuBean;
 
 import java.util.List;
 

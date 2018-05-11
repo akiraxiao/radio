@@ -5,18 +5,29 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.TextView;
 
 import com.gcores.radionews.R;
-import com.gcores.radionews.ui.bean.MenuBean;
+import com.gcores.radionews.ui.api.TestService;
+import com.gcores.radionews.ui.api.UrlPath;
+import com.gcores.radionews.ui.model.MenuBean;
 import com.gcores.radionews.ui.view.base.BaseActivity;
 import com.gcores.radionews.ui.view.base.adapter.LeftMenuAdapter;
 import com.gcores.radionews.ui.wedget.GAppBar;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class HomeActivity extends BaseActivity {
 
@@ -36,7 +47,6 @@ public class HomeActivity extends BaseActivity {
 //        Toolbar toolbar =  findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
         coordinatorLayout = findViewById(R.id.container);
-
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withToolbarMenuToggle(gbar)
                 .withMenuOpened(false)
@@ -64,7 +74,12 @@ public class HomeActivity extends BaseActivity {
 
 //        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 //        navigationView.setNavigationItemSelectedListener(this);
+
+          getLogin();
     }
+
+
+
 
     private void initMenu(RecyclerView menuList) {
         menuBeanList = getMenuList();
@@ -131,6 +146,36 @@ public class HomeActivity extends BaseActivity {
         } else {
             HomeActivity.this.finishAffinity();
         }
+    }
+
+    private void getLogin() {
+        Retrofit retrofit = new Retrofit.Builder().
+                baseUrl(UrlPath.URL_BASE).build();
+        TestService ts =  retrofit.create(TestService.class);
+        Call<ResponseBody> call =  ts.Login();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+
+                    String content = null;
+                    try {
+                        content = response.body().string();
+                        ((TextView)findViewById(R.id.content)).setText(content);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("eee",t.getMessage());
+            }
+        });
+
     }
 
 }

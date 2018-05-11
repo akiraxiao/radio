@@ -1,4 +1,4 @@
-package com.gcores.radionews.ui.bean;
+package com.gcores.radionews.ui.model;
 
 /**
  * 菜单
