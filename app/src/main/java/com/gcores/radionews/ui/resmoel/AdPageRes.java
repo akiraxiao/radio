@@ -1,11 +1,11 @@
 package com.gcores.radionews.ui.resmoel;
 
-import com.gcores.radionews.ui.model.start.StartPage;
+import com.gcores.radionews.ui.model.start.AdPage;
 
-public class StartPageRes {
+public class AdPageRes {
 
     private  int status;
-    private StartPage results;
+    private AdPage results;
 
     public int getStatus() {
         return status;
@@ -15,11 +15,11 @@ public class StartPageRes {
         this.status = status;
     }
 
-    public StartPage getResults() {
+    public AdPage getResults() {
         return results;
     }
 
-    public void setResults(StartPage results) {
+    public void setResults(AdPage results) {
         this.results = results;
     }
 }

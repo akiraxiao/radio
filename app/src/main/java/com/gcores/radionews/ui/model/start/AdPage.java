@@ -3,7 +3,7 @@ package com.gcores.radionews.ui.model.start;
 /**
  * 开始页面
  */
-public class StartPage {
+public class AdPage {
 
     private String video_path;
     private String path;
