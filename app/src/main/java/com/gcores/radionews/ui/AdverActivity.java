@@ -11,8 +11,10 @@ import com.gcores.radionews.R;
 import com.gcores.radionews.ui.api.NewsService;
 import com.gcores.radionews.ui.api.RetrofitClient;
 import com.gcores.radionews.ui.api.UrlPath;
+import com.gcores.radionews.ui.model.notifiation.Notifacation;
 import com.gcores.radionews.ui.model.start.AdPage;
 import com.gcores.radionews.ui.resmoel.AdPageRes;
+import com.gcores.radionews.ui.resmoel.NotificationRes;
 import com.gcores.radionews.ui.view.base.BaseActivity;
 
 import java.util.Timer;
@@ -37,6 +39,10 @@ public class AdverActivity extends BaseActivity {
     private TimerTask timerTask;//计时器任务
     private final int MAX_COUNT = 5;//最大计算时长
     private int currentCount = 5;//当前时间(秒)
+
+    private int notification_size = 0;//未读消息数
+    private int subcribe_size = 0;//订阅数
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +58,37 @@ public class AdverActivity extends BaseActivity {
 
         );
         //开始获取广告页面请求
-        startPageApi();
+        Retrofit retrofit =  RetrofitClient.getRetrofit(UrlPath.base_url_api);
+        NewsService newsService = retrofit.create(NewsService.class);
+
+        startPageApi(newsService);
+        getNotificationMessage(newsService);
         //开始倒计时任务
         startCountDown();
 
 //        Glide.with(this).load().into(imageStart);
+    }
+
+    //获取订阅和未读信息
+    private void getNotificationMessage(NewsService newsService) {
+       Call<NotificationRes> call =   newsService.getNotificationMessage();
+       call.enqueue(new Callback<NotificationRes>() {
+           @Override
+           public void onResponse(Call<NotificationRes> call, Response<NotificationRes> response) {
+
+               if (response.body().getStatus()==UrlPath.NET_SUCESS){
+                   Notifacation notificationRes =  response.body().getResults();
+                   notification_size = notificationRes.getNotifications_size();
+                   subcribe_size = notificationRes.getSubscriptions_size();
+               }
+
+           }
+
+           @Override
+           public void onFailure(Call<NotificationRes> call, Throwable t) {
+
+           }
+       });
     }
 
     private void startCountDown() {
@@ -73,8 +105,10 @@ public class AdverActivity extends BaseActivity {
                         tvTime.setText("跳过"+currentCount+"s");
 
                     }else{
-
-                        startActivityTrans(HomeActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("notifications_size",notification_size);
+                        bundle.putInt("subscriptions_size",subcribe_size);
+                        startActivityTrans(HomeActivity.class,bundle);
                         AdverActivity.this.finishAfterTransition();
                      }
                     });
@@ -99,10 +133,10 @@ public class AdverActivity extends BaseActivity {
 
     }
 
-    private void startPageApi() {
+    private void startPageApi(NewsService newsService) {
 
-        Retrofit retrofit =  RetrofitClient.getRetrofit(UrlPath.base_url_api);
-        NewsService newsService =   retrofit.create(NewsService.class);
+//        Retrofit retrofit =  RetrofitClient.getRetrofit(UrlPath.base_url_api);
+//        NewsService newsService =   retrofit.create(NewsService.class);
         Call<AdPageRes> call =  newsService.getStartPage();
         call.enqueue(new Callback<AdPageRes>() {
             @Override

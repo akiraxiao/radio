@@ -40,10 +40,19 @@ public class HomeActivity extends BaseActivity {
     private List<MenuBean> menuBeanList = new ArrayList<>();
     private RecyclerView menuList;
     private LeftMenuAdapter leftMenuAdapter;
+
+    private int notification_size = 0;
+    private int subscrible_size = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+       notification_size =  getIntent().getIntExtra("notifications_size",0);
+       subscrible_size =  getIntent().getIntExtra("subscriptions_size",0);
+
         GAppBar gbar =  initThemeToolBar();
 //        Toolbar toolbar =  findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);

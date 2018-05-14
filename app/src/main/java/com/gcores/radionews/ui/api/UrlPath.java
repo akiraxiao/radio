@@ -15,7 +15,7 @@ public class UrlPath {
     public final static String image_base = "https://image.g-cores.com/";
 
     //基础请求api
-    public final static String base_url_api = base_url+"/api/";
+    public final static String base_url_api = base_url+"api/";
 
     public final static String image_url = base_url+"uploads/mobile_app_focus_image/";
 

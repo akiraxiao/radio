@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -78,6 +77,19 @@ public class BaseActivity extends AppCompatActivity {
      */
     protected void startActivityTrans(Class<?> className) {
         Intent intent = new Intent(mContext, className);
+        startActivity(intent,
+                ActivityOptions.makeSceneTransitionAnimation((Activity) mContext).toBundle());
+    }
+
+    /**
+     * activity跳转 过度 带参数
+     *
+     * @param className
+     */
+    protected void startActivityTrans(Class<?> className,Bundle passBundle) {
+        Intent intent = new Intent(mContext, className);
+//        intent.putExtra()
+        intent.putExtras(passBundle);
         startActivity(intent,
                 ActivityOptions.makeSceneTransitionAnimation((Activity) mContext).toBundle());
     }
