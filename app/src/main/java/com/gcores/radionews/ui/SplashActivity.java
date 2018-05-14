@@ -51,7 +51,7 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
        /* Intent intent = new Intent(SplashActivity.this,HomeActivity.class);
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
         finishAfterTransition();*/
-        startActivityTrans(HomeActivity.class);
+        startActivityTrans(StartActivity.class);
         finishAfterTransition();
     }
 

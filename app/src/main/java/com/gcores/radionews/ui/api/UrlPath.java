@@ -12,7 +12,7 @@ public class UrlPath {
 
     public final static String base_url = "https://www.g-cores.com/";
 
-    private final static String image_base = "https://image.g-cores.com/";
+    public final static String image_base = "https://image.g-cores.com/";
 
     //基础请求api
     public final static String base_url_api = base_url+"/api";
@@ -21,7 +21,7 @@ public class UrlPath {
 
 
 
-
+    public final static int NET_SUCESS = 1;
 
 
 

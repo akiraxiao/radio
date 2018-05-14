@@ -19,6 +19,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.StartActivity"
+            android:theme="@style/AppTheme.Full"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+
+        <activity
             android:name=".ui.HomeActivity"
             android:theme="@style/AppTheme.Immersive"
             android:screenOrientation="portrait"

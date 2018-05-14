@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.gcores.radionews.R;
+import com.gcores.radionews.ui.api.RetrofitClient;
 import com.gcores.radionews.ui.api.TestService;
 import com.gcores.radionews.ui.api.UrlPath;
 import com.gcores.radionews.ui.model.MenuBean;
@@ -149,8 +150,9 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void getLogin() {
-        Retrofit retrofit = new Retrofit.Builder().
-                baseUrl(UrlPath.URL_BASE).build();
+        Retrofit retrofit =  RetrofitClient.getRetrofit(UrlPath.URL_BASE);
+       /* Retrofit retrofit = new Retrofit.Builder().
+                baseUrl(UrlPath.URL_BASE).build();*/
         TestService ts =  retrofit.create(TestService.class);
         Call<ResponseBody> call =  ts.Login();
         call.enqueue(new Callback<ResponseBody>() {
