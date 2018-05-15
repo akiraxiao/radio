@@ -1,22 +1,27 @@
 package com.gcores.radionews.ui.view.base;
 
+import android.animation.ArgbEvaluator;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.gcores.radionews.R;
-import com.gcores.radionews.ui.wedget.GAppBar;
+import com.gcores.radionews.ui.wedget.toolbar.GAppBar;
 
 public class BaseActivity extends AppCompatActivity {
 
     private Context mContext;
+    private ArgbEvaluator mArgbEvaluator;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,6 +31,7 @@ public class BaseActivity extends AppCompatActivity {
         }*/
 //        setTranslucentStatus();
         mContext = this;
+        mArgbEvaluator = new ArgbEvaluator();
     }
 
     private void setTranslucentStatus() {
@@ -34,12 +40,32 @@ public class BaseActivity extends AppCompatActivity {
             localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
         }
     }
+    /** 根据百分比改变颜色透明度 */
+    public int changeAlpha(int color, float fraction) {
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+        int alpha = (int) (Color.alpha(color) * fraction);
+        return Color.argb(alpha, red, green, blue);
+    }
+
 
 
     protected GAppBar initThemeToolBar() {
 //        initStatusBar();
+
         GAppBar toolbar = findViewById(R.id.toolbar);
         TextView titleMain = toolbar.findViewById(R.id.txt_main_title);
+        AppBarLayout appBarLayout = findViewById(R.id.root_appbar);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                Log.e("eee",Math.abs(verticalOffset*1.0f)/appBarLayout.getTotalScrollRange()+"ffff");
+                toolbar.setBackgroundColor(changeAlpha(getResources().getColor(R.color.white),Math.abs(verticalOffset*1.0f)/appBarLayout.getTotalScrollRange()));
+                int color = (int)mArgbEvaluator.evaluate(Math.abs(verticalOffset*1.0f)/appBarLayout.getTotalScrollRange(),Color.WHITE,Color.parseColor("#999999"));
+                titleMain.setTextColor(color);
+            }
+        });
         toolbar.setTitle("主页");
         setSupportActionBar(toolbar);
         titleMain.setText(toolbar.getTitle());

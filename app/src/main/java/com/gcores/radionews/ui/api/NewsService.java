@@ -1,6 +1,7 @@
 package com.gcores.radionews.ui.api;
 
 import com.gcores.radionews.ui.resmoel.AdPageRes;
+import com.gcores.radionews.ui.resmoel.BannerRes;
 import com.gcores.radionews.ui.resmoel.NotificationRes;
 
 import retrofit2.Call;
@@ -15,5 +16,9 @@ public interface NewsService {
 
     @GET("all_notifications_size?auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw")
     Call<NotificationRes> getNotificationMessage();
+
+
+    @GET("originals/home_slideshow?auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw")
+    Call<BannerRes> getBanner();
 
 }

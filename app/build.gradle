@@ -36,6 +36,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     //图形请求
     implementation 'com.github.bumptech.glide:glide:4.7.1'
+    //banner
+    implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
+
+
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
     testImplementation 'junit:junit:4.12'

@@ -1,10 +1,9 @@
-package com.gcores.radionews.ui.wedget;
+package com.gcores.radionews.ui.wedget.toolbar;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.TextView;
 
 import com.gcores.radionews.R;
