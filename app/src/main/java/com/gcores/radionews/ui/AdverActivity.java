@@ -65,7 +65,6 @@ public class AdverActivity extends BaseActivity {
         getNotificationMessage(newsService);
         //开始倒计时任务
         startCountDown();
-
 //        Glide.with(this).load().into(imageStart);
     }
 
@@ -81,7 +80,6 @@ public class AdverActivity extends BaseActivity {
                    notification_size = notificationRes.getNotifications_size();
                    subcribe_size = notificationRes.getSubscriptions_size();
                }
-
            }
 
            @Override

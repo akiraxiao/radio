@@ -6,12 +6,12 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -50,6 +50,19 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * 动态改变颜色
+     * @param rate 频率
+     * @param startColor 开始颜色
+     * @param endColor 结束颜色
+     * @return
+     */
+    public int changeColor(float rate,int startColor,int endColor){
+        int color = (int)mArgbEvaluator.evaluate(rate,startColor,endColor);
+        return color;
+    }
+
+
 
     protected GAppBar initThemeToolBar() {
 //        initStatusBar();
@@ -60,10 +73,17 @@ public class BaseActivity extends AppCompatActivity {
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                Log.e("eee",Math.abs(verticalOffset*1.0f)/appBarLayout.getTotalScrollRange()+"ffff");
-                toolbar.setBackgroundColor(changeAlpha(getResources().getColor(R.color.white),Math.abs(verticalOffset*1.0f)/appBarLayout.getTotalScrollRange()));
-                int color = (int)mArgbEvaluator.evaluate(Math.abs(verticalOffset*1.0f)/appBarLayout.getTotalScrollRange(),Color.WHITE,Color.parseColor("#999999"));
-                titleMain.setTextColor(color);
+//                Log.e("eee",Math.abs(verticalOffset*1.0f)/appBarLayout.getTotalScrollRange()+"ffff");
+                //当appbarLayout滑动的改变
+                float rate = Math.abs(verticalOffset*1.0f)/appBarLayout.getTotalScrollRange();
+                toolbar.setBackgroundColor(changeAlpha(getResources().getColor(R.color.white),rate));
+
+                //当前的颜色为
+                int currentColor = changeColor(rate,Color.WHITE,Color.parseColor("#999999"));
+                //菜单
+                toolbar.getNavigationIcon().setColorFilter(currentColor,PorterDuff.Mode.SRC_ATOP);
+                //字体
+                titleMain.setTextColor(currentColor);
             }
         });
         toolbar.setTitle("主页");

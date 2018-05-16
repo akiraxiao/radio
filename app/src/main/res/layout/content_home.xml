@@ -8,6 +8,8 @@
     tools:context=".ui.HomeActivity"
     tools:showIn="@layout/app_bar_home"
     android:background="@android:color/white"
+    android:fillViewport="true"
+    android:layout_gravity="fill_vertical"
     >
 
     <RelativeLayout
@@ -15,19 +17,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
-            android:layout_centerInParent="true" />
-
-
-      <!--  <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/container_bottom"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            app:tabMode="scrollable"
+            app:tabGravity="center"
+            android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"/>-->
+            android:background="@color/white"
+            android:elevation="2dp"
+            app:tabTextColor="@color/black"
+            app:tabSelectedTextColor="@color/black"
+            app:tabIndicatorColor="@color/red"
+            android:minHeight="?attr/actionBarSize"
+            />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/newspager"
+            android:layout_below="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <!--  <android.support.design.widget.CoordinatorLayout
+              android:id="@+id/container_bottom"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentBottom="true"/>-->
 
 
     </RelativeLayout>

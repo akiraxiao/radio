@@ -3,8 +3,13 @@ package com.gcores.radionews.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,8 +26,10 @@ import com.bumptech.glide.Glide;
 import com.gcores.radionews.R;
 import com.gcores.radionews.ui.api.NewsService;
 import com.gcores.radionews.ui.api.RetrofitClient;
-import com.gcores.radionews.ui.api.TestService;
 import com.gcores.radionews.ui.api.UrlPath;
+import com.gcores.radionews.ui.fragment.HomeFragment;
+import com.gcores.radionews.ui.fragment.NewsFragment;
+import com.gcores.radionews.ui.fragment.RvFragment;
 import com.gcores.radionews.ui.model.MenuBean;
 import com.gcores.radionews.ui.model.news.Banner;
 import com.gcores.radionews.ui.resmoel.BannerRes;
@@ -33,16 +40,17 @@ import com.gcores.radionews.ui.wedget.transformations.GateTransformation;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+/**
+ * 主页面
+ */
 public class HomeActivity extends BaseActivity {
 
 
@@ -58,11 +66,25 @@ public class HomeActivity extends BaseActivity {
     private int subscrible_size = 0;//订阅
 
 //    private RecyclerViewPager mRecyclerViewPage;
-    private ViewPager mBanner;
+    private ViewPager mBanner;//广告
     private BannerAdapter bannerAdapter;
     private List<Banner> bannerList = new ArrayList<>();
 
-    private Retrofit retrofit;
+    private Retrofit retrofit;//网络加载
+
+    private TabLayout mTablayout;//tab
+
+    private ViewPager mNewsPager;//新闻page
+
+
+    //每个tab的位置
+    public final int RADIO = 0;
+    public final int VIDEO = 1;
+    public final int HOME = 2;
+    public final int NEWS = 3;
+    public final int ARITCLE = 4;
+
+    private NewsPageAdapter newsPageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +115,22 @@ public class HomeActivity extends BaseActivity {
 //        LinearLayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 //        mRecyclerViewPage.setLayoutManager(layout);
 
+        //获取tab
+        String[] mTabs =  getResources().getStringArray(R.array.news_tab_arr);
+        newsPageAdapter = new NewsPageAdapter(getSupportFragmentManager(),mTabs);
+        mNewsPager = findViewById(R.id.newspager);
+        mNewsPager.setOffscreenPageLimit(mTabs.length);
+        mNewsPager.setAdapter(newsPageAdapter);
+        mTablayout = findViewById(R.id.tab_layout);
+        mTablayout.setupWithViewPager(mNewsPager);
+        // Iterate over all tabs and set the custom view
+        for (int i = 0; i < mTablayout.getTabCount(); i++) {
+            TabLayout.Tab tab = mTablayout.getTabAt(i);
+            tab.setCustomView(newsPageAdapter.getTabView(i));
+        }
         retrofit = RetrofitClient.getRetrofit(UrlPath.base_url_api);
         NewsService newsService =  retrofit.create(NewsService.class);
         getBannerList(newsService);
-
 
         //        mRecyclerViewPage
 //        ViewPager
@@ -113,7 +147,7 @@ public class HomeActivity extends BaseActivity {
 //        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 //        navigationView.setNavigationItemSelectedListener(this);
 
-        getLogin();
+//        getLogin();
     }
 
     private void getBannerList(NewsService newsService) {
@@ -209,10 +243,10 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
-    private void getLogin() {
+    /*private void getLogin() {
         Retrofit retrofit = RetrofitClient.getRetrofit(UrlPath.URL_BASE);
-       /* Retrofit retrofit = new Retrofit.Builder().
-                baseUrl(UrlPath.URL_BASE).build();*/
+       *//* Retrofit retrofit = new Retrofit.Builder().
+                baseUrl(UrlPath.URL_BASE).build();*//*
         TestService ts = retrofit.create(TestService.class);
         Call<ResponseBody> call = ts.Login();
         call.enqueue(new Callback<ResponseBody>() {
@@ -238,11 +272,11 @@ public class HomeActivity extends BaseActivity {
             }
         });
 
-    }
+    }*/
 
 
 
-    public class BannerAdapter  extends PagerAdapter {
+    private class BannerAdapter  extends PagerAdapter {
         private List<Banner> bannerList;
         private LayoutInflater layoutInflater;
         private Context mContext;
@@ -279,6 +313,59 @@ public class HomeActivity extends BaseActivity {
         @Override
         public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
             return view==object;
+        }
+    }
+
+
+    private class NewsPageAdapter extends FragmentPagerAdapter{
+
+        private String[] mtabs;
+
+        public NewsPageAdapter(FragmentManager fm, String[] tabs){
+            super(fm);
+            mtabs = tabs;
+        }
+
+
+        @Override
+        public int getCount() {
+            return mtabs.length;
+        }
+
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position){
+
+                case RADIO:
+                    return new RvFragment();
+
+                case VIDEO:
+                    return new RvFragment();
+
+                case HOME:
+                    return new HomeFragment();
+
+                case NEWS:
+                    return new NewsFragment();
+
+                case ARITCLE:
+                    return new RvFragment();
+            }
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mtabs[position];
+        }
+
+        public View getTabView(int position) {
+            View tab = LayoutInflater.from(HomeActivity.this).inflate(R.layout.tab_news, null);
+            TextView tv = tab.findViewById(R.id.tv_tab);
+            tv.setText(mtabs[position]);
+            return tab;
         }
     }
 
