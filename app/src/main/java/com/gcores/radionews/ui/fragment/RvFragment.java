@@ -3,7 +3,6 @@ package com.gcores.radionews.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,17 +15,13 @@ import com.gcores.radionews.ui.view.base.adapter.RvListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RvFragment extends Fragment {
+public class RvFragment extends AppFragment {
 
     private RecyclerView mRvList;
     private RvListAdapter rvListAdapter;
 
     private List<String> arr = new ArrayList<>();
 
-    public RvFragment(){
-        // Required empty public constructor
-
-    }
 
 
     @Override
@@ -39,7 +34,6 @@ public class RvFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        return super.onCreateView(inflater, container, savedInstanceState);
         View root = inflater.inflate(R.layout.fragment_rv,container,false);
-
         poluteRvData();
         rvListAdapter = new RvListAdapter(arr);
         mRvList =  root.findViewById(R.id.frag_list);

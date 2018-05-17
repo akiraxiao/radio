@@ -26,10 +26,9 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:elevation="2dp"
-            app:tabTextColor="@color/black"
-            app:tabSelectedTextColor="@color/black"
-            app:tabIndicatorColor="@color/red"
             android:minHeight="?attr/actionBarSize"
+            style="@style/AppTabLayout"
+            app:tabTextAppearance="@style/AppTabTextAppearance"
             />
 
         <android.support.v4.view.ViewPager

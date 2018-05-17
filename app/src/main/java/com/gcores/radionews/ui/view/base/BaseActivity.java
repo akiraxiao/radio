@@ -5,18 +5,26 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gcores.radionews.R;
 import com.gcores.radionews.ui.wedget.toolbar.GAppBar;
+
+import java.lang.reflect.Field;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -33,6 +41,7 @@ public class BaseActivity extends AppCompatActivity {
         mContext = this;
         mArgbEvaluator = new ArgbEvaluator();
     }
+
 
     private void setTranslucentStatus() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
@@ -69,6 +78,9 @@ public class BaseActivity extends AppCompatActivity {
 
         GAppBar toolbar = findViewById(R.id.toolbar);
         TextView titleMain = toolbar.findViewById(R.id.txt_main_title);
+        //导入字体
+        Typeface   typeface= Typeface.createFromAsset(getAssets(),"fonts/streetlight.ttf"); titleMain.setTypeface(typeface);
+        titleMain.setTypeface(typeface);
         AppBarLayout appBarLayout = findViewById(R.id.root_appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
@@ -86,7 +98,7 @@ public class BaseActivity extends AppCompatActivity {
                 titleMain.setTextColor(currentColor);
             }
         });
-        toolbar.setTitle("主页");
+        toolbar.setTitle("GAMEGORES");
         setSupportActionBar(toolbar);
         titleMain.setText(toolbar.getTitle());
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -139,4 +151,65 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent,
                 ActivityOptions.makeSceneTransitionAnimation((Activity) mContext).toBundle());
     }
+
+    /**
+     * 设置下划线宽度
+     * @param tabs
+     * @param leftDip
+     * @param rightDip
+     */
+    protected void setIndicator (TabLayout tabs, int leftDip, int rightDip){
+        Class<?> tabLayout = tabs.getClass();
+        Field tabStrip = null;
+        try {
+            tabStrip = tabLayout.getDeclaredField("mTabStrip");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
+        tabStrip.setAccessible(true);
+        LinearLayout llTab = null;
+        try {
+            llTab = (LinearLayout) tabStrip.get(tabs);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
+        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
+
+        for (int i = 0; i < llTab.getChildCount(); i++) {
+            View child = llTab.getChildAt(i);
+            child.setPadding(0, 0, 0, 0);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+            params.setMarginStart(left);
+            params.setMarginEnd(right);
+            child.setLayoutParams(params);
+            child.invalidate();
+        }
+    }
+
+    /*protected void setIndicator (TabLayout tabs){
+
+        Class<?> tablayout = tabs.getClass();
+        Field tabStrip = null;
+        try {
+            tabStrip = tablayout.getDeclaredField("mTabStrip");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        tabStrip.setAccessible(true);
+        LinearLayout ll_tab= (LinearLayout) tabStrip.get(tl_main);
+        for (int i = 0; i < ll_tab.getChildCount(); i++) {
+            View child = ll_tab.getChildAt(i);
+            child.setPadding(0,0,0,0);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,1);
+            params.setMarginStart(DensityUtil.dip2px(20f));
+            params.setMarginEnd(DensityUtil.dip2px(20f));
+            child.setLayoutParams(params);
+            child.invalidate();
+        }
+
+
+    }*/
 }

@@ -86,6 +86,7 @@ public class HomeActivity extends BaseActivity {
 
     private NewsPageAdapter newsPageAdapter;
 
+    private ArrayList<Fragment> mFragments = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,17 +118,27 @@ public class HomeActivity extends BaseActivity {
 
         //获取tab
         String[] mTabs =  getResources().getStringArray(R.array.news_tab_arr);
+        //添加fragment
+//        for (String tab:mTabs){
+            mFragments.add(new RvFragment());
+            mFragments.add(new RvFragment());
+            mFragments.add(new HomeFragment());
+            mFragments.add(new NewsFragment());
+            mFragments.add(new RvFragment());
+//        }
         newsPageAdapter = new NewsPageAdapter(getSupportFragmentManager(),mTabs);
         mNewsPager = findViewById(R.id.newspager);
         mNewsPager.setOffscreenPageLimit(mTabs.length);
         mNewsPager.setAdapter(newsPageAdapter);
         mTablayout = findViewById(R.id.tab_layout);
         mTablayout.setupWithViewPager(mNewsPager);
+
         // Iterate over all tabs and set the custom view
         for (int i = 0; i < mTablayout.getTabCount(); i++) {
             TabLayout.Tab tab = mTablayout.getTabAt(i);
             tab.setCustomView(newsPageAdapter.getTabView(i));
         }
+        mNewsPager.setCurrentItem(2);
         retrofit = RetrofitClient.getRetrofit(UrlPath.base_url_api);
         NewsService newsService =  retrofit.create(NewsService.class);
         getBannerList(newsService);
@@ -336,21 +347,20 @@ public class HomeActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             switch (position){
-
                 case RADIO:
-                    return new RvFragment();
+                    return mFragments.get(RADIO);
 
                 case VIDEO:
-                    return new RvFragment();
+                    return mFragments.get(VIDEO);
 
                 case HOME:
-                    return new HomeFragment();
+                    return mFragments.get(HOME);
 
                 case NEWS:
-                    return new NewsFragment();
+                    return mFragments.get(NEWS);
 
                 case ARITCLE:
-                    return new RvFragment();
+                    return mFragments.get(ARITCLE);
             }
             return null;
         }
