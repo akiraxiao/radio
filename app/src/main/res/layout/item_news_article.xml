@@ -3,7 +3,7 @@
     android:weightSum="1"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="220dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
@@ -16,7 +16,7 @@
             android:id="@+id/iv_news_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             />
 
         <!--<ImageView
@@ -37,6 +37,7 @@
             android:layout_height="wrap_content">
 
             <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_author"
                 android:src="@drawable/ic_video"
                 android:scaleType="fitCenter"
                 android:layout_weight="0.3"

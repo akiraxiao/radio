@@ -1,5 +1,8 @@
 package com.gcores.radionews.ui.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public  class UserBean {
     /**
      * id : 21327
@@ -9,17 +12,27 @@ public  class UserBean {
      * is_fresh : false
      */
 
-    private int id;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("nickname")
+    @Expose
     private String nickname;
-    private String thumb_url;
+    @SerializedName("thumb_url")
+    @Expose
+    private String thumbUrl;
+    @SerializedName("location")
+    @Expose
     private String location;
-    private boolean is_fresh;
+    @SerializedName("is_fresh")
+    @Expose
+    private Boolean isFresh;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -31,12 +44,12 @@ public  class UserBean {
         this.nickname = nickname;
     }
 
-    public String getThumb_url() {
-        return thumb_url;
+    public String getThumbUrl() {
+        return thumbUrl;
     }
 
-    public void setThumb_url(String thumb_url) {
-        this.thumb_url = thumb_url;
+    public void setThumbUrl(String thumbUrl) {
+        this.thumbUrl = thumbUrl;
     }
 
     public String getLocation() {
@@ -47,11 +60,12 @@ public  class UserBean {
         this.location = location;
     }
 
-    public boolean isIs_fresh() {
-        return is_fresh;
+    public Boolean getIsFresh() {
+        return isFresh;
     }
 
-    public void setIs_fresh(boolean is_fresh) {
-        this.is_fresh = is_fresh;
+    public void setIsFresh(Boolean isFresh) {
+        this.isFresh = isFresh;
     }
+
 }

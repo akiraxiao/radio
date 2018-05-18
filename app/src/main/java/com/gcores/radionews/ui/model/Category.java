@@ -1,5 +1,8 @@
 package com.gcores.radionews.ui.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public  class Category {
     /**
      * id : 51
@@ -13,21 +16,39 @@ public  class Category {
      * subscriptors_num : 1868
      */
 
-    private int id;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("name")
+    @Expose
     private String name;
+    @SerializedName("desc")
+    @Expose
     private String desc;
-    private String show_name;
+    @SerializedName("show_name")
+    @Expose
+    private String showName;
+    @SerializedName("type")
+    @Expose
     private String type;
-    private String specific_type;
-    private String logo_url;
-    private String background_url;
-    private int subscriptors_num;
+    @SerializedName("specific_type")
+    @Expose
+    private String specificType;
+    @SerializedName("logo_url")
+    @Expose
+    private String logoUrl;
+    @SerializedName("background_url")
+    @Expose
+    private String backgroundUrl;
+    @SerializedName("subscriptors_num")
+    @Expose
+    private Integer subscriptorsNum;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -47,12 +68,12 @@ public  class Category {
         this.desc = desc;
     }
 
-    public String getShow_name() {
-        return show_name;
+    public String getShowName() {
+        return showName;
     }
 
-    public void setShow_name(String show_name) {
-        this.show_name = show_name;
+    public void setShowName(String showName) {
+        this.showName = showName;
     }
 
     public String getType() {
@@ -63,35 +84,36 @@ public  class Category {
         this.type = type;
     }
 
-    public String getSpecific_type() {
-        return specific_type;
+    public String getSpecificType() {
+        return specificType;
     }
 
-    public void setSpecific_type(String specific_type) {
-        this.specific_type = specific_type;
+    public void setSpecificType(String specificType) {
+        this.specificType = specificType;
     }
 
-    public String getLogo_url() {
-        return logo_url;
+    public String getLogoUrl() {
+        return logoUrl;
     }
 
-    public void setLogo_url(String logo_url) {
-        this.logo_url = logo_url;
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
     }
 
-    public String getBackground_url() {
-        return background_url;
+    public String getBackgroundUrl() {
+        return backgroundUrl;
     }
 
-    public void setBackground_url(String background_url) {
-        this.background_url = background_url;
+    public void setBackgroundUrl(String backgroundUrl) {
+        this.backgroundUrl = backgroundUrl;
     }
 
-    public int getSubscriptors_num() {
-        return subscriptors_num;
+    public Integer getSubscriptorsNum() {
+        return subscriptorsNum;
     }
 
-    public void setSubscriptors_num(int subscriptors_num) {
-        this.subscriptors_num = subscriptors_num;
+    public void setSubscriptorsNum(Integer subscriptorsNum) {
+        this.subscriptorsNum = subscriptorsNum;
     }
+
 }

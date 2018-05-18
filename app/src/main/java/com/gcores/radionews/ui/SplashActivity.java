@@ -24,8 +24,6 @@ public class SplashActivity extends BaseActivity implements Animator.AnimatorLis
         scaleLogo();
         /*Handler handler = new Handler();
         handler.postDelayed(()->{
-
-
                 }
                 ,2000);*/
 

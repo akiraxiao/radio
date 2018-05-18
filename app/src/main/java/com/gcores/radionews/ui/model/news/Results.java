@@ -2,8 +2,14 @@ package com.gcores.radionews.ui.model.news;
 
 import com.gcores.radionews.ui.model.Category;
 import com.gcores.radionews.ui.model.UserBean;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Results {
+
+
+
+
 
     /**
      * id : 98328
@@ -21,25 +27,51 @@ public class Results {
      * category : {"id":51,"name":"差点儿一分钟","desc":"短视频节目","show_name":"差点儿一分钟","type":"Show","specific_type":"video","logo_url":"https://image.g-cores.com/d61c2e3a-2bbd-4917-82d0-ba145d9fe1c0.png","background_url":"https://image.g-cores.com/1fc61946-1762-41ab-b515-c032658e5462.jpg","subscriptors_num":1868}
      */
 
-    private int id;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("type")
+    @Expose
     private String type;
+    @SerializedName("title")
+    @Expose
     private String title;
+    @SerializedName("desc")
+    @Expose
     private String desc;
-    private String thumb_url;
-    private String cover_url;
+    @SerializedName("thumb_url")
+    @Expose
+    private String thumbUrl;
+    @SerializedName("cover_url")
+    @Expose
+    private String coverUrl;
+    @SerializedName("permalink")
+    @Expose
     private String permalink;
-    private String vol;
-    private int likes_num;
-    private int comments_num;
-    private String created_at;
+    @SerializedName("vol")
+    @Expose
+    private Object vol;
+    @SerializedName("likes_num")
+    @Expose
+    private Integer likesNum;
+    @SerializedName("comments_num")
+    @Expose
+    private Integer commentsNum;
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt;
+    @SerializedName("user")
+    @Expose
     private UserBean user;
+    @SerializedName("category")
+    @Expose
     private Category category;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -67,20 +99,20 @@ public class Results {
         this.desc = desc;
     }
 
-    public String getThumb_url() {
-        return thumb_url;
+    public String getThumbUrl() {
+        return thumbUrl;
     }
 
-    public void setThumb_url(String thumb_url) {
-        this.thumb_url = thumb_url;
+    public void setThumbUrl(String thumbUrl) {
+        this.thumbUrl = thumbUrl;
     }
 
-    public String getCover_url() {
-        return cover_url;
+    public String getCoverUrl() {
+        return coverUrl;
     }
 
-    public void setCover_url(String cover_url) {
-        this.cover_url = cover_url;
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
     }
 
     public String getPermalink() {
@@ -91,36 +123,36 @@ public class Results {
         this.permalink = permalink;
     }
 
-    public String getVol() {
+    public Object getVol() {
         return vol;
     }
 
-    public void setVol(String vol) {
+    public void setVol(Object vol) {
         this.vol = vol;
     }
 
-    public int getLikes_num() {
-        return likes_num;
+    public Integer getLikesNum() {
+        return likesNum;
     }
 
-    public void setLikes_num(int likes_num) {
-        this.likes_num = likes_num;
+    public void setLikesNum(Integer likesNum) {
+        this.likesNum = likesNum;
     }
 
-    public int getComments_num() {
-        return comments_num;
+    public Integer getCommentsNum() {
+        return commentsNum;
     }
 
-    public void setComments_num(int comments_num) {
-        this.comments_num = comments_num;
+    public void setCommentsNum(Integer commentsNum) {
+        this.commentsNum = commentsNum;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public UserBean getUser() {
@@ -138,5 +170,7 @@ public class Results {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+
 
 }
