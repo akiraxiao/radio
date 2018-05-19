@@ -43,6 +43,9 @@ dependencies {
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     //roundimageview
     implementation 'com.makeramen:roundedimageview:2.3.0'
+    //卡片布局
+    implementation 'com.android.support:cardview-v7:27.1.0'
+
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
     testImplementation 'junit:junit:4.12'

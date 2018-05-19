@@ -8,20 +8,18 @@
     android:layout_height="wrap_content"
     app:cardElevation="8dp"
     app:cardBackgroundColor="@color/white"
-    app:contentPadding="5dp"
-    android:layout_margin="8dp"
+    android:layout_margin="5dp"
     >
 <LinearLayout android:orientation="vertical"
     android:weightSum="1"
     android:layout_width="match_parent"
-    android:layout_height="240dp"
-    android:padding="10dp"
+    android:layout_height="120dp"
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.6">
+        android:layout_weight="1">
 
         <ImageView
             android:id="@+id/iv_news_video"
@@ -39,75 +37,32 @@
             android:layout_centerInParent="true"
             />
 -->
-        <LinearLayout
-            android:weightSum="1"
+
+        <TextView
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/iv_author"
-                android:src="@drawable/ic_video"
-                android:scaleType="fitCenter"
-                android:layout_weight="0.3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:riv_oval="true"
-                />
-            <LinearLayout
-                android:weightSum="1"
-                android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_weight="0.7"
-                android:layout_height="match_parent">
+            android:id="@+id/item_categroy_name"
+            style="@style/Text_Small_Start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="新闻" />
 
 
-               <TextView
-               android:id="@+id/item_ariticle_author"
-               style="@style/Text_Small_Start"
-               android:layout_width="match_parent"
-               android:layout_height="0dp"
-               android:layout_weight="0.6"
-               android:layout_gravity="start"
-               android:text="0'0'" />
-
-                <TextView
-                    android:id="@+id/item_ariticle_time"
-                    style="@style/Text_Small_Start"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.6"
-                    android:layout_gravity="start"
-                    android:text="0'0'" />
-
-                <!-- <TextView
-               android:id="@+id/item_top_type"
-               style="@style/Text_Small"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-
-               android:drawableLeft="@drawable/ic_video"
-               android:text="0'0'" />-->
-
-            </LinearLayout>
-           <!-- <TextView
-                android:id="@+id/item_top_type"
-                style="@style/Text_Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:drawableLeft="@drawable/ic_video"
-                android:text="0'0'" />-->
-
-
-        </LinearLayout>
-
-
+        <TextView
+            android:id="@+id/tv_item_header"
+            android:layout_above="@id/ll_bottom"
+            style="@style/Text_Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:gravity="start"
+            android:layout_margin="10dp"
+            android:text="xxxxxx11" />
 
         <LinearLayout
+            android:id="@+id/ll_bottom"
             android:orientation="vertical"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
@@ -135,8 +90,10 @@
                 android:weightSum="1">
 
 
+
+
                 <TextView
-                    android:id="@+id/item_top_categroy"
+                    android:id="@+id/item_ariticle_time"
                     style="@style/Text_Small"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -160,7 +117,7 @@
 
 
 
-    <LinearLayout
+    <!--<LinearLayout
         android:background="@color/white"
         android:weightSum="1"
         android:orientation="vertical"
@@ -194,7 +151,7 @@
             android:layout_weight="0.3"
             android:layout_width="match_parent"
             android:layout_height="0dp" />
-    </LinearLayout>
+    </LinearLayout>-->
 
 
 

@@ -9,6 +9,9 @@ public class Top implements MultiItemEntity {
     //文章
     public static final int ARTICLE = 2;
 
+    //头部
+    public static final int HEADER = 3;
+
     private int itemType;
     public Top(){
 //        this.itemType = itemType;

@@ -23,7 +23,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/banner_pager"
             android:layout_width="match_parent"
-            android:layout_height="240dp"/>
+            android:layout_height="220dp"/>
 
 
         <com.gcores.radionews.ui.wedget.toolbar.GAppBar
