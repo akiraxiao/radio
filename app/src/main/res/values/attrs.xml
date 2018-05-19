@@ -26,6 +26,9 @@
         <attr name="x_tabPaddingTop" format="dimension"/>
         <attr name="x_tabPaddingEnd" format="dimension"/>
         <attr name="x_tabPaddingBottom" format="dimension"/>
-        <attr name="x_tabPadding" format="dimension"/>
+
+    </declare-styleable>
+    <declare-styleable name="BackImageView">
+        <attr name="colorback" format="color"/>
     </declare-styleable>
 </resources>

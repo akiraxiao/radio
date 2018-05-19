@@ -1,11 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+<com.scwang.smartrefresh.layout.SmartRefreshLayout
+
+    android:id="@+id/refreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:srlPrimaryColor="@color/red"
+    app:srlAccentColor="@android:color/white"
+    app:srlEnablePreviewInEditMode="true"
+    >
+   <!-- app:fghTextGameOver="游戏结束"
+    app:fghMaskTextBottom="上下滑动控制球拍"
+    app:fghMaskTextTopRelease="释放游戏即将开始"
+    app:fghMaskTextTopPull="下拉开始游戏"
+    app:fghTextLoadingFailed="加载失败"
+    app:fghTextLoading="玩个游戏 稍等一下-0-"
+    app:fghTextLoadingFinished="加载完成"-->
+    <!--srlAccentColor srlPrimaryColor 将会改变 Header 和 Footer 的主题颜色-->
+    <!--srlEnablePreviewInEditMode 可以开启和关闭预览功能-->
+    <com.scwang.smartrefresh.header.StoreHouseHeader
+        app:shhText="GAMECORES"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <android.support.v7.widget.RecyclerView
+        android:overScrollMode="never"
         android:id="@+id/toplist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
-</RelativeLayout>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

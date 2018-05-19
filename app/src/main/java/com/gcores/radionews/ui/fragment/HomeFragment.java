@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gcores.radionews.R;
 import com.gcores.radionews.ui.api.NewsService;
 import com.gcores.radionews.ui.api.RetrofitClient;
@@ -31,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-
+//首页
 public class HomeFragment extends AppFragment {
 
     private RecyclerView topList;
@@ -66,6 +67,7 @@ public class HomeFragment extends AppFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (mGson==null)
         mGson = new Gson();
 
     }
@@ -185,6 +187,17 @@ public class HomeFragment extends AppFragment {
         topList.setLayoutManager(linearLayoutManager);
         newsItemAdapter.addHeaderView(mHeanderView);
 //        topList.addItemDecoration(new SpaceItemDecoration(5,newsItemAdapter.getItemCount(),getActivity()));
+        //开启加载动画
+        newsItemAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         topList.setAdapter(newsItemAdapter);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+          itemJson ="";
+          headerJson = "";
+          if(mGson!=null)
+          mGson = null;
     }
 }

@@ -7,13 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="8dp"
-    app:cardBackgroundColor="@color/white"
     android:layout_margin="5dp"
     >
 <LinearLayout android:orientation="vertical"
     android:weightSum="1"
     android:layout_width="match_parent"
     android:layout_height="120dp"
+
     >
 
     <RelativeLayout
@@ -21,14 +21,16 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <ImageView
+        <com.gcores.radionews.ui.wedget.BackImageView
             android:id="@+id/iv_news_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:background="@drawable/ad_text"
             />
-
+        <!--<View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000" />-->
         <!--<ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

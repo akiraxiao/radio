@@ -14,7 +14,7 @@
     <LinearLayout android:orientation="vertical"
                   android:weightSum="1"
                   android:layout_width="match_parent"
-                  android:layout_height="240dp"
+                  android:layout_height="200dp"
                   android:padding="10dp"
         >
 
@@ -23,12 +23,11 @@
         android:layout_height="0dp"
         android:layout_weight="0.6">
 
-        <ImageView
+        <com.gcores.radionews.ui.wedget.BackImageView
             android:id="@+id/iv_news_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:background="@drawable/ad_text"
             />
 
         <ImageView
@@ -112,24 +111,19 @@
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
-<View
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="0.1"/>
+
 
         <TextView
             android:id="@+id/item_news_title"
             android:text="111111"
             style="@style/Text_Normal_Black"
             android:gravity="start"
-            android:layout_weight="0.4"
+            android:layout_weight="0.6"
+            android:maxLines="3"
             android:layout_width="match_parent"
             android:layout_height="0dp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1"/>
+
 
         <TextView
             android:id="@+id/item_news_desc"

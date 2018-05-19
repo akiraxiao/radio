@@ -2,7 +2,6 @@ package com.gcores.radionews.ui.view.base.adapter;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -10,6 +9,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcores.radionews.R;
 import com.gcores.radionews.ui.model.news.Top;
+import com.gcores.radionews.ui.wedget.BackImageView;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class NewsHeaderAdapter extends BaseMultiItemQuickAdapter<Top,BaseViewHol
 //    private TextView mDesc;
     private TextView mFav;
     private TextView mReply;
-    private ImageView mBack;
+    private BackImageView mBack;
 
 //    private RoundedImageView ivAuthor;
 //    private TextView mAuthorName;
@@ -59,7 +59,6 @@ public class NewsHeaderAdapter extends BaseMultiItemQuickAdapter<Top,BaseViewHol
                 Glide.with(mContext).load(item.getData().getThumbUrl()).into(mBack);
                 break;*/
             case Top.HEADER:
-
 //                ivAuthor = helper.getView(R.id.iv_author);
 //                mAuthorName = helper.getView(R.id.item_ariticle_author);
                 mCreateTime = helper.getView(R.id.item_ariticle_time);
