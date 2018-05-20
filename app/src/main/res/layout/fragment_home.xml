@@ -27,9 +27,9 @@
     <!--srlEnablePreviewInEditMode 可以开启和关闭预览功能-->
     <com.scwang.smartrefresh.header.StoreHouseHeader
         app:shhText="GAMECORES"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
 
     <android.support.v7.widget.RecyclerView
         android:overScrollMode="never"

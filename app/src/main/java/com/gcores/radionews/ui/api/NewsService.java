@@ -7,22 +7,23 @@ import com.gcores.radionews.ui.resmoel.TopRes;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface NewsService {
 
 
-    @GET("app_start_pages/active_page?auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw")
-    Call<AdPageRes> getStartPage();
+    @GET("app_start_pages/active_page")
+    Call<AdPageRes> getStartPage(@Query("auth_exclusive") String auth_exclusive,@Query("auth_token")String auth_token);
 
 
-    @GET("all_notifications_size?auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw")
-    Call<NotificationRes> getNotificationMessage();
+    @GET("all_notifications_size")
+    Call<NotificationRes> getNotificationMessage(@Query("auth_exclusive") String auth_exclusive,@Query("auth_token")String auth_token);
 
 
-    @GET("originals/home_slideshow?auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw")
-    Call<BannerRes> getBanner();
+    @GET("originals/home_slideshow")
+    Call<BannerRes> getBanner(@Query("auth_exclusive") String auth_exclusive,@Query("auth_token")String auth_token);
 
     //头条
-    @GET("originals/home?page=1&auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw")
-    Call<TopRes> getTopNews();
+    @GET("originals/home")
+    Call<TopRes> getTopNews(@Query("page") int page,@Query("auth_exclusive") String auth_exclusive,@Query("auth_token")String auth_token);
 }

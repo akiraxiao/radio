@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="8dp"
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="@color/red"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:weightSum="1"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <com.gcores.radionews.ui.wedget.BackImageView
+                android:id="@+id/iv_news_video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                />
+            <!--<View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000" />-->
+            <!--<ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_play_indicator"
+            android:layout_centerInParent="true"
+            />
+-->
+
+            <!--   <TextView
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/item_categroy_name"
+            style="@style/Text_Small_Start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="新闻" />-->
+
+
+            <ImageView
+                android:id="@+id/iv_item_catename"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_above="@id/ll_bottom"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="30dp"
+                android:background="@color/font"
+                android:paddingBottom="10dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/ll_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical"
+                >
+
+
+                <!--<TextView
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/item_top_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="XXXXXXXX"
+            style="@style/Text_Normal"
+            android:gravity="start"
+            />-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:weightSum="1">
+
+
+                    <TextView
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:id="@+id/item_ariticle_count"
+                        style="@style/Text_Small"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="文章"/>
+
+                    <!--<TextView
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:id="@+id/v_center"
+                        android:layout_toRightOf="@id/item_ariticle_count"
+                        android:layout_centerInParent="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>-->
+
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:id="@+id/item_subcribe_count"
+                        style="@style/Text_Small"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content"
+                        android:text="订阅"/>
+
+                    <!--<LinearLayout
+                    android:id="@+id/item_ll_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:orientation="horizontal">
+
+                    &lt;!&ndash;<include layout="@layout/view_fav_reply"></include>&ndash;&gt;
+                </LinearLayout>-->
+
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+
+        <!--<LinearLayout
+        android:background="@color/white"
+        android:weightSum="1"
+        android:orientation="vertical"
+        android:layout_weight="0.4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.1"/>
+
+        <TextView
+            android:id="@+id/item_news_title"
+            android:text="111111"
+            style="@style/Text_Normal_Black"
+            android:gravity="start"
+            android:layout_weight="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"/>
+
+        <TextView
+            android:id="@+id/item_news_desc"
+            android:text="111111"
+            style="@style/Text_Small_Gray"
+            android:layout_weight="0.3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+    </LinearLayout>-->
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+
+

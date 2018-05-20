@@ -163,7 +163,7 @@ public class HomeActivity extends BaseActivity {
 
     private void getBannerList(NewsService newsService) {
         bannerList.clear();
-        Call<BannerRes>  call  =  newsService.getBanner();
+        Call<BannerRes>  call  =  newsService.getBanner(Constant.AUTH_EXCLUSIVE,Constant.AUTH_TOKEN);
         call.enqueue(new Callback<BannerRes>() {
             @Override
             public void onResponse(Call<BannerRes> call, Response<BannerRes> response) {

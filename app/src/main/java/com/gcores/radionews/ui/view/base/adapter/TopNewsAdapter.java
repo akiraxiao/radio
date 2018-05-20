@@ -40,9 +40,9 @@ public class TopNewsAdapter extends BaseQuickAdapter<Results,BaseViewHolder> {
         mBack =  helper.getView(R.id.iv_news);
         mType.setText("新闻");
         mTitle.setText(item.getTitle());
-        mTime.setText(item.getCreatedAt());
-        mFav.setText(item.getLikesNum());
-        mReply.setText(item.getCommentsNum());
-        Glide.with(mContext).load(item.getThumbUrl()).into(mBack);
+        mTime.setText(item.getCreated_at());
+        mFav.setText(item.getLikes_num());
+        mReply.setText(item.getComments_num());
+        Glide.with(mContext).load(item.getThumb_url()).into(mBack);
     }
 }

@@ -70,7 +70,7 @@ public class AdverActivity extends BaseActivity {
 
     //获取订阅和未读信息
     private void getNotificationMessage(NewsService newsService) {
-       Call<NotificationRes> call =   newsService.getNotificationMessage();
+       Call<NotificationRes> call =   newsService.getNotificationMessage(Constant.AUTH_EXCLUSIVE,Constant.AUTH_TOKEN);
        call.enqueue(new Callback<NotificationRes>() {
            @Override
            public void onResponse(Call<NotificationRes> call, Response<NotificationRes> response) {
@@ -135,7 +135,7 @@ public class AdverActivity extends BaseActivity {
 
 //        Retrofit retrofit =  RetrofitClient.getRetrofit(UrlPath.base_url_api);
 //        NewsService newsService =   retrofit.create(NewsService.class);
-        Call<AdPageRes> call =  newsService.getStartPage();
+        Call<AdPageRes> call =  newsService.getStartPage(Constant.AUTH_EXCLUSIVE,Constant.AUTH_TOKEN);
         call.enqueue(new Callback<AdPageRes>() {
             @Override
             public void onResponse(Call<AdPageRes> call, Response<AdPageRes> response) {

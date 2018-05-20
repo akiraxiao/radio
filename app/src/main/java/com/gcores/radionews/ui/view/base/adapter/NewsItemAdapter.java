@@ -52,13 +52,13 @@ public class NewsItemAdapter extends BaseMultiItemQuickAdapter<Top,BaseViewHolde
 
                 helper.setText(R.id.item_top_time, Gutil.convertToSencond(item.getData().getDuration()));
                 mCate.setText(item.getData().getCategory().getName());
-                mFav.setText(item.getData().getLikesNum()+"");
-                mReply.setText(item.getData().getCommentsNum()+"");
+                mFav.setText(item.getData().getLikes_num()+"");
+                mReply.setText(item.getData().getComments_num()+"");
                 mTitle.setText(item.getData().getTitle());
                 mDesc.setText(item.getData().getDesc());
 
 //                mBack.setColorFilter(Color.parseColor("#30000000"), PorterDuff.Mode.LIGHTEN);//指定滤镜颜色以及混合模式
-                Glide.with(mContext).load(item.getData().getThumbUrl()).into(mBack);
+                Glide.with(mContext).load(item.getData().getThumb_url()).into(mBack);
                 break;
             case Top.ARTICLE:
 
@@ -73,15 +73,15 @@ public class NewsItemAdapter extends BaseMultiItemQuickAdapter<Top,BaseViewHolde
                 mDesc = helper.getView(R.id.item_news_desc);
 
 
-                Glide.with(mContext).load(item.getData().getUser().getThumbUrl()).into(ivAuthor);
+                Glide.with(mContext).load(item.getData().getUser().getThumb_url()).into(ivAuthor);
                 mAuthorName.setText(item.getData().getUser().getNickname());
-                mCreateTime.setText(item.getData().getCreatedAt());
+                mCreateTime.setText(item.getData().getCreated_at());
                 mCate.setText(item.getData().getCategory().getName());
-                mFav.setText(item.getData().getLikesNum()+"");
-                mReply.setText(item.getData().getCommentsNum()+"");
+                mFav.setText(item.getData().getLikes_num()+"");
+                mReply.setText(item.getData().getComments_num()+"");
                 mTitle.setText(item.getData().getTitle());
                 mDesc.setText(item.getData().getDesc());
-                Glide.with(mContext).load(item.getData().getThumbUrl()).into(mBack);
+                Glide.with(mContext).load(item.getData().getThumb_url()).into(mBack);
                 break;
         }
 

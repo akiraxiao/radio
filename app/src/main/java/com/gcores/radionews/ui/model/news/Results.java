@@ -1,188 +1,162 @@
 package com.gcores.radionews.ui.model.news;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.gcores.radionews.ui.model.Category;
-import com.gcores.radionews.ui.model.UserBean;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.gcores.radionews.ui.model.User;
 
-public class Results {
+/**
+ * Copyright 2018 bejson.com
+ */
 
+/**
+ * Auto-generated: 2018-05-20 19:20:27
+ *
+ * @author bejson.com (i@bejson.com)
+ * @website http://www.bejson.com/java2pojo/
+ */
+public class Results implements MultiItemEntity {
 
-
-
-
-    /**
-     * id : 98328
-     * type : Volume
-     * title : 传说中的秘银了解一下
-     * desc : 禁拉又禁拽，禁蹬又禁踹
-     * thumb_url : https://image.g-cores.com/410ec6d3-35e7-485b-a924-cb165dbfb9d4.jpg?x-oss-process=style/original_hsat2x
-     * cover_url : https://image.g-cores.com/410ec6d3-35e7-485b-a924-cb165dbfb9d4.jpg?x-oss-process=style/original_hsat2x
-     * permalink : https://www.g-cores.com/originals/98328
-     * vol : 52
-     * likes_num : 17
-     * comments_num : 38
-     * created_at : 2018-05-10 08:00:27
-     * user : {"id":21327,"nickname":"Ryoma","thumb_url":"https://alioss.g-cores.com/uploads/user/aa080c8b-0b93-4370-96af-1e06afef697d_normal.png","location":"北京","is_fresh":false}
-     * category : {"id":51,"name":"差点儿一分钟","desc":"短视频节目","show_name":"差点儿一分钟","type":"Show","specific_type":"video","logo_url":"https://image.g-cores.com/d61c2e3a-2bbd-4917-82d0-ba145d9fe1c0.png","background_url":"https://image.g-cores.com/1fc61946-1762-41ab-b515-c032658e5462.jpg","subscriptors_num":1868}
-     */
-
-    @SerializedName("id")
-    @Expose
-    private Integer id;
-    @SerializedName("type")
-    @Expose
+    private int id;
     private String type;
-    @SerializedName("title")
-    @Expose
     private String title;
-    @SerializedName("desc")
-    @Expose
     private String desc;
-    @SerializedName("thumb_url")
-    @Expose
-    private String thumbUrl;
-    @SerializedName("cover_url")
-    @Expose
-    private String coverUrl;
-    @SerializedName("permalink")
-    @Expose
+    private String thumb_url;
+    private String cover_url;
     private String permalink;
-    @SerializedName("vol")
-    @Expose
-    private Object vol;
-    @SerializedName("likes_num")
-    @Expose
-    private Integer likesNum;
-    @SerializedName("comments_num")
-    @Expose
-    private Integer commentsNum;
-    @SerializedName("created_at")
-    @Expose
-    private String createdAt;
-    @SerializedName("user")
-    @Expose
-    private UserBean user;
-    @SerializedName("category")
-    @Expose
+    private String vol;
+    private int likes_num;
+    private int comments_num;
+    private String created_at;
+    private int duration;
+    private User user;
     private Category category;
 
-    @SerializedName("duration")
-    @Expose
-    private int duration;
 
-    public int getDuration() {
-        return duration;
-    }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
+    private int itemType;
+    //头部的几个布局
+    public static final int HEADER_NEWS = 1;
+//    public static final int HEADER_CATE = 2;
+    public static final int HEADER_ART = 3;
+    public static final int HEADER_USER = 4;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public int getId() {
+        return id;
     }
 
     public void setType(String type) {
         this.type = type;
     }
 
-    public String getTitle() {
-        return title;
+    public String getType() {
+        return type;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getTitle() {
+        return title;
     }
 
     public void setDesc(String desc) {
         this.desc = desc;
     }
 
-    public String getThumbUrl() {
-        return thumbUrl;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setThumbUrl(String thumbUrl) {
-        this.thumbUrl = thumbUrl;
+    public void setThumb_url(String thumb_url) {
+        this.thumb_url = thumb_url;
     }
 
-    public String getCoverUrl() {
-        return coverUrl;
+    public String getThumb_url() {
+        return thumb_url;
     }
 
-    public void setCoverUrl(String coverUrl) {
-        this.coverUrl = coverUrl;
+    public void setCover_url(String cover_url) {
+        this.cover_url = cover_url;
     }
 
-    public String getPermalink() {
-        return permalink;
+    public String getCover_url() {
+        return cover_url;
     }
 
     public void setPermalink(String permalink) {
         this.permalink = permalink;
     }
 
-    public Object getVol() {
-        return vol;
+    public String getPermalink() {
+        return permalink;
     }
 
-    public void setVol(Object vol) {
+    public void setVol(String vol) {
         this.vol = vol;
     }
 
-    public Integer getLikesNum() {
-        return likesNum;
+    public String getVol() {
+        return vol;
     }
 
-    public void setLikesNum(Integer likesNum) {
-        this.likesNum = likesNum;
+    public void setLikes_num(int likes_num) {
+        this.likes_num = likes_num;
     }
 
-    public Integer getCommentsNum() {
-        return commentsNum;
+    public int getLikes_num() {
+        return likes_num;
     }
 
-    public void setCommentsNum(Integer commentsNum) {
-        this.commentsNum = commentsNum;
+    public void setComments_num(int comments_num) {
+        this.comments_num = comments_num;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public int getComments_num() {
+        return comments_num;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public UserBean getUser() {
-        return user;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setUser(UserBean user) {
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public Category getCategory() {
-        return category;
+    public User getUser() {
+        return user;
     }
 
     public void setCategory(Category category) {
         this.category = category;
     }
 
+    public Category getCategory() {
+        return category;
+    }
 
-
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
+    }
+    @Override
+    public int getItemType() {
+        return itemType;
+    }
 }

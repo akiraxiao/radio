@@ -69,7 +69,7 @@
                style="@style/Text_Small_Start"
                android:layout_width="match_parent"
                android:layout_height="0dp"
-               android:layout_weight="0.6"
+               android:layout_weight="0.5"
                android:layout_gravity="start"
                android:text="0'0'" />
 
@@ -78,7 +78,7 @@
                     style="@style/Text_Small_Start"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="0.6"
+                    android:layout_weight="0.5"
                     android:layout_gravity="start"
                     android:text="0'0'" />
 
