@@ -18,9 +18,9 @@ import com.gcores.radionews.ui.api.NewsService;
 import com.gcores.radionews.ui.api.RetrofitClient;
 import com.gcores.radionews.ui.api.UrlPath;
 import com.gcores.radionews.ui.inter.BannerListner;
-import com.gcores.radionews.ui.model.news.Radio;
-import com.gcores.radionews.ui.resmoel.RadioRes;
-import com.gcores.radionews.ui.view.base.adapter.RadioAdapter;
+import com.gcores.radionews.ui.model.news.Results;
+import com.gcores.radionews.ui.resmoel.VideoRes;
+import com.gcores.radionews.ui.view.base.adapter.VideoAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -33,7 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class RadioFragment extends AppFragment implements OnRefreshListener, OnLoadMoreListener {
+public class VideoFragment extends AppFragment implements OnRefreshListener, OnLoadMoreListener {
 
     private RecyclerView topList;
     //private RecyclerView topHeaderList;*/
@@ -54,7 +54,7 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
     private View root;
 
 
-//    private HomeItem item;
+    //    private HomeItem item;
     //    private NewsHeaderAdapter mNewsHeaderAdapter;
 //    private NewsItemAdapter mNewsItemAdapter;
     private RefreshLayout mRefreshLayout;
@@ -62,9 +62,9 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
 
     private int currentPage = 1;//当前页数
 
-    private RadioAdapter mRadioAdapter;
+    private VideoAdapter mVideoAdapter;
     //    private HomeSimpleAdapter mHomeSimpleAdapter;
-    List<Radio> mRadioItems = new ArrayList<>();
+    List<Results> mVideoItems = new ArrayList<>();
 
     private boolean loadCompelete;//加载是否完毕
 
@@ -74,7 +74,7 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
 
 //    public BannerListner mListener;
 
-    public RadioFragment() {
+    public VideoFragment() {
 
     }
 
@@ -101,7 +101,7 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
         LinearLayoutManager linearLayoutManagerHeander = new LinearLayoutManager(getActivity());
         linearLayoutManagerHeander.setOrientation(LinearLayoutManager.VERTICAL);
         topList.setLayoutManager(linearLayoutManagerHeander);
-        mRadioAdapter = new RadioAdapter(mRadioItems, getActivity());
+        mVideoAdapter = new VideoAdapter(mVideoItems, getActivity());
         /*mHomeItemAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -115,7 +115,7 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
 //        mHomeItemAdapter.bindToRecyclerView(topList);
 //        mHomeItemAdapter.disableLoadMoreIfNotFullPage();
 //          mHomeItemAdapter.disableLoadMoreIfNotFullPage(topList);
-        topList.setAdapter(mRadioAdapter);
+        topList.setAdapter(mVideoAdapter);
 //        mRefreshLayout.setEnableLoadMore(false);
 //        topHeaderList =   mHeanderView.findViewById(R.id.top_header);
 //        ((TextView)mHeanderView.findViewById(R.id.tv_top_header)).setText("新闻联播");
@@ -139,13 +139,13 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
 //       mNewsTop.clear();
 
         loadCompelete = !loadCompelete;
-        mRadioAdapter.setEnableLoadMore(false);
+        mVideoAdapter.setEnableLoadMore(false);
         Retrofit retrofit = RetrofitClient.getRetrofit(UrlPath.base_url_api);
         newsService = retrofit.create(NewsService.class);
-        Call<RadioRes> call = newsService.getRadios(mcurrentPage, Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
-        call.enqueue(new Callback<RadioRes>() {
+        Call<VideoRes> call = newsService.getVideos(mcurrentPage, Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
+        call.enqueue(new Callback<VideoRes>() {
             @Override
-            public void onResponse(Call<RadioRes> call, Response<RadioRes> response) {
+            public void onResponse(Call<VideoRes> call, Response<VideoRes> response) {
 //               refreshLayout.finishRefresh();
 //                mHomeItems.clear();
                 loadCompelete = true;
@@ -153,16 +153,16 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
 //                 = null;
                 Log.e("eee", response.message());
                 if (response.body().getStatus() == UrlPath.NET_SUCESS) {
-                    mRadioItems = response.body().getResults();
+                    mVideoItems = response.body().getResults();
                     if (currentPage > 1) {
                         refreshLayout.finishLoadMore();
 //                        mHomeItemAdapter.setNewData(mHomeItems);
 //                        mHomeItemAdapter.setEnableLoadMore(false);
-                        setRadioData(false, mRadioItems);
+                        setRadioData(false, mVideoItems);
 //                        mHomeItemAdapter.setEnableLoadMore(true);
                     } else {
 //                        mHomeItemAdapter.setEnableLoadMore(true);
-                        setRadioData(true,mRadioItems);
+                        setRadioData(true,mVideoItems);
                         refreshLayout.finishRefresh();
                     }
 //                    mSwipeRefreshLayout.setRefreshing(false);
@@ -170,7 +170,7 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
             }
 
             @Override
-            public void onFailure(Call<RadioRes> call, Throwable t) {
+            public void onFailure(Call<VideoRes> call, Throwable t) {
                 Log.e("eee", t.getMessage());
                 loadCompelete = true;
                 if (currentPage > 1) {
@@ -185,28 +185,28 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
         });
     }
 
-    private void setRadioData(boolean isRefresh, List<Radio> listItem) {
+    private void setRadioData(boolean isRefresh, List<Results> listItem) {
 //        final int size = item == null ? 0 : item.size();
         if (isRefresh) {
-            mRadioAdapter.setNewData(listItem);
-            mRadioAdapter.setEnableLoadMore(true);
+            mVideoAdapter.setNewData(listItem);
+            mVideoAdapter.setEnableLoadMore(true);
 //            mHomeSimpleAdapter.setData(listItem);
         } else {
-            mRadioAdapter.addData(listItem);
-            mRadioAdapter.setEnableLoadMore(true);
+            mVideoAdapter.addData(listItem);
+            mVideoAdapter.setEnableLoadMore(true);
 //                mHomeSimpleAdapter.addData(itemHome);
         }
 
 
-            if (current_counter < TOTAL_COUNTER) {
-                //第一页如果不够一页就不显示没有更多数据布局
-                mRadioAdapter.loadMoreEnd(isRefresh);
-//                Toast.makeText(getActivity(), "no more data", Toast.LENGTH_SHORT).show();
-                Snackbar.make(getActivity().findViewById(R.id.container), getString(R.string.nomore_data), Snackbar.LENGTH_SHORT).show();
+        if (current_counter < TOTAL_COUNTER) {
+            //第一页如果不够一页就不显示没有更多数据布局
+            mVideoAdapter.loadMoreEnd(isRefresh);
+//            Toast.makeText(getActivity(), "no more data", Toast.LENGTH_SHORT).show();
+            Snackbar.make(getActivity().findViewById(R.id.container), getString(R.string.nomore_data), Snackbar.LENGTH_SHORT).show();
         } else {
 //            int count =  mHomeItemAdapter.getData().size();
-                mRadioAdapter.loadMoreComplete();
-            }
+            mVideoAdapter.loadMoreComplete();
+        }
 
 
     }
@@ -222,14 +222,12 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        mListener.requestBanner();
         refresh(refreshLayout);
     }
 
-
-
     private void refresh(RefreshLayout refreshLayout) {
-        mRadioItems.clear();
+        mListener.requestBanner();
+        mVideoItems.clear();
        /* if (!fristLoad){
             mRadioItems.clear();
         }*/
@@ -262,7 +260,7 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
     protected void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible) {
             //更新界面数据，如果数据还在下载中，就显示加载框
-            mRadioAdapter.notifyDataSetChanged();
+            mVideoAdapter.notifyDataSetChanged();
             if (!loadCompelete) {
                 if (currentPage == 1) {
                     refresh(mRefreshLayout);

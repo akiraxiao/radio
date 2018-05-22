@@ -27,10 +27,11 @@ import com.gcores.radionews.R;
 import com.gcores.radionews.ui.api.NewsService;
 import com.gcores.radionews.ui.api.RetrofitClient;
 import com.gcores.radionews.ui.api.UrlPath;
+import com.gcores.radionews.ui.fragment.ArticleFragment;
 import com.gcores.radionews.ui.fragment.HomeFragment;
 import com.gcores.radionews.ui.fragment.NewsFragment;
 import com.gcores.radionews.ui.fragment.RadioFragment;
-import com.gcores.radionews.ui.fragment.RvFragment;
+import com.gcores.radionews.ui.fragment.VideoFragment;
 import com.gcores.radionews.ui.inter.BannerListner;
 import com.gcores.radionews.ui.model.MenuBean;
 import com.gcores.radionews.ui.model.news.Banner;
@@ -123,10 +124,10 @@ public class HomeActivity extends BaseActivity implements BannerListner {
         //添加fragment
 //        for (String tab:mTabs){
             mFragments.add(new RadioFragment());
-            mFragments.add(new RvFragment());
+            mFragments.add(new VideoFragment());
             mFragments.add(new HomeFragment());
             mFragments.add(new NewsFragment());
-            mFragments.add(new RvFragment());
+            mFragments.add(new ArticleFragment());
 //        }
         newsPageAdapter = new NewsPageAdapter(getSupportFragmentManager(),mTabs);
         mNewsPager = findViewById(R.id.newspager);
@@ -255,6 +256,11 @@ public class HomeActivity extends BaseActivity implements BannerListner {
             HomeActivity.this.finishAffinity();
         }
     }
+
+    public CoordinatorLayout getCoordinatorLayout() {
+        return coordinatorLayout;
+    }
+
 
     @Override
     public void requestBanner() {
