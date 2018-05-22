@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
     >
-    <!--<LinearLayout
+    <LinearLayout
         android:id="@+id/ll_header"
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -25,16 +27,15 @@
 
 
         <android.support.v7.widget.RecyclerView
-            android:layout_marginTop="10dp"
             android:id="@+id/top_header"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
     </LinearLayout>
--->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/toplist_item"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
 
 </LinearLayout>

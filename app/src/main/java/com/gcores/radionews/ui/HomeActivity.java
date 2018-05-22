@@ -30,6 +30,7 @@ import com.gcores.radionews.ui.api.UrlPath;
 import com.gcores.radionews.ui.fragment.HomeFragment;
 import com.gcores.radionews.ui.fragment.NewsFragment;
 import com.gcores.radionews.ui.fragment.RvFragment;
+import com.gcores.radionews.ui.inter.BannerListner;
 import com.gcores.radionews.ui.model.MenuBean;
 import com.gcores.radionews.ui.model.news.Banner;
 import com.gcores.radionews.ui.resmoel.BannerRes;
@@ -51,7 +52,7 @@ import retrofit2.Retrofit;
 /**
  * 主页面
  */
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements BannerListner {
 
 
     private CoordinatorLayout coordinatorLayout;
@@ -85,7 +86,7 @@ public class HomeActivity extends BaseActivity {
     public final int ARITCLE = 4;
 
     private NewsPageAdapter newsPageAdapter;
-
+    private NewsService newsService;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,8 +141,8 @@ public class HomeActivity extends BaseActivity {
         }
         mNewsPager.setCurrentItem(2);
         retrofit = RetrofitClient.getRetrofit(UrlPath.base_url_api);
-        NewsService newsService =  retrofit.create(NewsService.class);
-        getBannerList(newsService);
+        newsService =  retrofit.create(NewsService.class);
+        fectchBannerList(newsService);
 
         //        mRecyclerViewPage
 //        ViewPager
@@ -161,7 +162,7 @@ public class HomeActivity extends BaseActivity {
 //        getLogin();
     }
 
-    private void getBannerList(NewsService newsService) {
+    public void fectchBannerList(NewsService newsService) {
         bannerList.clear();
         Call<BannerRes>  call  =  newsService.getBanner(Constant.AUTH_EXCLUSIVE,Constant.AUTH_TOKEN);
         call.enqueue(new Callback<BannerRes>() {
@@ -252,6 +253,11 @@ public class HomeActivity extends BaseActivity {
         } else {
             HomeActivity.this.finishAffinity();
         }
+    }
+
+    @Override
+    public void requestBanner() {
+        fectchBannerList(newsService);
     }
 
     /*private void getLogin() {

@@ -1,5 +1,6 @@
 package com.gcores.radionews.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,12 +10,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.gcores.radionews.R;
 import com.gcores.radionews.ui.Constant;
 import com.gcores.radionews.ui.api.NewsService;
 import com.gcores.radionews.ui.api.RetrofitClient;
 import com.gcores.radionews.ui.api.UrlPath;
+import com.gcores.radionews.ui.inter.BannerListner;
+import com.gcores.radionews.ui.model.User;
 import com.gcores.radionews.ui.model.news.CateBanner;
 import com.gcores.radionews.ui.model.news.HomeItem;
 import com.gcores.radionews.ui.model.news.Results;
@@ -35,6 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
 //首页
 public class HomeFragment extends AppFragment implements OnRefreshListener, OnLoadMoreListener {
 
@@ -43,7 +48,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
 
     private NewsService newsService;
 
-    private List<TopListList> mNewsTop ;
+    private List<TopListList> mNewsTop;
     private List<Top> mNewsTopItemList = new ArrayList<>();
     private List<Top> mNewsHeaderList = new ArrayList<>();
 
@@ -60,7 +65,9 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
 
     private View root;
 
-//    private NewsHeaderAdapter mNewsHeaderAdapter;
+
+    private HomeItem item;
+    //    private NewsHeaderAdapter mNewsHeaderAdapter;
 //    private NewsItemAdapter mNewsItemAdapter;
     private RefreshLayout mRefreshLayout;
     private boolean fristLoad = true;
@@ -68,45 +75,28 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
     private int currentPage = 1;//当前页数
 
     private HomeItemAdapter mHomeItemAdapter;
-
+//    private HomeSimpleAdapter mHomeSimpleAdapter;
     List<HomeItem> mHomeItems = new ArrayList<>();
-    ///新闻头
-    public enum TitlesHeader {
 
-        NEWS(1,"新闻联播"),CATE(2,"精彩节目推荐"),ART(3,"节目推荐"),USERS(4,"各路大神在此集结");
+    private boolean loadSucess;//加载是否成功
 
-        private TitlesHeader(  int page,String name  ){
-            this.name = name ;
-            this.page = page ;
-        }
 
-        private int page;
-        private String name;
+    private final int TOTAL_COUNTER = 6;
+    private final int TOTAL_LIST = 5;
 
-        public String getName() {
-            return name;
-        }
-        public void setName(String name) {
-            this.name = name;
-        }
-        public int getPage() {
-            return page;
-        }
-        public void setPage(int index) {
-            this.page = index;
-        }
+    private int current_counter;
 
-    }
+    public BannerListner mListener;
 
-        public HomeFragment(){
+    public HomeFragment() {
 
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (mGson==null)
-        mGson = new Gson();
+        if (mGson == null)
+            mGson = new Gson();
 
     }
 
@@ -114,39 +104,45 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        return super.onCreateView(inflater, container, savedInstanceState);
-        root = inflater.inflate(R.layout.fragment_home,container,false);
+        root = inflater.inflate(R.layout.fragment_home, container, false);
 
 //        mHeanderView = inflater.inflate(R.layout.view_item_header,null);
         topList = root.findViewById(R.id.toplist);
         mRefreshLayout = root.findViewById(R.id.refreshLayout);
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setOnLoadMoreListener(this);
-        //解决滑动冲突 来源:https://stackoverflow.com/questions/37423763/recycler-view-inside-recycler-view-not-scrolling
-        LinearLayoutManager linearLayoutManagerHeander = new LinearLayoutManager(getActivity()) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
+
+        LinearLayoutManager linearLayoutManagerHeander = new LinearLayoutManager(getActivity());
         linearLayoutManagerHeander.setOrientation(LinearLayoutManager.VERTICAL);
         topList.setLayoutManager(linearLayoutManagerHeander);
-        mHomeItemAdapter = new HomeItemAdapter(mHomeItems,getActivity());
+        mHomeItemAdapter = new HomeItemAdapter(mHomeItems, getActivity());
+        /*mHomeItemAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                loadMore(mRefreshLayout);
+            }
+        },topList);*/
+//        mHomeSimpleAdapter = new HomeSimpleAdapter(mHomeItems, getActivity());
+
 //        mNewsItemAdapter.addHeaderView(mHeanderView);
 //        topList.addItemDecoration(new SpaceItemDecoration(5,newsItemAdapter.getItemCount(),getActivity()));
-        topList.setAdapter(mHomeItemAdapter);
+//        mHomeItemAdapter.bindToRecyclerView(topList);
+//        mHomeItemAdapter.disableLoadMoreIfNotFullPage();
+//          mHomeItemAdapter.disableLoadMoreIfNotFullPage(topList);
+          topList.setAdapter(mHomeItemAdapter);
+//        mRefreshLayout.setEnableLoadMore(false);
 //        topHeaderList =   mHeanderView.findViewById(R.id.top_header);
 //        ((TextView)mHeanderView.findViewById(R.id.tv_top_header)).setText("新闻联播");
-        if (fristLoad){
+        if (fristLoad) {
             mRefreshLayout.autoRefresh();
         }
         return root;
     }
 
 
-
     //请求头条数据
 
-    private void fectchData( RefreshLayout refreshLayout) {
+    private void fectchData(int mcurrentPage, RefreshLayout refreshLayout) {
        /* if (!fristLoad){
             mNewsHeaderList.clear();
             mNewsTopItemList.clear();
@@ -155,30 +151,30 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
         }
         fristLoad  = false;*/
 //       mNewsTop.clear();
-       Retrofit retrofit =  RetrofitClient.getRetrofit(UrlPath.base_url_api);
-       newsService = retrofit.create(NewsService.class);
-       Call<TopRes> call =  newsService.getTopNews(currentPage,Constant.AUTH_EXCLUSIVE,Constant.AUTH_TOKEN);
-       call.enqueue(new Callback<TopRes>() {
-           @Override
-           public void onResponse(Call<TopRes> call, Response<TopRes> response) {
+        mHomeItemAdapter.setEnableLoadMore(false);
+        Retrofit retrofit = RetrofitClient.getRetrofit(UrlPath.base_url_api);
+        newsService = retrofit.create(NewsService.class);
+        Call<TopRes> call = newsService.getTopNews(mcurrentPage, Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
+        call.enqueue(new Callback<TopRes>() {
+            @Override
+            public void onResponse(Call<TopRes> call, Response<TopRes> response) {
+//               refreshLayout.finishRefresh();
+//                mHomeItems.clear();
+                loadSucess = true;
+                current_counter = response.body().getResults().size();
+//                 = null;
+                Log.e("eee", response.message());
+                if (response.body().getStatus() == UrlPath.NET_SUCESS) {
 
-                if(currentPage>1){
-                    refreshLayout.finishLoadMore();
-                }
-               refreshLayout.finishRefresh();
-               HomeItem item = null;
-               Log.e("eee",response.message());
-               if (response.body().getStatus()==UrlPath.NET_SUCESS){
-
-                   switch (currentPage){
-                       case HomeItem.NEWS:
-                           item = new HomeItem(currentPage);
-                           mNewsTop =  response.body().getResults();
-                           List<Results> headerNews =  setHeaderNews(mNewsTop.get(0));
-                           item.setNewsHeader(headerNews);
-                           item.setItemType(HomeItem.NEWS);
-                           mNewsTop.remove(0);
-                           setHomeBody(item);
+                    switch (mcurrentPage) {
+                        case HomeItem.NEWS:
+                            item = new HomeItem(HomeItem.NEWS);
+                            mNewsTop = response.body().getResults();
+                            List<Results> headerNews = setHeaderNews(mcurrentPage, mNewsTop.get(0));
+                            item.setNewsHeader(headerNews);
+//                            item.setItemType(HomeItem.NEWS);
+                            mNewsTop.remove(0);
+                            setHomeBody(item);
                            /*itemJson =  mGson.toJson(mNewsTop,ArrayList.class);
                            mNewsTopItemList = mGson.fromJson(itemJson,new TypeToken<List<Top>>() {}.getType());
                            for (int x=0;x<mNewsTopItemList.size();x++){
@@ -190,91 +186,141 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
                            }
                            item.setData(setTopNews(mNewsTopItemList));*/
 
-                           break;
+                            break;
 
-                       case HomeItem.CATE:
-                           item = new HomeItem(currentPage);
-                           mNewsTop =  response.body().getResults();
-                           List<CateBanner> cateBanner =  setHeaderBanner(mNewsTop.get(0));
-                           item.setCateHeader(cateBanner);
+                        case HomeItem.CATE:
+                            item = new HomeItem(HomeItem.CATE);
+                            mNewsTop = response.body().getResults();
+                            List<CateBanner> cateBanner = setHeaderBanner(mNewsTop.get(0));
+                            item.setCateHeader(cateBanner);
 //                           item.setData(setTopNews(mNewsTopItemList));
-                           item.setItemType(HomeItem.CATE);
-                           mNewsTop.remove(0);
-                           setHomeBody(item);
-                           break;
+//                            item.setItemType(HomeItem.CATE);
+                            mNewsTop.remove(0);
+                            setHomeBody(item);
+                            break;
 
-                       case HomeItem.ART:
+                        case HomeItem.ART:
 
-                           item = new HomeItem(currentPage);
-                           mNewsTop =  response.body().getResults();
-                           List<Results> headerArt =  setHeaderNews(mNewsTop.get(0));
-                           item.setArtHeader(headerArt);
-                           item.setItemType(HomeItem.ART);
+                            item = new HomeItem(HomeItem.ART);
+                            mNewsTop = response.body().getResults();
+                            List<Results> headerArt = setHeaderNews(mcurrentPage, mNewsTop.get(0));
+                            item.setArtHeader(headerArt);
+//                            item.setItemType(HomeItem.ART);
 //                           item.setData(setTopNews(mNewsTopItemList));
-                           mNewsTop.remove(0);
-                           setHomeBody(item);
-                           break;
+                            mNewsTop.remove(0);
+                            setHomeBody(item);
+                            break;
 
-                       case HomeItem.USERS:
-                           item = new HomeItem(currentPage);
-                           mNewsTop =  response.body().getResults();
-                           List<Results> headerUsers =  setHeaderNews(mNewsTop.get(0));
-                           item.setUserHeader(headerUsers);
-                           item.setItemType(HomeItem.USERS);
+                        case HomeItem.USERS:
+                            item = new HomeItem(HomeItem.USERS);
+                            mNewsTop = response.body().getResults();
+                            List<User> headerUsers = setHeaderUser(mNewsTop.get(0));
+                            item.setUserHeader(headerUsers);
+//                            item.setItemType(HomeItem.USERS);
 //                           item.setData(setTopNews(mNewsTopItemList));
-                           mNewsTop.remove(0);
-                           setHomeBody(item);
-                           break;
-
-                       case HomeItem.DEFAULT:
-                           item = new HomeItem(currentPage);
-                           mNewsTop =  response.body().getResults();
+                            mNewsTop.remove(0);
+                            setHomeBody(item);
+                            break;
+                        default:
+                            item = new HomeItem(HomeItem.DEFAULT);
+                            mNewsTop = response.body().getResults();
 //                           List<Results> headerNews =  setHeaderNews(mNewsTop.get(0));
 //                           item.setNewsHeader(headerNews);
 //                           item.setData(setTopNews(mNewsTopItemList));
 //                           mNewsTop.remove(0);
-                           item.setItemType(HomeItem.DEFAULT);
-                           setHomeBody(item);
-                           break;
-                   }
-
-                   /*mNewsTop =  response.body().getResults();
-                   setHeaderNews(currentPage,mNewsTop.get(0));
-                   mNewsTop.remove(0);*/
-//                   Gson go = new Gson();
-                    mHomeItems.add(item);
-                    if (currentPage==1){
-                        mHomeItemAdapter.setNewData(mHomeItems);
-                    }else{
-                        mHomeItemAdapter.addData(item);
+//                            item.setItemType(HomeItem.DEFAULT);
+                            setHomeBody(item);
+                            break;
                     }
 
-               }
 
+                    if (currentPage==1) {
+                        mHomeItems.add(item);
+                    }
 
+                    if (currentPage > 1) {
+                        refreshLayout.finishLoadMore();
+//                        mHomeItemAdapter.setNewData(mHomeItems);
+//                        mHomeItemAdapter.setEnableLoadMore(false);
+                        setHomeData(false, null,item);
+//                        mHomeItemAdapter.setEnableLoadMore(true);
+                    } else {
+//                        mHomeItemAdapter.setEnableLoadMore(true);
+                        setHomeData(true, mHomeItems,null);
+                        refreshLayout.finishRefresh();
+                    }
+//                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            }
 
-           }
+            @Override
+            public void onFailure(Call<TopRes> call, Throwable t) {
+                Log.e("eee", t.getMessage());
+                loadSucess = !loadSucess;
+                if (currentPage > 1) {
+                    refreshLayout.finishLoadMore();
+//                    mHomeItemAdapter.loadMoreFail();
+                } else {
+//                    mHomeItemAdapter.setEnableLoadMore(false);
+                    refreshLayout.finishRefresh();
+                }
+            }
 
-           @Override
-           public void onFailure(Call<TopRes> call, Throwable t) {
-               Log.e("eee",t.getMessage());
-           }
-       });
+        });
+    }
+
+    private void setHomeData(boolean isRefresh, List<HomeItem> listItem,HomeItem itemHome) {
+//        final int size = item == null ? 0 : item.size();
+        if (isRefresh) {
+            mHomeItemAdapter.setNewData(listItem);
+            mHomeItemAdapter.setEnableLoadMore(true);
+//            mHomeSimpleAdapter.setData(listItem);
+        } else {
+            if (current_counter >= TOTAL_LIST) {
+                mHomeItemAdapter.addData(itemHome);
+                mHomeItemAdapter.setEnableLoadMore(true);
+//                mHomeSimpleAdapter.addData(itemHome);
+            }
+        }
+
+        if (currentPage<5){
+            if (current_counter < TOTAL_COUNTER) {
+                //第一页如果不够一页就不显示没有更多数据布局
+                mHomeItemAdapter.loadMoreEnd(isRefresh);
+                Toast.makeText(getActivity(), "no more data", Toast.LENGTH_SHORT).show();
+            } else {
+//            int count =  mHomeItemAdapter.getData().size();
+                mHomeItemAdapter.loadMoreComplete();
+            }
+
+        }else{
+            if (current_counter < TOTAL_LIST) {
+                //第一页如果不够一页就不显示没有更多数据布局
+                mHomeItemAdapter.loadMoreEnd(isRefresh);
+                Toast.makeText(getActivity(), "no more data", Toast.LENGTH_SHORT).show();
+            } else {
+//            int count =  mHomeItemAdapter.getData().size();
+                mHomeItemAdapter.loadMoreComplete();
+            }
+
+        }
+
     }
 
 
-    public void loadMoreData(RefreshLayout refreshLayout){
+    /* public void loadMoreData(RefreshLayout refreshLayout){
 
-        fectchData(refreshLayout);
-    }
+         fectchData(refreshLayout);
+     }*/
     //头条
-    private List<Results> setHeaderNews(TopListList topListList) {
-        headerJson =  mGson.toJson(topListList.getData(),ArrayList.class);
-        List<Results>   resultsList = mGson.fromJson(headerJson,new TypeToken<List<Results>>() {}.getType());
-        for (int x=0;x<resultsList.size();x++){
-            if (currentPage<=4){
-                resultsList.get(x).setItemType(currentPage);
-            }else{
+    private List<Results> setHeaderNews(int page, TopListList topListList) {
+        headerJson = mGson.toJson(topListList.getData(), ArrayList.class);
+        List<Results> resultsList = mGson.fromJson(headerJson, new TypeToken<List<Results>>() {
+        }.getType());
+        for (int x = 0; x < resultsList.size(); x++) {
+            if (page <= 4) {
+                resultsList.get(x).setItemType(page);
+            } else {
                 resultsList.get(x).setItemType(5);
             }
         }
@@ -288,38 +334,49 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
         return resultsList;
     }
 
+    //各路大神
+    private List<User> setHeaderUser(TopListList topListList) {
+        headerJson = mGson.toJson(topListList.getData(), ArrayList.class);
+        List<User> userList = mGson.fromJson(headerJson, new TypeToken<List<User>>() {
+        }.getType());
+//       mNewsHeaderAdapter.setNewData(mNewsHeaderList);
+        return userList;
+    }
 
     //Banner
     private List<CateBanner> setHeaderBanner(TopListList topListList) {
-        headerJson =  mGson.toJson(topListList.getData(),ArrayList.class);
-        List<CateBanner>   resultsList = mGson.fromJson(headerJson,new TypeToken<List<CateBanner>>() {}.getType());
+        headerJson = mGson.toJson(topListList.getData(), ArrayList.class);
+        List<CateBanner> resultsList = mGson.fromJson(headerJson, new TypeToken<List<CateBanner>>() {
+        }.getType());
 
 //       mNewsHeaderAdapter.setNewData(mNewsHeaderList);
         return resultsList;
     }
 
     private List<Top> setTopNews(List<Top> mNewsTop) {
-        itemJson =  mGson.toJson(mNewsTop,ArrayList.class);
-       List<Top> resTop =   mNewsTopItemList = mGson.fromJson(itemJson,new TypeToken<List<Top>>() {}.getType());
-        for (int x=0;x<mNewsTopItemList.size();x++){
-            if (mNewsTopItemList.get(x).getData().getType().equals("Article")){
+        itemJson = mGson.toJson(mNewsTop, ArrayList.class);
+        List<Top> resTop = mNewsTopItemList = mGson.fromJson(itemJson, new TypeToken<List<Top>>() {
+        }.getType());
+        for (int x = 0; x < mNewsTopItemList.size(); x++) {
+            if (mNewsTopItemList.get(x).getData().getType().equals("Article")) {
                 mNewsTopItemList.get(x).setItemType(Top.ARTICLE);
-            }else{
+            } else {
                 mNewsTopItemList.get(x).setItemType(Top.VIDEO);
             }
         }
 //        mNewsItemAdapter.setNewData(mNewsTop);
-return  resTop;
+        return resTop;
     }
 
 
-    private void  setHomeBody(HomeItem item){
-        itemJson =  mGson.toJson(mNewsTop,ArrayList.class);
-        mNewsTopItemList = mGson.fromJson(this.itemJson,new TypeToken<List<Top>>() {}.getType());
-        for (int x=0;x<mNewsTopItemList.size();x++){
-            if (mNewsTopItemList.get(x).getData().getType().equals("Article")){
+    private void setHomeBody(HomeItem item) {
+        itemJson = mGson.toJson(mNewsTop, ArrayList.class);
+        mNewsTopItemList = mGson.fromJson(this.itemJson, new TypeToken<List<Top>>() {
+        }.getType());
+        for (int x = 0; x < mNewsTopItemList.size(); x++) {
+            if (mNewsTopItemList.get(x).getData().getType().equals("Article")) {
                 mNewsTopItemList.get(x).setItemType(Top.ARTICLE);
-            }else{
+            } else {
                 mNewsTopItemList.get(x).setItemType(Top.VIDEO);
             }
         }
@@ -330,24 +387,42 @@ return  resTop;
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-          itemJson ="";
-          headerJson = "";
-          if(mGson!=null)
-          mGson = null;
+        itemJson = "";
+        headerJson = "";
+        if (mGson != null)
+            mGson = null;
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        currentPage =1;
-        fectchData(refreshLayout);
+        mListener.requestBanner();
+        refresh(refreshLayout);
+    }
 
+    private void refresh(RefreshLayout refreshLayout) {
+        mHomeItems.clear();
+        currentPage = 1;
+//        mHomeItemAdapter.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
+        fectchData(currentPage, refreshLayout);
     }
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-            currentPage++;
-            fectchData(refreshLayout);
-           /* currentPage++;
-            loadMoreData(refreshLayout);*/
+//            loadMore(currentPage,refreshLayout);
+        currentPage++;
+//        mHomeItemAdapter.setEnableLoadMore(false);
+        fectchData(currentPage, refreshLayout);
+    }
+
+    private void loadMore(RefreshLayout refreshLayout){
+        currentPage++;
+//        mHomeItemAdapter.setEnableLoadMore(true);
+        fectchData(currentPage, refreshLayout);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mListener = (BannerListner) context;
     }
 }

@@ -1,10 +1,10 @@
 package com.gcores.radionews.ui.model.news;
 
-import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.gcores.radionews.ui.model.User;
 
 import java.util.List;
 
-public class HomeItem implements MultiItemEntity {
+public class HomeItem  {
 
 
     //视频
@@ -24,6 +24,8 @@ public class HomeItem implements MultiItemEntity {
 //        this.header = header;
 //        this.list = list;
     }
+
+
 
 
 //    private int type;
@@ -55,11 +57,11 @@ public class HomeItem implements MultiItemEntity {
         this.artHeader = artHeader;
     }
 
-    public List<Results> getUserHeader() {
+    public List<User> getUserHeader() {
         return userHeader;
     }
 
-    public void setUserHeader(List<Results> userHeader) {
+    public void setUserHeader(List<User> userHeader) {
         this.userHeader = userHeader;
     }
 
@@ -74,7 +76,7 @@ public class HomeItem implements MultiItemEntity {
     private List<Results> newsHeader;
     private List<CateBanner> cateHeader;
     private List<Results> artHeader;
-    private List<Results> userHeader;
+    private List<User> userHeader;
 
 
     //list body数据
@@ -84,14 +86,16 @@ public class HomeItem implements MultiItemEntity {
 
 
 
-    public void setItemType(int itemType) {
+   /* public void setItemType(int itemType) {
         this.itemType = itemType;
-    }
+    }*/
 
-
-
-    @Override
     public int getItemType() {
         return itemType;
     }
+
+    /*@Override
+    public int getItemType() {
+        return itemType;
+    }*/
 }

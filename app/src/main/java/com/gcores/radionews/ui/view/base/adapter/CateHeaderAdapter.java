@@ -52,9 +52,5 @@ public class CateHeaderAdapter extends BaseQuickAdapter<CateBanner,BaseViewHolde
                 Glide.with(mContext).load(item.getLogo_url()).into(centerView);
 
 
-
-
-
-
     }
 }

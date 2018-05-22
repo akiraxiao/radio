@@ -5,9 +5,10 @@
     app:cardCornerRadius="8dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardElevation="8dp"
-    android:layout_margin="5dp"
-    app:contentPadding="5dp"
+    android:layout_margin="8dp"
+    app:contentPadding="8dp"
+    app:cardBackgroundColor="@android:color/transparent"
+    android:orientation="vertical"
     >
 
     <LinearLayout
@@ -23,13 +24,14 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             app:riv_oval="true"
+            android:layout_gravity="center_horizontal"
             />
 
         <TextView
             android:layout_gravity="center"
             android:gravity="center"
             android:id="@+id/item_user_name"
-            style="@style/Text_Normal"
+            style="@style/Text_Normal_Black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="文章"/>

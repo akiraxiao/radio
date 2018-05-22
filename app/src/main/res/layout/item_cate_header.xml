@@ -8,7 +8,6 @@
     android:layout_height="wrap_content"
     app:cardElevation="8dp"
     android:layout_margin="5dp"
-    app:cardBackgroundColor="@color/red"
     >
 
     <LinearLayout
@@ -57,12 +56,10 @@
 
             <ImageView
                 android:id="@+id/iv_item_catename"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_above="@id/ll_bottom"
                 android:layout_centerInParent="true"
-                android:layout_marginBottom="30dp"
-                android:background="@color/font"
                 android:paddingBottom="10dp"
                 />
 
