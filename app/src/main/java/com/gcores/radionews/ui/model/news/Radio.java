@@ -1,20 +1,10 @@
 package com.gcores.radionews.ui.model.news;
 
-import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.gcores.radionews.ui.model.Category;
+import com.gcores.radionews.ui.model.Media;
 import com.gcores.radionews.ui.model.User;
 
-/**
- * Copyright 2018 bejson.com
- */
-
-/**
- * Auto-generated: 2018-05-20 19:20:27
- *
- * @author bejson.com (i@bejson.com)
- * @website http://www.bejson.com/java2pojo/
- */
-public class Results implements MultiItemEntity {
+public class Radio {
 
     private int id;
     private String type;
@@ -27,27 +17,29 @@ public class Results implements MultiItemEntity {
     private int likes_num;
     private int comments_num;
     private String created_at;
+
+    public String getTimellines_images_url() {
+        return timellines_images_url;
+    }
+
+    public void setTimellines_images_url(String timellines_images_url) {
+        this.timellines_images_url = timellines_images_url;
+    }
+
+    private String timellines_images_url;
     private int duration;
     private User user;
     private Category category;
 
-    /*public Media getMedia() {
+    public Media getMedia() {
         return media;
     }
 
     public void setMedia(Media media) {
         this.media = media;
     }
-*/
-//    private Media media;
 
-
-    private int itemType;
-    //头部的几个布局
-    public static final int HEADER_NEWS = 1;
-//    public static final int HEADER_CATE = 2;
-    public static final int HEADER_ART = 3;
-    public static final int HEADER_USER = 4;
+    private Media media;
 
     public void setId(int id) {
         this.id = id;
@@ -161,11 +153,5 @@ public class Results implements MultiItemEntity {
         return category;
     }
 
-    public void setItemType(int itemType) {
-        this.itemType = itemType;
-    }
-    @Override
-    public int getItemType() {
-        return itemType;
-    }
+
 }

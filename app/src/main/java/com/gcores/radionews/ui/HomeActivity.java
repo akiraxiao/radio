@@ -29,6 +29,7 @@ import com.gcores.radionews.ui.api.RetrofitClient;
 import com.gcores.radionews.ui.api.UrlPath;
 import com.gcores.radionews.ui.fragment.HomeFragment;
 import com.gcores.radionews.ui.fragment.NewsFragment;
+import com.gcores.radionews.ui.fragment.RadioFragment;
 import com.gcores.radionews.ui.fragment.RvFragment;
 import com.gcores.radionews.ui.inter.BannerListner;
 import com.gcores.radionews.ui.model.MenuBean;
@@ -121,7 +122,7 @@ public class HomeActivity extends BaseActivity implements BannerListner {
         String[] mTabs =  getResources().getStringArray(R.array.news_tab_arr);
         //添加fragment
 //        for (String tab:mTabs){
-            mFragments.add(new RvFragment());
+            mFragments.add(new RadioFragment());
             mFragments.add(new RvFragment());
             mFragments.add(new HomeFragment());
             mFragments.add(new NewsFragment());

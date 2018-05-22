@@ -75,10 +75,10 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
     private int currentPage = 1;//当前页数
 
     private HomeItemAdapter mHomeItemAdapter;
-//    private HomeSimpleAdapter mHomeSimpleAdapter;
+    //    private HomeSimpleAdapter mHomeSimpleAdapter;
     List<HomeItem> mHomeItems = new ArrayList<>();
 
-    private boolean loadSucess;//加载是否成功
+    private boolean loadCompelete;//加载是否完毕
 
 
     private final int TOTAL_COUNTER = 6;
@@ -129,14 +129,17 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
 //        mHomeItemAdapter.bindToRecyclerView(topList);
 //        mHomeItemAdapter.disableLoadMoreIfNotFullPage();
 //          mHomeItemAdapter.disableLoadMoreIfNotFullPage(topList);
-          topList.setAdapter(mHomeItemAdapter);
+        topList.setAdapter(mHomeItemAdapter);
 //        mRefreshLayout.setEnableLoadMore(false);
 //        topHeaderList =   mHeanderView.findViewById(R.id.top_header);
 //        ((TextView)mHeanderView.findViewById(R.id.tv_top_header)).setText("新闻联播");
-        if (fristLoad) {
-            mRefreshLayout.autoRefresh();
-        }
+
         return root;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
 
@@ -151,6 +154,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
         }
         fristLoad  = false;*/
 //       mNewsTop.clear();
+        loadCompelete = !loadCompelete;
         mHomeItemAdapter.setEnableLoadMore(false);
         Retrofit retrofit = RetrofitClient.getRetrofit(UrlPath.base_url_api);
         newsService = retrofit.create(NewsService.class);
@@ -160,7 +164,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
             public void onResponse(Call<TopRes> call, Response<TopRes> response) {
 //               refreshLayout.finishRefresh();
 //                mHomeItems.clear();
-                loadSucess = true;
+                loadCompelete = true;
                 current_counter = response.body().getResults().size();
 //                 = null;
                 Log.e("eee", response.message());
@@ -234,7 +238,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
                     }
 
 
-                    if (currentPage==1) {
+                    if (currentPage == 1) {
                         mHomeItems.add(item);
                     }
 
@@ -242,11 +246,11 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
                         refreshLayout.finishLoadMore();
 //                        mHomeItemAdapter.setNewData(mHomeItems);
 //                        mHomeItemAdapter.setEnableLoadMore(false);
-                        setHomeData(false, null,item);
+                        setHomeData(false, null, item);
 //                        mHomeItemAdapter.setEnableLoadMore(true);
                     } else {
 //                        mHomeItemAdapter.setEnableLoadMore(true);
-                        setHomeData(true, mHomeItems,null);
+                        setHomeData(true, mHomeItems, null);
                         refreshLayout.finishRefresh();
                     }
 //                    mSwipeRefreshLayout.setRefreshing(false);
@@ -256,7 +260,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
             @Override
             public void onFailure(Call<TopRes> call, Throwable t) {
                 Log.e("eee", t.getMessage());
-                loadSucess = !loadSucess;
+                loadCompelete = true;
                 if (currentPage > 1) {
                     refreshLayout.finishLoadMore();
 //                    mHomeItemAdapter.loadMoreFail();
@@ -269,7 +273,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
         });
     }
 
-    private void setHomeData(boolean isRefresh, List<HomeItem> listItem,HomeItem itemHome) {
+    private void setHomeData(boolean isRefresh, List<HomeItem> listItem, HomeItem itemHome) {
 //        final int size = item == null ? 0 : item.size();
         if (isRefresh) {
             mHomeItemAdapter.setNewData(listItem);
@@ -283,7 +287,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
             }
         }
 
-        if (currentPage<5){
+        if (currentPage < 5) {
             if (current_counter < TOTAL_COUNTER) {
                 //第一页如果不够一页就不显示没有更多数据布局
                 mHomeItemAdapter.loadMoreEnd(isRefresh);
@@ -293,7 +297,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
                 mHomeItemAdapter.loadMoreComplete();
             }
 
-        }else{
+        } else {
             if (current_counter < TOTAL_LIST) {
                 //第一页如果不够一页就不显示没有更多数据布局
                 mHomeItemAdapter.loadMoreEnd(isRefresh);
@@ -400,7 +404,9 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
     }
 
     private void refresh(RefreshLayout refreshLayout) {
-        mHomeItems.clear();
+        if (!fristLoad) {
+            mHomeItems.clear();
+        }
         currentPage = 1;
 //        mHomeItemAdapter.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
         fectchData(currentPage, refreshLayout);
@@ -414,7 +420,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
         fectchData(currentPage, refreshLayout);
     }
 
-    private void loadMore(RefreshLayout refreshLayout){
+    private void loadMore(RefreshLayout refreshLayout) {
         currentPage++;
 //        mHomeItemAdapter.setEnableLoadMore(true);
         fectchData(currentPage, refreshLayout);
@@ -424,5 +430,37 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
     public void onAttach(Context context) {
         super.onAttach(context);
         mListener = (BannerListner) context;
+    }
+
+
+    @Override
+    protected void onFragmentFirstVisible() {
+        if (fristLoad) {
+            mRefreshLayout.autoRefresh();
+        }
+    }
+
+    @Override
+    protected void onFragmentVisibleChange(boolean isVisible) {
+        if (isVisible) {
+            //更新界面数据，如果数据还在下载中，就显示加载框
+            mHomeItemAdapter.notifyDataSetChanged();
+            if (!loadCompelete) {
+                if (currentPage == 1) {
+                    refresh(mRefreshLayout);
+                } else {
+                    loadMore(mRefreshLayout);
+                }
+            } else {
+                if (currentPage == 1) {
+                    mRefreshLayout.finishRefresh();
+                } else {
+                    mRefreshLayout.finishLoadMore();
+                }
+
+            }
+
+
+        }
     }
 }

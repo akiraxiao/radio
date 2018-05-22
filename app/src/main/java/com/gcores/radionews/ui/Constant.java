@@ -14,8 +14,11 @@ public class Constant {
 
 
 //https://www.g-cores.com/api/mark?auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw
+    //RADIO
 //https://www.g-cores.com/api/categories/9/originals?page=1&auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw
-//    https://www.g-cores.com/api/volumes/98574/timelines?auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw
+    //VIDEO
+   // https://www.g-cores.com/api/categories/8/originals?page=1&auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw
+    //    https://www.g-cores.com/api/volumes/98574/timelines?auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw
 //    https://www.g-cores.com/api/mark?auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw
 //https://www.g-cores.com/api/originals/98574?auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw
     public static final String AUTH_EXCLUSIVE = "dpkynzs2q0wm9o5gi1r83fcabthl4eu";
