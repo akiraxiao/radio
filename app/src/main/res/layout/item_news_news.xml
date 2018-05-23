@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:padding="10dp"
+    android:weightSum="1"
+    >
+
+
+
+
+    <ImageView
+        android:layout_weight="0.4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_weight="0.6"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/item_news_title"
+            android:text="111111"
+            style="@style/Text_Normal_Black"
+            android:gravity="start"
+            android:maxLines="5"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+
+        <TextView
+            android:id="@+id/item_news_desc"
+            android:text="111111"
+            style="@style/Text_Small_Gray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+
+            <TextView
+                android:id="@+id/item_top_categroy"
+                style="@style/Text_Small_Gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="xxxxxx" />
+
+
+
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    style="@style/Text_Small_Gray"
+                    android:drawableLeft="@drawable/ic_like_indicator"
+                    android:id="@+id/view_tv_fav"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="16"
+                    />
+
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                style="@style/Text_Small_Gray"
+                android:drawableLeft="@drawable/ic_comment_indicator"
+                android:id="@+id/view_tv_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="16"
+                />
+
+            </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
