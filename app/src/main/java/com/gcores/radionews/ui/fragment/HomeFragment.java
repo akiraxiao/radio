@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -301,7 +302,8 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
             if (current_counter < TOTAL_LIST) {
                 //第一页如果不够一页就不显示没有更多数据布局
                 mHomeItemAdapter.loadMoreEnd(isRefresh);
-                Toast.makeText(getActivity(), "no more data", Toast.LENGTH_SHORT).show();
+                Snackbar.make(getActivity().findViewById(R.id.container), getString(R.string.nomore_data), Snackbar.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "no more data", Toast.LENGTH_SHORT).show();
             } else {
 //            int count =  mHomeItemAdapter.getData().size();
                 mHomeItemAdapter.loadMoreComplete();
@@ -404,9 +406,10 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
     }
 
     private void refresh(RefreshLayout refreshLayout) {
-        if (!fristLoad) {
+      /*  if (!fristLoad) {
             mHomeItems.clear();
-        }
+        }*/
+        mHomeItems.clear();
         currentPage = 1;
 //        mHomeItemAdapter.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
         fectchData(currentPage, refreshLayout);
