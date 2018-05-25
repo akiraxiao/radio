@@ -142,7 +142,7 @@ public class ArticleFragment extends AppFragment implements OnRefreshListener, O
         mArticleAdapter.setEnableLoadMore(false);
         Retrofit retrofit = RetrofitClient.getRetrofit(UrlPath.base_url_api);
         newsService = retrofit.create(NewsService.class);
-        Call<ArticleRes> call = newsService.getArticle(mcurrentPage, Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
+        Call<ArticleRes> call = newsService.getHomeNews(mcurrentPage, Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
         call.enqueue(new Callback<ArticleRes>() {
             @Override
             public void onResponse(Call<ArticleRes> call, Response<ArticleRes> response) {

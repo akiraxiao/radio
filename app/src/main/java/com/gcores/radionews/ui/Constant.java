@@ -24,13 +24,7 @@ public class Constant {
 //    https://www.g-cores.com/api/categories/2/originals?page=1&auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw
 //    https://www.g-cores.com/api/categories/1/originals?page=1&auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw
     public static final String AUTH_EXCLUSIVE = "dpkynzs2q0wm9o5gi1r83fcabthl4eu";
-
-
     public static final String AUTH_TOKEN = "LTxNSzIS5kWskwT-jGW0Fw";
-
-
-
-
 
 
 

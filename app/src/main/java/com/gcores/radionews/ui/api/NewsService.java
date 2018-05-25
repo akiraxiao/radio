@@ -44,5 +44,9 @@ public interface NewsService {
     Call<ArticleRes> getArticle(@Query("page") int page, @Query("auth_exclusive") String auth_exclusive, @Query("auth_token")String auth_token);
 
 
+    //新闻
+    @GET("categories/2/originals")
+    Call<ArticleRes> getHomeNews(@Query("page") int page, @Query("auth_exclusive") String auth_exclusive, @Query("auth_token")String auth_token);
+
 
 }
