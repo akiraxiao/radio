@@ -1,6 +1,7 @@
 package com.gcores.radionews.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,9 +16,11 @@ import android.widget.Toast;
 
 import com.gcores.radionews.R;
 import com.gcores.radionews.ui.Constant;
+import com.gcores.radionews.ui.DetailActvity;
 import com.gcores.radionews.ui.api.NewsService;
 import com.gcores.radionews.ui.api.RetrofitClient;
 import com.gcores.radionews.ui.api.UrlPath;
+import com.gcores.radionews.ui.inter.AdapterClickListener;
 import com.gcores.radionews.ui.inter.BannerListner;
 import com.gcores.radionews.ui.model.User;
 import com.gcores.radionews.ui.model.news.CateBanner;
@@ -42,7 +45,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 //首页
-public class HomeFragment extends AppFragment implements OnRefreshListener, OnLoadMoreListener {
+public class HomeFragment extends AppFragment implements OnRefreshListener, OnLoadMoreListener, AdapterClickListener {
 
     private RecyclerView topList;
     //private RecyclerView topHeaderList;*/
@@ -117,6 +120,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
         linearLayoutManagerHeander.setOrientation(LinearLayoutManager.VERTICAL);
         topList.setLayoutManager(linearLayoutManagerHeander);
         mHomeItemAdapter = new HomeItemAdapter(mHomeItems, getActivity());
+        mHomeItemAdapter.setAdapterItemListener(this);
         /*mHomeItemAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -465,5 +469,13 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
 
 
         }
+    }
+
+    @Override
+    public void onNewsClick(int topId) {
+        String url = "https://www.g-cores.com/api/originals/"+topId+"/html_content?auth_exclusive="+Constant.AUTH_EXCLUSIVE+"&quickdownload=1&auth_token="+Constant.AUTH_TOKEN;
+        Intent intent = new Intent(getActivity(), DetailActvity.class);
+        intent.putExtra("url",url);
+        startActivity(intent);
     }
 }

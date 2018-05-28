@@ -1,6 +1,7 @@
 package com.gcores.radionews.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -321,6 +322,17 @@ public class HomeActivity extends BaseActivity implements BannerListner {
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
 //            return super.instantiateItem(container, position);
             View item = layoutInflater.inflate(R.layout.banner_item,container,false);
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Banner itemBanner = (Banner) bannerList.get(position);
+                    int topId =  itemBanner.getOriginal_id();
+                    String url = "https://www.g-cores.com/api/originals/"+topId+"/html_content?auth_exclusive="+Constant.AUTH_EXCLUSIVE+"&quickdownload=1&auth_token="+Constant.AUTH_TOKEN;
+                    Intent intent = new Intent(HomeActivity.this, DetailActvity.class);
+                    intent.putExtra("url",url);
+                    startActivity(intent);
+                }
+            });
             ImageView imagBanner = item.findViewById(R.id.image_banner);
             Glide.with(mContext).load(((Banner)bannerList.get(position)).getImage()).into(imagBanner);
             container.addView(item);

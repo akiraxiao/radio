@@ -11,11 +11,16 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcores.radionews.R;
+import com.gcores.radionews.ui.inter.AdapterClickListener;
+import com.gcores.radionews.ui.model.User;
+import com.gcores.radionews.ui.model.news.CateBanner;
 import com.gcores.radionews.ui.model.news.HomeItem;
+import com.gcores.radionews.ui.model.news.Results;
+import com.gcores.radionews.ui.model.news.Top;
 
 import java.util.List;
 
-public class HomeItemAdapter extends BaseQuickAdapter<HomeItem,BaseViewHolder> {
+public class HomeItemAdapter extends BaseQuickAdapter<HomeItem,BaseViewHolder> implements BaseQuickAdapter.OnItemClickListener {
 
     private Context mContext;
 
@@ -30,6 +35,7 @@ public class HomeItemAdapter extends BaseQuickAdapter<HomeItem,BaseViewHolder> {
     private CateHeaderAdapter cateHeaderAdapter;
     private LinearLayoutManager linearLayoutManagerHeander;
     private LayoutInflater inflate;
+    private AdapterClickListener adapterClickListener;
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
@@ -55,9 +61,11 @@ public class HomeItemAdapter extends BaseQuickAdapter<HomeItem,BaseViewHolder> {
 //        headerView.setLayoutManager(linearLayoutManagerHeander);
 //        headerView = inflate.inflate(R.layout.view_item_header,null);
         topHeaderList = helper.getView(R.id.top_header);
+
         bodyView =  helper.getView(R.id.toplist_item);
         tvTitle =  helper.getView(R.id.tv_top_header);
         mNewsItemAdapter = new NewsItemAdapter(item.getData(),mContext);
+        mNewsItemAdapter.setOnItemClickListener(this);
         //解决滑动冲突 来源:https://stackoverflow.com/questions/37423763/recycler-view-inside-recycler-view-not-scrolling
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext){
             @Override
@@ -88,7 +96,16 @@ public class HomeItemAdapter extends BaseQuickAdapter<HomeItem,BaseViewHolder> {
              /*   topHeaderList.setLayoutManager(linearLayoutManager1);
                 topHeaderList.setAdapter(newsHeaderAdapter);
                 mNewsHeaderAdapter= new NewsHeaderAdapter(item.getNewsHeader(),mContext);*/
-                topHeaderList.setAdapter(mNewsHeaderAdapter);
+
+             topHeaderList.setAdapter(mNewsHeaderAdapter);
+            mNewsHeaderAdapter.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    Results results = (Results) adapter.getItem(position);
+                    int topId =  results.getId();
+                    adapterClickListener.onNewsClick(topId);
+                }
+            });
 //                mNewsItemAdapter.addHeaderView(headerView);
                 break;
             case HomeItem.CATE:
@@ -103,6 +120,14 @@ public class HomeItemAdapter extends BaseQuickAdapter<HomeItem,BaseViewHolder> {
                 topHeaderList.setAdapter(newsHeaderAdapter);
                 mNewsHeaderAdapter= new NewsHeaderAdapter(item.getNewsHeader(),mContext);*/
                 topHeaderList.setAdapter(cateHeaderAdapter);
+                cateHeaderAdapter.setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        CateBanner results = (CateBanner) adapter.getItem(position);
+                        /*int topId =  results.getId();
+                        adapterClickListener.onNewsClick(topId);*/
+                    }
+                });
 //                mNewsItemAdapter.addHeaderView(headerView);
                /* LinearLayoutManager linearLayoutManagerHeander = new LinearLayoutManager(mContext);
                 linearLayoutManagerHeander.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -130,6 +155,14 @@ public class HomeItemAdapter extends BaseQuickAdapter<HomeItem,BaseViewHolder> {
                 topHeaderList.setAdapter(newsHeaderAdapter);
                 mNewsHeaderAdapter= new NewsHeaderAdapter(item.getNewsHeader(),mContext);*/
                 topHeaderList.setAdapter(mNewsHeaderAdapter);
+                mNewsHeaderAdapter.setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        Results results = (Results) adapter.getItem(position);
+                        int topId =  results.getId();
+                        adapterClickListener.onNewsClick(topId);
+                    }
+                });
 //                mNewsItemAdapter.addHeaderView(headerView);
                 break;
             case HomeItem.USERS:
@@ -150,11 +183,31 @@ public class HomeItemAdapter extends BaseQuickAdapter<HomeItem,BaseViewHolder> {
                 topHeaderList.setAdapter(newsHeaderAdapter);
                 mNewsHeaderAdapter= new NewsHeaderAdapter(item.getNewsHeader(),mContext);*/
                 topHeaderList.setAdapter(userHeaderAdapter);
+                userHeaderAdapter.setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        User uItem = (User) adapter.getItem(position);
+                        int topId =  uItem.getId();
+                        adapterClickListener.onNewsClick(topId);
+                    }
+                });
 //                mNewsItemAdapter.addHeaderView(headerView);
                 break;
             case HomeItem.DEFAULT:
                 llTop.setVisibility(View.GONE);
                 break;
         }
+    }
+
+
+    public void setAdapterItemListener(AdapterClickListener clickListener){
+        this.adapterClickListener = clickListener;
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        Top itemH = (Top) adapter.getItem(position);
+        int topId =  itemH.getData().getId();
+        adapterClickListener.onNewsClick(topId);
     }
 }

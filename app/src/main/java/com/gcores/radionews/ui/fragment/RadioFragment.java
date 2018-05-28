@@ -1,6 +1,7 @@
 package com.gcores.radionews.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gcores.radionews.R;
 import com.gcores.radionews.ui.Constant;
+import com.gcores.radionews.ui.DetailActvity;
 import com.gcores.radionews.ui.api.NewsService;
 import com.gcores.radionews.ui.api.RetrofitClient;
 import com.gcores.radionews.ui.api.UrlPath;
@@ -116,6 +119,17 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
 //        mHomeItemAdapter.disableLoadMoreIfNotFullPage();
 //          mHomeItemAdapter.disableLoadMoreIfNotFullPage(topList);
         topList.setAdapter(mRadioAdapter);
+        mRadioAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Radio itemRadio = (Radio) adapter.getItem(position);
+                int topId =  itemRadio.getId();
+                String url = "https://www.g-cores.com/api/originals/"+topId+"/html_content?auth_exclusive="+Constant.AUTH_EXCLUSIVE+"&quickdownload=1&auth_token="+Constant.AUTH_TOKEN;
+                Intent intent = new Intent(getActivity(), DetailActvity.class);
+                intent.putExtra("url",url);
+                startActivity(intent);
+            }
+        });
 //        mRefreshLayout.setEnableLoadMore(false);
 //        topHeaderList =   mHeanderView.findViewById(R.id.top_header);
 //        ((TextView)mHeanderView.findViewById(R.id.tv_top_header)).setText("新闻联播");
