@@ -7,8 +7,8 @@
     <TextView
         android:drawableLeft="@drawable/ic_like_indicator"
         android:id="@+id/view_tv_fav"
-        android:textSize="8sp"
-        android:layout_width="0dp"
+        android:textSize="@dimen/sp_8"
+        android:layout_width="@dimen/dp_0"
         android:layout_weight="0.4"
         android:layout_height="match_parent"
         android:text="16"
@@ -19,7 +19,7 @@
 
 
     <View
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="match_parent"
         android:layout_weight="0.2"
         />
@@ -28,8 +28,8 @@
     <TextView
         android:drawableLeft="@drawable/ic_comment_indicator"
         android:id="@+id/view_tv_reply"
-        android:textSize="8sp"
-        android:layout_width="0dp"
+        android:textSize="@dimen/sp_8"
+        android:layout_width="@dimen/dp_0"
         android:layout_weight="0.4"
         android:layout_height="match_parent"
         android:text="16"

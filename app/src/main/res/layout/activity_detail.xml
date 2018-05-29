@@ -19,14 +19,14 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:minHeight="100dp"
+                android:minHeight="@dimen/dp_100"
                 app:theme="@style/AppTheme.ThemeToolbar"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:titleMarginTop="15dp">
+                app:titleMarginTop="@dimen/dp_15">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
+                    android:padding="@dimen/dp_10"
                     >
 
                     <LinearLayout
@@ -38,12 +38,12 @@
                         >
                         <ImageView
                             android:id="@+id/iv_backtop"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
                             android:src="@drawable/ic_action_backtop"
                             android:layout_alignParentLeft="true"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginRight="5dp"
+                            android:layout_marginRight="@dimen/dp_5"
                             />
 
                         <TextView
@@ -55,7 +55,7 @@
                             android:textColor="@color/font"
                             android:layout_centerVertical="true"
                             android:text="返回"
-                            android:textSize="20sp"
+                            android:textSize="@dimen/sp_20"
                             android:visibility="visible" />
 
                     </LinearLayout>
@@ -63,10 +63,10 @@
 
 
                     <ImageView
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="@dimen/dp_20"
                         android:id="@+id/iv_share2"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
                         android:src="@drawable/ic_action_like_gray"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@id/iv_share1"

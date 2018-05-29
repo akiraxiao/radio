@@ -3,16 +3,16 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="@dimen/dp_8"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="8dp"
-    android:layout_margin="5dp"
+    app:cardElevation="@dimen/dp_8"
+    android:layout_margin="@dimen/dp_5"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="@dimen/dp_120"
         android:orientation="vertical"
         android:weightSum="1"
 
@@ -20,7 +20,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/dp_0"
             android:layout_weight="1">
 
             <com.gcores.radionews.ui.wedget.BackImageView
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/ll_bottom"
                 android:layout_centerInParent="true"
-                android:paddingBottom="10dp"
+                android:paddingBottom="@dimen/dp_10"
                 />
 
             <LinearLayout
@@ -88,19 +88,19 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:orientation="horizontal"
-                    android:padding="10dp"
+                    android:padding="@dimen/dp_10"
                     android:weightSum="1">
 
 
                     <TextView
                         android:layout_weight="0.5"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="@dimen/dp_30"
+                        android:layout_marginRight="@dimen/dp_30"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:id="@+id/item_ariticle_count"
                         style="@style/Text_Small"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/dp_0"
                         android:layout_height="wrap_content"
                         android:text="文章"/>
 
@@ -116,11 +116,11 @@
 
                     <TextView
                         android:gravity="center"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="@dimen/dp_30"
+                        android:layout_marginRight="@dimen/dp_30"
                         android:id="@+id/item_subcribe_count"
                         style="@style/Text_Small"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/dp_0"
                         android:layout_weight="0.5"
                         android:layout_height="wrap_content"
                         android:text="订阅"/>

@@ -11,7 +11,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/image_banner"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="@dimen/dp_220"
         android:scaleType="centerCrop"
         />
 <!--

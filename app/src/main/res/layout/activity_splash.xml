@@ -9,14 +9,14 @@
         android:contentDescription="@string/description_splash"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100.0dip"
+        android:layout_marginTop="@dimen/dp_100"
         android:layout_width="wrap_content" />
 
     <TextView
         android:gravity="center"
         android:layout_gravity="bottom"
         android:layout_height="wrap_content"
-        android:layout_margin="10.0dip"
+        android:layout_margin="@dimen/dp_10"
         android:layout_width="fill_parent"
         android:text="@string/label_copyright"
         android:textColor="#ff919191" />

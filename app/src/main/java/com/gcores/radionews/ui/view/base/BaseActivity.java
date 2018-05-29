@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -78,6 +79,7 @@ public class BaseActivity extends AppCompatActivity {
 
         GAppBar toolbar = findViewById(R.id.toolbar);
         TextView titleMain = toolbar.findViewById(R.id.txt_main_title);
+        ImageView ivCate = toolbar.findViewById(R.id.iv_cate_home);
         //导入字体
         Typeface   typeface= Typeface.createFromAsset(getAssets(),"fonts/streetlight.ttf"); titleMain.setTypeface(typeface);
         titleMain.setTypeface(typeface);
@@ -96,6 +98,7 @@ public class BaseActivity extends AppCompatActivity {
                 toolbar.getNavigationIcon().setColorFilter(currentColor,PorterDuff.Mode.SRC_ATOP);
                 //字体
                 titleMain.setTextColor(currentColor);
+                ivCate.setColorFilter(currentColor,PorterDuff.Mode.SRC_ATOP);
             }
         });
         toolbar.setTitle("GAMEGORES");

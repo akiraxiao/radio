@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:padding="10dp"
+    android:layout_height="@dimen/dp_120"
+    android:padding="@dimen/dp_10"
     android:weightSum="1"
     >
 
@@ -12,25 +12,25 @@
     <ImageView
         android:id="@+id/news_back"
         android:layout_weight="0.4"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="match_parent" />
 
     <LinearLayout
         android:layout_weight="0.6"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:padding="@dimen/dp_10"
         >
         <TextView
             android:id="@+id/item_news_title"
             android:text="111111"
             style="@style/Text_Normal_Black"
-            android:textSize="12sp"
+            android:textSize="@dimen/sp_12"
             android:gravity="start"
             android:maxLines="5"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/dp_0"
             android:layout_weight="0.5"/>
 
 
@@ -60,7 +60,7 @@
 
 
                 <TextView
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/dp_10"
                     style="@style/Text_Small_Gray"
                     android:drawableLeft="@drawable/ic_like_indicator_gray"
                     android:id="@+id/view_tv_fav"
@@ -71,7 +71,7 @@
 
 
             <TextView
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/dp_10"
                 style="@style/Text_Small_Gray"
                 android:drawableLeft="@drawable/ic_comment_indicator_gray"
                 android:id="@+id/view_tv_reply"
