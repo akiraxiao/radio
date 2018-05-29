@@ -127,6 +127,7 @@ public class ArticleFragment extends AppFragment implements OnRefreshListener, O
                 String url = "https://www.g-cores.com/api/originals/"+topId+"/html_content?auth_exclusive="+Constant.AUTH_EXCLUSIVE+"&quickdownload=1&auth_token="+Constant.AUTH_TOKEN;
                 Intent intent = new Intent(getActivity(), DetailActvity.class);
                 intent.putExtra("url",url);
+                intent.putExtra("commentnum",results.getComments_num());
                 startActivity(intent);
             }
         });

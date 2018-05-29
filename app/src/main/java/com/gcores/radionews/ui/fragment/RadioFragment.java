@@ -127,6 +127,7 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
                 String url = "https://www.g-cores.com/api/originals/"+topId+"/html_content?auth_exclusive="+Constant.AUTH_EXCLUSIVE+"&quickdownload=1&auth_token="+Constant.AUTH_TOKEN;
                 Intent intent = new Intent(getActivity(), DetailActvity.class);
                 intent.putExtra("url",url);
+                intent.putExtra("commentnum",itemRadio.getComments_num());
                 startActivity(intent);
             }
         });

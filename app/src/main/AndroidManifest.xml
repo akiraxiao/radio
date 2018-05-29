@@ -37,6 +37,7 @@
             android:name=".ui.DetailActvity"
             android:theme="@style/AppTheme.Start"
             android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
             >
         </activity>
     </application>

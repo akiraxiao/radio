@@ -13,4 +13,5 @@
     <string name="balance_amount">524.99</string>
     <string name="skip_ad">跳过5s</string>
     <string name="nomore_data">没有更多数据</string>
+    <string name="login">请登录</string>
 </resources>

@@ -471,11 +471,36 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
         }
     }
 
+    /*@Override
+    public void onNewsItemClick(int topId, Results results) {
+
+    }*/
+
     @Override
-    public void onNewsClick(int topId) {
+    public void onNewsHeaderClick(int topId, Results results) {
         String url = "https://www.g-cores.com/api/originals/"+topId+"/html_content?auth_exclusive="+Constant.AUTH_EXCLUSIVE+"&quickdownload=1&auth_token="+Constant.AUTH_TOKEN;
         Intent intent = new Intent(getActivity(), DetailActvity.class);
         intent.putExtra("url",url);
+        intent.putExtra("commentnum",results.getComments_num());
         startActivity(intent);
+    }
+
+    @Override
+    public void onNewsItemClick(int topId, Top results) {
+        String url = "https://www.g-cores.com/api/originals/"+topId+"/html_content?auth_exclusive="+Constant.AUTH_EXCLUSIVE+"&quickdownload=1&auth_token="+Constant.AUTH_TOKEN;
+        Intent intent = new Intent(getActivity(), DetailActvity.class);
+        intent.putExtra("url",url);
+        intent.putExtra("commentnum",results.getData().getComments_num());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onUserClick(int topId, User user) {
+
+    }
+
+    @Override
+    public void onCateClick(int topId, CateBanner cateBanner) {
+
     }
 }

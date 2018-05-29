@@ -103,7 +103,7 @@ public class HomeItemAdapter extends BaseQuickAdapter<HomeItem,BaseViewHolder> i
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     Results results = (Results) adapter.getItem(position);
                     int topId =  results.getId();
-                    adapterClickListener.onNewsClick(topId);
+                    adapterClickListener.onNewsHeaderClick(topId, results);
                 }
             });
 //                mNewsItemAdapter.addHeaderView(headerView);
@@ -160,7 +160,7 @@ public class HomeItemAdapter extends BaseQuickAdapter<HomeItem,BaseViewHolder> i
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                         Results results = (Results) adapter.getItem(position);
                         int topId =  results.getId();
-                        adapterClickListener.onNewsClick(topId);
+                        adapterClickListener.onNewsHeaderClick(topId,results);
                     }
                 });
 //                mNewsItemAdapter.addHeaderView(headerView);
@@ -188,7 +188,7 @@ public class HomeItemAdapter extends BaseQuickAdapter<HomeItem,BaseViewHolder> i
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                         User uItem = (User) adapter.getItem(position);
                         int topId =  uItem.getId();
-                        adapterClickListener.onNewsClick(topId);
+                        adapterClickListener.onUserClick(topId, uItem);
                     }
                 });
 //                mNewsItemAdapter.addHeaderView(headerView);
@@ -208,6 +208,6 @@ public class HomeItemAdapter extends BaseQuickAdapter<HomeItem,BaseViewHolder> i
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Top itemH = (Top) adapter.getItem(position);
         int topId =  itemH.getData().getId();
-        adapterClickListener.onNewsClick(topId);
+        adapterClickListener.onNewsItemClick(topId, itemH);
     }
 }
