@@ -3,6 +3,7 @@ package com.gcores.radionews.ui.api;
 import com.gcores.radionews.ui.resmoel.AdPageRes;
 import com.gcores.radionews.ui.resmoel.ArticleRes;
 import com.gcores.radionews.ui.resmoel.BannerRes;
+import com.gcores.radionews.ui.resmoel.CateRes;
 import com.gcores.radionews.ui.resmoel.NotificationRes;
 import com.gcores.radionews.ui.resmoel.RadioRes;
 import com.gcores.radionews.ui.resmoel.TopRes;
@@ -48,5 +49,9 @@ public interface NewsService {
     @GET("categories/2/originals")
     Call<ArticleRes> getHomeNews(@Query("page") int page, @Query("auth_exclusive") String auth_exclusive, @Query("auth_token")String auth_token);
 
+
+    //分类
+    @GET("categories")
+    Call<CateRes> getCate( @Query("auth_exclusive") String auth_exclusive, @Query("auth_token")String auth_token);
 
 }

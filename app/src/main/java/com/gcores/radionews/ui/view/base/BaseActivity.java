@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gcores.radionews.R;
+import com.gcores.radionews.ui.CateActivity;
 import com.gcores.radionews.ui.wedget.toolbar.GAppBar;
 
 import java.lang.reflect.Field;
@@ -80,6 +81,13 @@ public class BaseActivity extends AppCompatActivity {
         GAppBar toolbar = findViewById(R.id.toolbar);
         TextView titleMain = toolbar.findViewById(R.id.txt_main_title);
         ImageView ivCate = toolbar.findViewById(R.id.iv_cate_home);
+        ivCate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BaseActivity.this, CateActivity.class);
+                startActivity(intent);
+            }
+        });
         //导入字体
         Typeface   typeface= Typeface.createFromAsset(getAssets(),"fonts/streetlight.ttf"); titleMain.setTypeface(typeface);
         titleMain.setTypeface(typeface);

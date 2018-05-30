@@ -40,6 +40,14 @@
             android:hardwareAccelerated="true"
             >
         </activity>
+
+        <activity
+            android:name=".ui.CateActivity"
+            android:theme="@style/AppTheme.Start"
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
+            >
+        </activity>
     </application>
 
 </manifest>

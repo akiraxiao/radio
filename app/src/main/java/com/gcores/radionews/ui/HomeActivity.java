@@ -55,44 +55,45 @@ import retrofit2.Retrofit;
 /**
  * 主页面
  */
-public class HomeActivity extends BaseActivity implements BannerListner {
+public class HomeActivity
+extends BaseActivity implements BannerListner {
 
 
-    private CoordinatorLayout coordinatorLayout;
-    private long exitTime = 0;
-    private final long COUNT = 2000;//两秒退出
-    private SlidingRootNav slidingRootNav;//菜单
-    private List<MenuBean> menuBeanList = new ArrayList<>();
-    private RecyclerView menuList;
-    private LeftMenuAdapter leftMenuAdapter;
+private CoordinatorLayout coordinatorLayout;
+private long exitTime = 0;
+private final long COUNT = 2000;//两秒退出
+private SlidingRootNav slidingRootNav;//菜单
+private List<MenuBean> menuBeanList = new ArrayList<>();
+private RecyclerView menuList;
+private LeftMenuAdapter leftMenuAdapter;
 
-    private int notification_size = 0;//通知
-    private int subscrible_size = 0;//订阅
+private int notification_size = 0;//通知
+private int subscrible_size = 0;//订阅
 
 //    private RecyclerViewPager mRecyclerViewPage;
-    private ViewPager mBanner;//广告
-    private BannerAdapter bannerAdapter;
-    private List<Banner> bannerList = new ArrayList<>();
+private ViewPager mBanner;//广告
+private BannerAdapter bannerAdapter;
+private List<Banner> bannerList = new ArrayList<>();
 
-    private Retrofit retrofit;//网络加载
+private Retrofit retrofit;//网络加载
 
-    private TabLayout mTablayout;//tab
+private TabLayout mTablayout;//tab
 
-    private ViewPager mNewsPager;//新闻page
+private ViewPager mNewsPager;//新闻page
 
 
-    //每个tab的位置
-    public final int RADIO = 0;
-    public final int VIDEO = 1;
-    public final int HOME = 2;
-    public final int NEWS = 3;
-    public final int ARITCLE = 4;
+//每个tab的位置
+public final int RADIO = 0;
+public final int VIDEO = 1;
+public final int HOME = 2;
+public final int NEWS = 3;
+public final int ARITCLE = 4;
 
-    private NewsPageAdapter newsPageAdapter;
-    private NewsService newsService;
-    private ArrayList<Fragment> mFragments = new ArrayList<>();
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+private NewsPageAdapter newsPageAdapter;
+private NewsService newsService;
+private ArrayList<Fragment> mFragments = new ArrayList<>();
+@Override
+protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -104,12 +105,12 @@ public class HomeActivity extends BaseActivity implements BannerListner {
 //        setSupportActionBar(toolbar);
         coordinatorLayout = findViewById(R.id.container);
         slidingRootNav = new SlidingRootNavBuilder(this)
-                .withToolbarMenuToggle(gbar)
-                .withMenuOpened(false)
-                .withContentClickableWhenMenuOpened(false)
-                .withSavedState(savedInstanceState)
-                .withMenuLayout(R.layout.menu_left_drawer)
-                .inject();
+        .withToolbarMenuToggle(gbar)
+        .withMenuOpened(false)
+        .withContentClickableWhenMenuOpened(false)
+        .withSavedState(savedInstanceState)
+        .withMenuLayout(R.layout.menu_left_drawer)
+        .inject();
 
         menuList = findViewById(R.id.menu_list);
         initMenu(menuList);
@@ -124,13 +125,14 @@ public class HomeActivity extends BaseActivity implements BannerListner {
         String[] mTabs =  getResources().getStringArray(R.array.news_tab_arr);
         //添加fragment
 //        for (String tab:mTabs){
-            mFragments.add(new RadioFragment());
-            mFragments.add(new VideoFragment());
-            mFragments.add(new HomeFragment());
-            mFragments.add(new NewsFragment());
-            mFragments.add(new ArticleFragment());
+        mFragments.add(new RadioFragment());
+        mFragments.add(new VideoFragment());
+        mFragments.add(new HomeFragment());
+        mFragments.add(new NewsFragment());
+        mFragments.add(new ArticleFragment());
 //        }
         newsPageAdapter = new NewsPageAdapter(getSupportFragmentManager(),mTabs);
+        newsPageAdapter.notifyDataSetChanged();
         mNewsPager = findViewById(R.id.newspager);
         mNewsPager.setOffscreenPageLimit(mTabs.length);
         mNewsPager.setAdapter(newsPageAdapter);
@@ -139,8 +141,8 @@ public class HomeActivity extends BaseActivity implements BannerListner {
 
         // Iterate over all tabs and set the custom view
         for (int i = 0; i < mTablayout.getTabCount(); i++) {
-            TabLayout.Tab tab = mTablayout.getTabAt(i);
-            tab.setCustomView(newsPageAdapter.getTabView(i));
+        TabLayout.Tab tab = mTablayout.getTabAt(i);
+        tab.setCustomView(newsPageAdapter.getTabView(i));
         }
         mNewsPager.setCurrentItem(2);
         retrofit = RetrofitClient.getRetrofit(UrlPath.base_url_api);
@@ -163,55 +165,55 @@ public class HomeActivity extends BaseActivity implements BannerListner {
 //        navigationView.setNavigationItemSelectedListener(this);
 
 //        getLogin();
-    }
+        }
 
-    public void fectchBannerList(NewsService newsService) {
+public void fectchBannerList(NewsService newsService) {
         bannerList.clear();
         Call<BannerRes>  call  =  newsService.getBanner(Constant.AUTH_EXCLUSIVE,Constant.AUTH_TOKEN);
         call.enqueue(new Callback<BannerRes>() {
-            @Override
-            public void onResponse(Call<BannerRes> call, Response<BannerRes> response) {
+@Override
+public void onResponse(Call<BannerRes> call, Response<BannerRes> response) {
 
-                if (response.body().getStatus()==UrlPath.NET_SUCESS){
-                    bannerList =  response.body().getResults();
-                    setPager();
+        if (response.body().getStatus()==UrlPath.NET_SUCESS){
+        bannerList =  response.body().getResults();
+        setPager();
 //                    bannerAdapter.notifyDataSetChanged();
-                }
-            }
+        }
+        }
 
-            @Override
-            public void onFailure(Call<BannerRes> call, Throwable t) {
-                Log.e("eee",t.getMessage());
+@Override
+public void onFailure(Call<BannerRes> call, Throwable t) {
+        Log.e("eee",t.getMessage());
 //
-            }
+        }
         });
 
 
-    }
+        }
 
-    private void setPager() {
+private void setPager() {
         bannerAdapter = new BannerAdapter(bannerList,this);
         mBanner.setAdapter(bannerAdapter);
-    }
+        }
 
 
-    private void initMenu(RecyclerView menuList) {
+private void initMenu(RecyclerView menuList) {
         menuBeanList = getMenuList();
         menuList.setLayoutManager(new LinearLayoutManager(this));
         leftMenuAdapter = new LeftMenuAdapter(menuBeanList);
         menuList.setAdapter(leftMenuAdapter);
-    }
+        }
 
-    private List<MenuBean> getMenuList() {
+private List<MenuBean> getMenuList() {
         menuBeanList.clear();
         String[] menuNames = getResources().getStringArray(R.array.main_menu_name);
         for (int x = 0; x < menuNames.length; x++) {
-            MenuBean menuBean = new MenuBean();
-            menuBean.setText(menuNames[x]);
-            menuBeanList.add(menuBean);
+        MenuBean menuBean = new MenuBean();
+        menuBean.setText(menuNames[x]);
+        menuBeanList.add(menuBean);
         }
         return menuBeanList;
-    }
+        }
 
     /*@Override
     public void onBackPressed() {
@@ -224,49 +226,49 @@ public class HomeActivity extends BaseActivity implements BannerListner {
     }*/
 
 
-    @Override
-    protected void onDestroy() {
+@Override
+protected void onDestroy() {
         super.onDestroy();
-    }
+        }
 
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+@Override
+public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            exitApplication(HomeActivity.this);
+        exitApplication(HomeActivity.this);
         }
         return false;
-    }
+        }
 
-    /**
-     * 退出
-     *
-     * @param homeActivity
-     */
-    protected void exitApplication(HomeActivity homeActivity) {
+/**
+ * 退出
+ *
+ * @param homeActivity
+ */
+protected void exitApplication(HomeActivity homeActivity) {
         if (slidingRootNav.isMenuOpened()) {
-            slidingRootNav.closeMenu();
-            return;
+        slidingRootNav.closeMenu();
+        return;
         }
         long currentTime = System.currentTimeMillis();
         if (currentTime - exitTime >= COUNT) {
-            exitTime = currentTime;
-            Snackbar.make(coordinatorLayout, "再按一次退出", Snackbar.LENGTH_SHORT).show();
+        exitTime = currentTime;
+        Snackbar.make(coordinatorLayout, "再按一次退出", Snackbar.LENGTH_SHORT).show();
         } else {
-            HomeActivity.this.finishAffinity();
+        HomeActivity.this.finishAffinity();
         }
-    }
+        }
 
-    public CoordinatorLayout getCoordinatorLayout() {
+public CoordinatorLayout getCoordinatorLayout() {
         return coordinatorLayout;
-    }
+        }
 
 
-    @Override
-    public void requestBanner() {
+@Override
+public void requestBanner() {
         fectchBannerList(newsService);
-    }
+        }
 
     /*private void getLogin() {
         Retrofit retrofit = RetrofitClient.getRetrofit(UrlPath.URL_BASE);
@@ -301,107 +303,107 @@ public class HomeActivity extends BaseActivity implements BannerListner {
 
 
 
-    private class BannerAdapter  extends PagerAdapter {
-        private List<Banner> bannerList;
-        private LayoutInflater layoutInflater;
-        private Context mContext;
-        public BannerAdapter(List<Banner> data, Context context){
-            this.bannerList = data;
-            this.mContext = context;
-            this.layoutInflater = LayoutInflater.from(context);
-        }
+private class BannerAdapter  extends PagerAdapter {
+    private List<Banner> bannerList;
+    private LayoutInflater layoutInflater;
+    private Context mContext;
+    public BannerAdapter(List<Banner> data, Context context){
+        this.bannerList = data;
+        this.mContext = context;
+        this.layoutInflater = LayoutInflater.from(context);
+    }
 
 
-        @Override
-        public int getCount() {
-            return bannerList.size();
-        }
+    @Override
+    public int getCount() {
+        return bannerList.size();
+    }
 
-        @NonNull
-        @Override
-        public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    @NonNull
+    @Override
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
 //            return super.instantiateItem(container, position);
-            View item = layoutInflater.inflate(R.layout.banner_item,container,false);
-            item.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Banner itemBanner = (Banner) bannerList.get(position);
-                    int topId =  itemBanner.getOriginal_id();
-                    String url = "https://www.g-cores.com/api/originals/"+topId+"/html_content?auth_exclusive="+Constant.AUTH_EXCLUSIVE+"&quickdownload=1&auth_token="+Constant.AUTH_TOKEN;
-                    Intent intent = new Intent(HomeActivity.this, DetailActvity.class);
-                    intent.putExtra("url",url);
-                    startActivity(intent);
-                }
-            });
-            ImageView imagBanner = item.findViewById(R.id.image_banner);
-            Glide.with(mContext).load(((Banner)bannerList.get(position)).getImage()).into(imagBanner);
-            container.addView(item);
-            return item;
-        }
-
-        @Override
-        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-//            super.destroyItem(container, position, object);
-            container.removeView((View) object);
-
-        }
-
-        @Override
-        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-            return view==object;
-        }
-    }
-
-
-    private class NewsPageAdapter extends FragmentPagerAdapter{
-
-        private String[] mtabs;
-
-        public NewsPageAdapter(FragmentManager fm, String[] tabs){
-            super(fm);
-            mtabs = tabs;
-        }
-
-
-        @Override
-        public int getCount() {
-            return mtabs.length;
-        }
-
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position){
-                case RADIO:
-                    return mFragments.get(RADIO);
-
-                case VIDEO:
-                    return mFragments.get(VIDEO);
-
-                case HOME:
-                    return mFragments.get(HOME);
-
-                case NEWS:
-                    return mFragments.get(NEWS);
-
-                case ARITCLE:
-                    return mFragments.get(ARITCLE);
+        View item = layoutInflater.inflate(R.layout.banner_item,container,false);
+        item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Banner itemBanner = (Banner) bannerList.get(position);
+                int topId =  itemBanner.getOriginal_id();
+                String url = "https://www.g-cores.com/api/originals/"+topId+"/html_content?auth_exclusive="+Constant.AUTH_EXCLUSIVE+"&quickdownload=1&auth_token="+Constant.AUTH_TOKEN;
+                Intent intent = new Intent(HomeActivity.this, DetailActvity.class);
+                intent.putExtra("url",url);
+                startActivity(intent);
             }
-            return null;
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mtabs[position];
-        }
-
-        public View getTabView(int position) {
-            View tab = LayoutInflater.from(HomeActivity.this).inflate(R.layout.tab_news, null);
-            TextView tv = tab.findViewById(R.id.tv_tab);
-            tv.setText(mtabs[position]);
-            return tab;
-        }
+        });
+        ImageView imagBanner = item.findViewById(R.id.image_banner);
+        Glide.with(mContext).load(((Banner)bannerList.get(position)).getImage()).into(imagBanner);
+        container.addView(item);
+        return item;
     }
+
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+//            super.destroyItem(container, position, object);
+        container.removeView((View) object);
+
+    }
+
+    @Override
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+        return view==object;
+    }
+}
+
+
+private class NewsPageAdapter extends FragmentPagerAdapter{
+
+    private String[] mtabs;
+
+    public NewsPageAdapter(FragmentManager fm, String[] tabs){
+        super(fm);
+        mtabs = tabs;
+    }
+
+
+    @Override
+    public int getCount() {
+        return mtabs.length;
+    }
+
+
+    @Override
+    public Fragment getItem(int position) {
+        switch (position){
+            case RADIO:
+                return mFragments.get(RADIO);
+
+            case VIDEO:
+                return mFragments.get(VIDEO);
+
+            case HOME:
+                return mFragments.get(HOME);
+
+            case NEWS:
+                return mFragments.get(NEWS);
+
+            case ARITCLE:
+                return mFragments.get(ARITCLE);
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mtabs[position];
+    }
+
+    public View getTabView(int position) {
+        View tab = LayoutInflater.from(HomeActivity.this).inflate(R.layout.tab_news, null);
+        TextView tv = tab.findViewById(R.id.tv_tab);
+        tv.setText(mtabs[position]);
+        return tab;
+    }
+}
 
 }
