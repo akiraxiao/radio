@@ -12,12 +12,11 @@ import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gcores.radionews.R;
-import com.gcores.radionews.ui.api.NewsService;
+import com.gcores.radionews.ui.api.NewsApi;
 import com.gcores.radionews.ui.api.RetrofitClient;
 import com.gcores.radionews.ui.api.UrlPath;
 import com.gcores.radionews.ui.inter.BannerListner;
 import com.gcores.radionews.ui.model.CateMenu;
-import com.gcores.radionews.ui.model.news.Results;
 import com.gcores.radionews.ui.resmoel.CateRes;
 import com.gcores.radionews.ui.view.base.BaseActivity;
 import com.gcores.radionews.ui.view.base.adapter.CateMenuAdapter;
@@ -37,7 +36,7 @@ public class CateActivity  extends BaseActivity implements OnRefreshListener {
     private RecyclerView topList;
     //private RecyclerView topHeaderList;*/
 
-    private NewsService newsService;
+    private NewsApi newsApi;
 
     public BannerListner mListener;
 //    private List<Top> mNewsTopItemList = new ArrayList<>();
@@ -82,12 +81,9 @@ public class CateActivity  extends BaseActivity implements OnRefreshListener {
         cateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Results results = (Results) adapter.getItem(position);
-                int topId =  results.getId();
-                String url = "https://www.g-cores.com/api/originals/"+topId+"/html_content?auth_exclusive="+Constant.AUTH_EXCLUSIVE+"&quickdownload=1&auth_token="+Constant.AUTH_TOKEN;
-                Intent intent = new Intent(CateActivity.this, DetailActvity.class);
-                intent.putExtra("url",url);
-                intent.putExtra("commentnum",results.getComments_num());
+                CateMenu cateMenu = (CateMenu) adapter.getItem(position);
+                Intent intent = new Intent(CateActivity.this, CateDetailActvity.class);
+                intent.putExtra("cateMenu",cateMenu);
                 startActivity(intent);
             }
         });
@@ -116,8 +112,8 @@ public class CateActivity  extends BaseActivity implements OnRefreshListener {
         loadCompelete = !loadCompelete;
         cateAdapter.setEnableLoadMore(false);
         Retrofit retrofit = RetrofitClient.getRetrofit(UrlPath.base_url_api);
-        newsService = retrofit.create(NewsService.class);
-        Call<CateRes> call = newsService.getCate(Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
+        newsApi = retrofit.create(NewsApi.class);
+        Call<CateRes> call = newsApi.getCate(Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
         call.enqueue(new Callback<CateRes>() {
             @Override
             public void onResponse(Call<CateRes> call, Response<CateRes> response) {

@@ -17,7 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gcores.radionews.R;
 import com.gcores.radionews.ui.Constant;
 import com.gcores.radionews.ui.DetailActvity;
-import com.gcores.radionews.ui.api.NewsService;
+import com.gcores.radionews.ui.api.NewsApi;
 import com.gcores.radionews.ui.api.RetrofitClient;
 import com.gcores.radionews.ui.api.UrlPath;
 import com.gcores.radionews.ui.inter.BannerListner;
@@ -41,7 +41,7 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
     private RecyclerView topList;
     //private RecyclerView topHeaderList;*/
 
-    private NewsService newsService;
+    private NewsApi newsApi;
 
     public BannerListner mListener;
 //    private List<Top> mNewsTopItemList = new ArrayList<>();
@@ -156,8 +156,8 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
         loadCompelete = !loadCompelete;
         mRadioAdapter.setEnableLoadMore(false);
         Retrofit retrofit = RetrofitClient.getRetrofit(UrlPath.base_url_api);
-        newsService = retrofit.create(NewsService.class);
-        Call<RadioRes> call = newsService.getRadios(mcurrentPage, Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
+        newsApi = retrofit.create(NewsApi.class);
+        Call<RadioRes> call = newsApi.getRadios(mcurrentPage, Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
         call.enqueue(new Callback<RadioRes>() {
             @Override
             public void onResponse(Call<RadioRes> call, Response<RadioRes> response) {

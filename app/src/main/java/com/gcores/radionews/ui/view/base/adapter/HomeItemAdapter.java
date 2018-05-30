@@ -12,8 +12,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcores.radionews.R;
 import com.gcores.radionews.ui.inter.AdapterClickListener;
+import com.gcores.radionews.ui.model.CateMenu;
 import com.gcores.radionews.ui.model.User;
-import com.gcores.radionews.ui.model.news.CateBanner;
 import com.gcores.radionews.ui.model.news.HomeItem;
 import com.gcores.radionews.ui.model.news.Results;
 import com.gcores.radionews.ui.model.news.Top;
@@ -123,7 +123,8 @@ public class HomeItemAdapter extends BaseQuickAdapter<HomeItem,BaseViewHolder> i
                 cateHeaderAdapter.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        CateBanner results = (CateBanner) adapter.getItem(position);
+                        CateMenu cateMenu =  cateHeaderAdapter.getItem(position);
+                        adapterClickListener.onCateClick(cateMenu);
                         /*int topId =  results.getId();
                         adapterClickListener.onNewsClick(topId);*/
                     }

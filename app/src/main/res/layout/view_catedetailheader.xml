@@ -1,0 +1,97 @@
+<android.support.v7.widget.CardView app:cardCornerRadius="@dimen/dp_8"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="@dimen/dp_8"
+    android:layout_margin="@dimen/dp_5"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200"
+        android:orientation="vertical"
+        android:weightSum="1"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="1">
+
+            <com.gcores.radionews.ui.wedget.BackImageView
+                android:id="@+id/iv_news_video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                />
+
+
+            <ImageView
+                android:id="@+id/iv_item_catename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/ll_bottom"
+                android:layout_centerInParent="true"
+                android:paddingBottom="@dimen/dp_10"
+                />
+
+            <LinearLayout
+                android:id="@+id/ll_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10"
+                    android:weightSum="1">
+
+
+                    <TextView
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="@dimen/dp_30"
+                        android:layout_marginRight="@dimen/dp_30"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:id="@+id/item_ariticle_count"
+                        style="@style/Text_Small"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:text="文章"/>
+
+                    <!--<TextView
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:id="@+id/v_center"
+                        android:layout_toRightOf="@id/item_ariticle_count"
+                        android:layout_centerInParent="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>-->
+
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_marginLeft="@dimen/dp_30"
+                        android:layout_marginRight="@dimen/dp_30"
+                        android:id="@+id/item_subcribe_count"
+                        style="@style/Text_Small"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content"
+                        android:text="订阅"/>
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

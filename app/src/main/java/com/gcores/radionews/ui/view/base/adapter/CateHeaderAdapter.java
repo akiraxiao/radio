@@ -8,12 +8,12 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcores.radionews.R;
-import com.gcores.radionews.ui.model.news.CateBanner;
+import com.gcores.radionews.ui.model.CateMenu;
 import com.gcores.radionews.ui.wedget.BackImageView;
 
 import java.util.List;
 
-public class CateHeaderAdapter extends BaseQuickAdapter<CateBanner,BaseViewHolder> {
+public class CateHeaderAdapter extends BaseQuickAdapter<CateMenu,BaseViewHolder> {
 
 
 
@@ -25,7 +25,7 @@ public class CateHeaderAdapter extends BaseQuickAdapter<CateBanner,BaseViewHolde
 
     private Context mContext;
 
-    public CateHeaderAdapter(@Nullable List<CateBanner> data, Context mContext) {
+    public CateHeaderAdapter(@Nullable List<CateMenu> data, Context mContext) {
         super(R.layout.item_cate_header,data);
         this.mContext = mContext;
 
@@ -33,7 +33,7 @@ public class CateHeaderAdapter extends BaseQuickAdapter<CateBanner,BaseViewHolde
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, CateBanner item) {
+    protected void convert(BaseViewHolder helper, CateMenu item) {
 
 //                ivAuthor = helper.getView(R.id.iv_author);
 //                mAuthorName = helper.getView(R.id.item_ariticle_author);

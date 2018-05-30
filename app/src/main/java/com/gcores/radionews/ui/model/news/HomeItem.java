@@ -1,5 +1,6 @@
 package com.gcores.radionews.ui.model.news;
 
+import com.gcores.radionews.ui.model.CateMenu;
 import com.gcores.radionews.ui.model.User;
 
 import java.util.List;
@@ -41,11 +42,11 @@ public class HomeItem  {
         this.newsHeader = newsHeader;
     }
 
-    public List<CateBanner> getCateHeader() {
+    public List<CateMenu> getCateHeader() {
         return cateHeader;
     }
 
-    public void setCateHeader(List<CateBanner> cateHeader) {
+    public void setCateHeader(List<CateMenu> cateHeader) {
         this.cateHeader = cateHeader;
     }
 
@@ -74,7 +75,7 @@ public class HomeItem  {
     }
 
     private List<Results> newsHeader;
-    private List<CateBanner> cateHeader;
+    private List<CateMenu> cateHeader;
     private List<Results> artHeader;
     private List<User> userHeader;
 

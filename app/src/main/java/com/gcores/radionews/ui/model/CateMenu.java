@@ -1,7 +1,10 @@
 package com.gcores.radionews.ui.model;
 
-public class CateMenu {
+import java.io.Serializable;
 
+public class CateMenu implements Serializable {
+
+    private static final long serialVersionUID = -588070434953594739L;
     /**
      * id : 2
      * name : 新闻
@@ -26,6 +29,15 @@ public class CateMenu {
     private int subscriptors_num;
     private int originals_num;
 
+    public boolean isIs_subscript() {
+        return is_subscript;
+    }
+
+    public void setIs_subscript(boolean is_subscript) {
+        this.is_subscript = is_subscript;
+    }
+
+    private boolean is_subscript;
     public int getId() {
         return id;
     }

@@ -46,8 +46,13 @@
             android:theme="@style/AppTheme.Start"
             android:screenOrientation="portrait"
             android:hardwareAccelerated="true"
-            >
-        </activity>
+            />
+        <activity
+            android:name=".ui.CateDetailActvity"
+            android:theme="@style/AppTheme.Start"
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
+            />
     </application>
 
 </manifest>

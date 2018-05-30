@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gcores.radionews.R;
-import com.gcores.radionews.ui.api.NewsService;
+import com.gcores.radionews.ui.api.NewsApi;
 import com.gcores.radionews.ui.api.RetrofitClient;
 import com.gcores.radionews.ui.api.UrlPath;
 import com.gcores.radionews.ui.model.notifiation.Notifacation;
@@ -59,18 +59,18 @@ public class AdverActivity extends BaseActivity {
         );
         //开始获取广告页面请求
         Retrofit retrofit =  RetrofitClient.getRetrofit(UrlPath.base_url_api);
-        NewsService newsService = retrofit.create(NewsService.class);
+        NewsApi newsApi = retrofit.create(NewsApi.class);
 
-        startPageApi(newsService);
-        getNotificationMessage(newsService);
+        startPageApi(newsApi);
+        getNotificationMessage(newsApi);
         //开始倒计时任务
         startCountDown();
 //        Glide.with(this).load().into(imageStart);
     }
 
     //获取订阅和未读信息
-    private void getNotificationMessage(NewsService newsService) {
-       Call<NotificationRes> call =   newsService.getNotificationMessage(Constant.AUTH_EXCLUSIVE,Constant.AUTH_TOKEN);
+    private void getNotificationMessage(NewsApi newsApi) {
+       Call<NotificationRes> call =   newsApi.getNotificationMessage(Constant.AUTH_EXCLUSIVE,Constant.AUTH_TOKEN);
        call.enqueue(new Callback<NotificationRes>() {
            @Override
            public void onResponse(Call<NotificationRes> call, Response<NotificationRes> response) {
@@ -131,11 +131,11 @@ public class AdverActivity extends BaseActivity {
 
     }
 
-    private void startPageApi(NewsService newsService) {
+    private void startPageApi(NewsApi newsApi) {
 
 //        Retrofit retrofit =  RetrofitClient.getRetrofit(UrlPath.base_url_api);
-//        NewsService newsService =   retrofit.create(NewsService.class);
-        Call<AdPageRes> call =  newsService.getStartPage(Constant.AUTH_EXCLUSIVE,Constant.AUTH_TOKEN);
+//        NewsApi newsApi =   retrofit.create(NewsApi.class);
+        Call<AdPageRes> call =  newsApi.getStartPage(Constant.AUTH_EXCLUSIVE,Constant.AUTH_TOKEN);
         call.enqueue(new Callback<AdPageRes>() {
             @Override
             public void onResponse(Call<AdPageRes> call, Response<AdPageRes> response) {

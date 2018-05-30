@@ -15,15 +15,16 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.gcores.radionews.R;
+import com.gcores.radionews.ui.CateDetailActvity;
 import com.gcores.radionews.ui.Constant;
 import com.gcores.radionews.ui.DetailActvity;
-import com.gcores.radionews.ui.api.NewsService;
+import com.gcores.radionews.ui.api.NewsApi;
 import com.gcores.radionews.ui.api.RetrofitClient;
 import com.gcores.radionews.ui.api.UrlPath;
 import com.gcores.radionews.ui.inter.AdapterClickListener;
 import com.gcores.radionews.ui.inter.BannerListner;
+import com.gcores.radionews.ui.model.CateMenu;
 import com.gcores.radionews.ui.model.User;
-import com.gcores.radionews.ui.model.news.CateBanner;
 import com.gcores.radionews.ui.model.news.HomeItem;
 import com.gcores.radionews.ui.model.news.Results;
 import com.gcores.radionews.ui.model.news.Top;
@@ -50,7 +51,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
     private RecyclerView topList;
     //private RecyclerView topHeaderList;*/
 
-    private NewsService newsService;
+    private NewsApi newsApi;
 
     private List<TopListList> mNewsTop;
     private List<Top> mNewsTopItemList = new ArrayList<>();
@@ -162,8 +163,8 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
         loadCompelete = !loadCompelete;
         mHomeItemAdapter.setEnableLoadMore(false);
         Retrofit retrofit = RetrofitClient.getRetrofit(UrlPath.base_url_api);
-        newsService = retrofit.create(NewsService.class);
-        Call<TopRes> call = newsService.getTopNews(mcurrentPage, Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
+        newsApi = retrofit.create(NewsApi.class);
+        Call<TopRes> call = newsApi.getTopNews(mcurrentPage, Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
         call.enqueue(new Callback<TopRes>() {
             @Override
             public void onResponse(Call<TopRes> call, Response<TopRes> response) {
@@ -200,7 +201,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
                         case HomeItem.CATE:
                             item = new HomeItem(HomeItem.CATE);
                             mNewsTop = response.body().getResults();
-                            List<CateBanner> cateBanner = setHeaderBanner(mNewsTop.get(0));
+                            List<CateMenu> cateBanner = setHeaderBanner(mNewsTop.get(0));
                             item.setCateHeader(cateBanner);
 //                           item.setData(setTopNews(mNewsTopItemList));
 //                            item.setItemType(HomeItem.CATE);
@@ -209,7 +210,6 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
                             break;
 
                         case HomeItem.ART:
-
                             item = new HomeItem(HomeItem.ART);
                             mNewsTop = response.body().getResults();
                             List<Results> headerArt = setHeaderNews(mcurrentPage, mNewsTop.get(0));
@@ -354,9 +354,9 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
     }
 
     //Banner
-    private List<CateBanner> setHeaderBanner(TopListList topListList) {
+    private List<CateMenu> setHeaderBanner(TopListList topListList) {
         headerJson = mGson.toJson(topListList.getData(), ArrayList.class);
-        List<CateBanner> resultsList = mGson.fromJson(headerJson, new TypeToken<List<CateBanner>>() {
+        List<CateMenu> resultsList = mGson.fromJson(headerJson, new TypeToken<List<CateMenu>>() {
         }.getType());
 
 //       mNewsHeaderAdapter.setNewData(mNewsHeaderList);
@@ -500,7 +500,9 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
     }
 
     @Override
-    public void onCateClick(int topId, CateBanner cateBanner) {
-
+    public void onCateClick(CateMenu cateBanner) {
+        Intent intent = new Intent(getActivity(), CateDetailActvity.class);
+        intent.putExtra("cateMenu",cateBanner);
+        startActivity(intent);
     }
 }

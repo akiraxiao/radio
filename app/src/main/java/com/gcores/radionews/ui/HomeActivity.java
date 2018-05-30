@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gcores.radionews.R;
-import com.gcores.radionews.ui.api.NewsService;
+import com.gcores.radionews.ui.api.NewsApi;
 import com.gcores.radionews.ui.api.RetrofitClient;
 import com.gcores.radionews.ui.api.UrlPath;
 import com.gcores.radionews.ui.fragment.ArticleFragment;
@@ -90,7 +90,7 @@ public final int NEWS = 3;
 public final int ARITCLE = 4;
 
 private NewsPageAdapter newsPageAdapter;
-private NewsService newsService;
+private NewsApi newsApi;
 private ArrayList<Fragment> mFragments = new ArrayList<>();
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -146,8 +146,8 @@ protected void onCreate(Bundle savedInstanceState) {
         }
         mNewsPager.setCurrentItem(2);
         retrofit = RetrofitClient.getRetrofit(UrlPath.base_url_api);
-        newsService =  retrofit.create(NewsService.class);
-        fectchBannerList(newsService);
+        newsApi =  retrofit.create(NewsApi.class);
+        fectchBannerList(newsApi);
 
         //        mRecyclerViewPage
 //        ViewPager
@@ -167,9 +167,9 @@ protected void onCreate(Bundle savedInstanceState) {
 //        getLogin();
         }
 
-public void fectchBannerList(NewsService newsService) {
+public void fectchBannerList(NewsApi newsApi) {
         bannerList.clear();
-        Call<BannerRes>  call  =  newsService.getBanner(Constant.AUTH_EXCLUSIVE,Constant.AUTH_TOKEN);
+        Call<BannerRes>  call  =  newsApi.getBanner(Constant.AUTH_EXCLUSIVE,Constant.AUTH_TOKEN);
         call.enqueue(new Callback<BannerRes>() {
 @Override
 public void onResponse(Call<BannerRes> call, Response<BannerRes> response) {
@@ -267,7 +267,7 @@ public CoordinatorLayout getCoordinatorLayout() {
 
 @Override
 public void requestBanner() {
-        fectchBannerList(newsService);
+        fectchBannerList(newsApi);
         }
 
     /*private void getLogin() {
