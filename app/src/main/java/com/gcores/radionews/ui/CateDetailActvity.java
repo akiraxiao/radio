@@ -105,6 +105,7 @@ public class CateDetailActvity extends BaseActivity implements OnRefreshListener
                 Intent intent = new Intent(CateDetailActvity.this, DetailActvity.class);
                 intent.putExtra("url", url);
                 intent.putExtra("commentnum", results.getComments_num());
+                intent.putExtra("userid", results.getUser().getId());
                 startActivity(intent);
             }
         });

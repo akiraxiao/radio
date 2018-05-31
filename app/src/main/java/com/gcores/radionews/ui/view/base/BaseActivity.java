@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
@@ -73,12 +74,12 @@ public class BaseActivity extends AppCompatActivity {
         return color;
     }
 
-
+    GAppBar toolbar;
 
     protected GAppBar initThemeToolBar() {
 //        initStatusBar();
 
-        GAppBar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         TextView titleMain = toolbar.findViewById(R.id.txt_main_title);
         ImageView ivCate = toolbar.findViewById(R.id.iv_cate_home);
         ivCate.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +92,7 @@ public class BaseActivity extends AppCompatActivity {
         //导入字体
         Typeface   typeface= Typeface.createFromAsset(getAssets(),"fonts/streetlight.ttf"); titleMain.setTypeface(typeface);
         titleMain.setTypeface(typeface);
+
         AppBarLayout appBarLayout = findViewById(R.id.root_appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
@@ -113,6 +115,10 @@ public class BaseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         titleMain.setText(toolbar.getTitle());
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        return toolbar;
+    }
+
+    public Toolbar getToolbar(){
         return toolbar;
     }
 

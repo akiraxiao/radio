@@ -128,6 +128,7 @@ public class NewsFragment extends AppFragment implements OnRefreshListener, OnLo
                 Intent intent = new Intent(getActivity(), DetailActvity.class);
                 intent.putExtra("url",url);
                 intent.putExtra("commentnum",results.getComments_num());
+                intent.putExtra("userid",results.getUser().getId());
                 startActivity(intent);
             }
         });

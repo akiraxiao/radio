@@ -481,6 +481,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
         String url = "https://www.g-cores.com/api/originals/"+topId+"/html_content?auth_exclusive="+Constant.AUTH_EXCLUSIVE+"&quickdownload=1&auth_token="+Constant.AUTH_TOKEN;
         Intent intent = new Intent(getActivity(), DetailActvity.class);
         intent.putExtra("url",url);
+        intent.putExtra("userid",results.getUser().getId());
         intent.putExtra("commentnum",results.getComments_num());
         startActivity(intent);
     }
@@ -490,6 +491,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
         String url = "https://www.g-cores.com/api/originals/"+topId+"/html_content?auth_exclusive="+Constant.AUTH_EXCLUSIVE+"&quickdownload=1&auth_token="+Constant.AUTH_TOKEN;
         Intent intent = new Intent(getActivity(), DetailActvity.class);
         intent.putExtra("url",url);
+        intent.putExtra("userid",results.getData().getUser().getId());
         intent.putExtra("commentnum",results.getData().getComments_num());
         startActivity(intent);
     }

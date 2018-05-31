@@ -1,7 +1,6 @@
 package com.gcores.radionews.ui;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,34 +15,26 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.gcores.radionews.R;
 import com.gcores.radionews.ui.view.base.BaseActivity;
-import com.gcores.radionews.ui.wedget.TouchiableWebview;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-public class DetailActvity extends BaseActivity implements OnRefreshListener {
+public class UserInfoActivity extends BaseActivity implements OnRefreshListener {
 
     private String url;
-    private TouchiableWebview mContent;
+    private WebView mContent;
     private SmartRefreshLayout smartRefreshLayout;
-    private boolean loadFrist = true;
     private LinearLayout llBackTop;
-    private int commentnum;
-    private TextView tvCommentNum;
-    private String currentUserid;
+//    private int commentnum;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_user);
         url = getIntent().getStringExtra("url");
-        commentnum = getIntent().getIntExtra("commentnum",0);
-        currentUserid = getIntent().getIntExtra("userid",0)+"";
         mContent = findViewById(R.id.web_content);
-
         smartRefreshLayout = findViewById(R.id.refreshLayout);
         llBackTop = findViewById(R.id.ll_backtop);
         llBackTop.setOnClickListener(new View.OnClickListener() {
@@ -52,8 +43,6 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
                 finish();
             }
         });
-        tvCommentNum = findViewById(R.id.tv_comment_num);
-        tvCommentNum.setText(commentnum+"");
         smartRefreshLayout.setOnRefreshListener(this);
         smartRefreshLayout.setEnableHeaderTranslationContent(true);
         mContent.setWebChromeClient(new WebChromeClient());
@@ -92,41 +81,25 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
                                           }
                                           if (requstUrl.startsWith("ios://showAuthor")){
                                               //用户中心
-                                              /*String[] arr =  requstUrl.split("/");
-                                              String userid;
+                                              String[] arr =  requstUrl.split("/");
+
                                               if (arr[arr.length-1].length()==0){
                                                   //当前用户
-                                                  userid = currentUserid;
-                                              }else{
-                                                  //其他用户
-                                                  userid = arr[arr.length-1];
-                                              }*/
-                                              String url = "https://www.g-cores.com/api/users/"+currentUserid+"/show_page?auth_exclusive="+ Constant.AUTH_EXCLUSIVE;
-                                              Intent intent = new Intent(DetailActvity.this,UserInfoActivity.class);
-                                              intent.putExtra("url",url);
-                                              startActivity(intent);
-                                              return true;
-                                          }
 
-                                          if (requstUrl.startsWith("ios://showUser")){
-                                              //用户中心
-                                              String[] arr =  requstUrl.split("/");
-                                              String userid = arr[arr.length-1];
-                                              String url = "https://www.g-cores.com/api/users/"+userid+"/show_page?auth_exclusive="+ Constant.AUTH_EXCLUSIVE;
-                                              Intent intent = new Intent(DetailActvity.this,UserInfoActivity.class);
-                                              intent.putExtra("url",url);
-                                              startActivity(intent);
+                                              }else{
+
+                                                  //其他用户
+                                                  String userid = arr[arr.length-1];
+
+                                              }
                                               return true;
                                           }
                                           if (requstUrl.startsWith("ios://showOriginal")){
                                               //文章
                                               String[] arr =  requstUrl.split("/");
-                                                  //其他文章
+                                              //其他文章
                                               String articleid = arr[arr.length-1];
-                                              String url = "https://www.g-cores.com/api/originals/"+articleid+"/html_content?auth_exclusive="+ Constant.AUTH_EXCLUSIVE+"&auth_token="+Constant.AUTH_TOKEN;
-                                              Intent intent = new Intent(DetailActvity.this,DetailActvity.class);
-                                              intent.putExtra("url",url);
-                                              startActivity(intent);
+
                                               return true;
                                           }
 
@@ -199,17 +172,19 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         webSettings.setJavaScriptEnabled(true);
+
+
+
+
+
         smartRefreshLayout.autoRefresh();
 //        mContent.loadUrl(url);
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        /*if (loadFrist){
-            mContent.loadUrl(url);
-            loadFrist = !loadFrist;
-        }else{*/
-           mContent.loadUrl(url);
+
+        mContent.loadUrl(url);
 //        }
     }
 }
