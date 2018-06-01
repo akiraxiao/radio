@@ -35,13 +35,14 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
     private int commentnum;
     private TextView tvCommentNum;
     private String currentUserid;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         url = getIntent().getStringExtra("url");
-        commentnum = getIntent().getIntExtra("commentnum",0);
-        currentUserid = getIntent().getIntExtra("userid",0)+"";
+        commentnum = getIntent().getIntExtra("commentnum", 0);
+        currentUserid = getIntent().getIntExtra("userid", 0) + "";
         mContent = findViewById(R.id.web_content);
 
         smartRefreshLayout = findViewById(R.id.refreshLayout);
@@ -53,27 +54,38 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
             }
         });
         tvCommentNum = findViewById(R.id.tv_comment_num);
-        tvCommentNum.setText(commentnum+"");
+        tvCommentNum.setText(commentnum + "");
         smartRefreshLayout.setOnRefreshListener(this);
         smartRefreshLayout.setEnableHeaderTranslationContent(true);
-        mContent.setWebChromeClient(new WebChromeClient());
+        mContent.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+//                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100) {
+
+                    mContent.getSettings().setBlockNetworkImage(false);
+//                    mContent.getSettings().setLoadsImagesAutomatically(true);
+                }
+            }
+        });
         mContent.setWebViewClient(new WebViewClient() {
 
                                       @Override
                                       public void onPageStarted(WebView view, String url, Bitmap favicon) {
                                           super.onPageStarted(view, url, favicon);
+                                          smartRefreshLayout.finishRefresh();
                                       }
 
                                       @Override
                                       public void onPageFinished(WebView view, String url) {
                                           super.onPageFinished(view, url);
-                                          smartRefreshLayout.finishRefresh();
+
                                       }
 
                                       @Override
                                       public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                                           super.onReceivedError(view, request, error);
-                                          smartRefreshLayout.finishRefresh();
+//                                          smartRefreshLayout.finishRefresh();
                                       }
 
 
@@ -81,16 +93,16 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
                                       @Override
                                       public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                                           String requstUrl = request.getUrl().toString();
-                                          if (requstUrl.equals("ios://pageLoadComplete")){
+                                          if (requstUrl.equals("ios://pageLoadComplete")) {
                                               //加载完毕
                                               return true;
                                           }
-                                          if (requstUrl.equals("ios://playedVideo")){
-                                              Log.e("111","playvideo");
+                                          if (requstUrl.equals("ios://playedVideo")) {
+                                              Log.e("111", "playvideo");
                                               //播放视频
                                               return true;
                                           }
-                                          if (requstUrl.startsWith("ios://showAuthor")){
+                                          if (requstUrl.startsWith("ios://showAuthor")) {
                                               //用户中心
                                               /*String[] arr =  requstUrl.split("/");
                                               String userid;
@@ -101,41 +113,43 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
                                                   //其他用户
                                                   userid = arr[arr.length-1];
                                               }*/
-                                              String url = "https://www.g-cores.com/api/users/"+currentUserid+"/show_page?auth_exclusive="+ Constant.AUTH_EXCLUSIVE;
-                                              Intent intent = new Intent(DetailActvity.this,UserInfoActivity.class);
-                                              intent.putExtra("url",url);
+                                              String url = "https://www.g-cores.com/api/users/" + currentUserid + "/show_page?auth_exclusive=" + Constant.AUTH_EXCLUSIVE;
+                                              Intent intent = new Intent(DetailActvity.this, UserInfoActivity.class);
+                                              intent.putExtra("url", url);
                                               startActivity(intent);
                                               return true;
                                           }
 
-                                          if (requstUrl.startsWith("ios://showUser")){
+                                          if (requstUrl.startsWith("ios://showUser")) {
                                               //用户中心
-                                              String[] arr =  requstUrl.split("/");
-                                              String userid = arr[arr.length-1];
-                                              String url = "https://www.g-cores.com/api/users/"+userid+"/show_page?auth_exclusive="+ Constant.AUTH_EXCLUSIVE;
-                                              Intent intent = new Intent(DetailActvity.this,UserInfoActivity.class);
-                                              intent.putExtra("url",url);
+                                              String[] arr = requstUrl.split("/");
+                                              String userid = arr[arr.length - 1];
+                                              String url = "https://www.g-cores.com/api/users/" + userid + "/show_page?auth_exclusive=" + Constant.AUTH_EXCLUSIVE;
+                                              Intent intent = new Intent(DetailActvity.this, UserInfoActivity.class);
+                                              intent.putExtra("url", url);
                                               startActivity(intent);
                                               return true;
                                           }
-                                          if (requstUrl.startsWith("ios://showOriginal")){
+                                          if (requstUrl.startsWith("ios://showOriginal")) {
                                               //文章
-                                              String[] arr =  requstUrl.split("/");
-                                                  //其他文章
-                                              String articleid = arr[arr.length-1];
-                                              String url = "https://www.g-cores.com/api/originals/"+articleid+"/html_content?auth_exclusive="+ Constant.AUTH_EXCLUSIVE+"&auth_token="+Constant.AUTH_TOKEN;
-                                              Intent intent = new Intent(DetailActvity.this,DetailActvity.class);
-                                              intent.putExtra("url",url);
+                                              String[] arr = requstUrl.split("/");
+                                              //其他文章
+                                              String articleid = arr[arr.length - 1];
+                                              String url = "https://www.g-cores.com/api/originals/" + articleid + "/html_content?auth_exclusive=" + Constant.AUTH_EXCLUSIVE + "&auth_token=" + Constant.AUTH_TOKEN;
+                                              Intent intent = new Intent(DetailActvity.this, DetailActvity.class);
+                                              intent.putExtra("url", url);
                                               startActivity(intent);
                                               return true;
                                           }
 
-                                          if (requstUrl.startsWith("ios://showCategory")){
+                                          if (requstUrl.startsWith("ios://showCategory")) {
                                               //分类
-                                              String[] arr =  requstUrl.split("/");
+                                              String[] arr = requstUrl.split("/");
                                               //其他分类
-                                              String cateid = arr[arr.length-1];
-
+                                              String cateid = arr[arr.length - 1];
+                                              Intent intent = new Intent(DetailActvity.this, CateDetailActvity.class);
+                                              intent.putExtra("cateid", Integer.parseInt(cateid));
+                                              startActivity(intent);
                                               return true;
                                           }
                                           return false;
@@ -144,42 +158,42 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
                                       @Override
                                       public boolean shouldOverrideUrlLoading(WebView view, String requstUrl) {
 //                                          String requstUrl = request.getUrl().toString();
-                                          if (requstUrl.equals("ios://pageLoadComplete")){
+                                          if (requstUrl.equals("ios://pageLoadComplete")) {
                                               return true;
                                           }
-                                          if (requstUrl.equals("ios://playedVideo")){
-                                              Log.e("111","playvideo");
+                                          if (requstUrl.equals("ios://playedVideo")) {
+                                              Log.e("111", "playvideo");
                                               return true;
                                           }
-                                          if (requstUrl.startsWith("ios://showAuthor")){
+                                          if (requstUrl.startsWith("ios://showAuthor")) {
                                               //用户中心
-                                              String[] arr =  requstUrl.split("/");
+                                              String[] arr = requstUrl.split("/");
 
-                                              if (arr[arr.length-1].length()==0){
+                                              if (arr[arr.length - 1].length() == 0) {
                                                   //当前用户
 
-                                              }else{
+                                              } else {
 
                                                   //其他用户
-                                                  String userid = arr[arr.length-1];
+                                                  String userid = arr[arr.length - 1];
 
                                               }
                                               return true;
                                           }
-                                          if (requstUrl.startsWith("ios://showOriginal")){
+                                          if (requstUrl.startsWith("ios://showOriginal")) {
                                               //文章
-                                              String[] arr =  requstUrl.split("/");
+                                              String[] arr = requstUrl.split("/");
                                               //其他文章
-                                              String articleid = arr[arr.length-1];
+                                              String articleid = arr[arr.length - 1];
 
                                               return true;
                                           }
 
-                                          if (requstUrl.startsWith("ios://showCategory")){
+                                          if (requstUrl.startsWith("ios://showCategory")) {
                                               //分类
-                                              String[] arr =  requstUrl.split("/");
+                                              String[] arr = requstUrl.split("/");
                                               //其他分类
-                                              String cateid = arr[arr.length-1];
+                                              String cateid = arr[arr.length - 1];
 
                                               return true;
                                           }
@@ -199,6 +213,7 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setBlockNetworkImage(true);
         smartRefreshLayout.autoRefresh();
 //        mContent.loadUrl(url);
     }
@@ -209,7 +224,7 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
             mContent.loadUrl(url);
             loadFrist = !loadFrist;
         }else{*/
-           mContent.loadUrl(url);
+        mContent.loadUrl(url);
 //        }
     }
 }

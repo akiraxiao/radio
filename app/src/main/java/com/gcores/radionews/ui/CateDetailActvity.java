@@ -79,12 +79,16 @@ public class CateDetailActvity extends BaseActivity implements OnRefreshListener
     private final int TOTAL_COUNTER = 10;
 
     private int current_counter;
+
+    private int cateid;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catedetail);
         mContext = CateDetailActvity.this;
         cateMenu = (CateMenu) getIntent().getSerializableExtra("cateMenu");
+        cateid = getIntent().getIntExtra("cateid",0);
+
         topList = findViewById(R.id.toplist);
         mRefreshLayout = findViewById(R.id.refreshLayout);
         mRefreshLayout.setOnRefreshListener(this);
@@ -129,13 +133,20 @@ public class CateDetailActvity extends BaseActivity implements OnRefreshListener
 
 
     //请求头条数据
-
+    int mCateId;
     private void fectchData(int page,RefreshLayout refreshLayout) {
         loadCompelete = !loadCompelete;
         cateAdapter.setEnableLoadMore(false);
         Retrofit retrofit = RetrofitClient.getRetrofit(UrlPath.base_url_api);
         newsApi = retrofit.create(NewsApi.class);
-        Observable observable =  newsApi.getCateDetailHead(cateMenu.getId(), Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
+        if (cateMenu!=null){
+            mCateId = cateMenu.getId();
+        }else{
+            mCateId = cateid;
+        }
+
+
+        Observable observable =  newsApi.getCateDetailHead(mCateId, Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
 
         observable.subscribeOn(Schedulers.io())               //在IO线程进行网络请求
         .observeOn(AndroidSchedulers.mainThread())  //回到主线程去处理请求注册结果
@@ -152,7 +163,7 @@ public class CateDetailActvity extends BaseActivity implements OnRefreshListener
                 .flatMap(new Function<CateMenuHeadRes, ObservableSource<ArticleRes>>() {
                     @Override
                     public ObservableSource<ArticleRes> apply(CateMenuHeadRes cateMenuHeadRes) throws Exception {
-                        return newsApi.getCateDetailList(cateMenu.getId(), page, Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
+                        return newsApi.getCateDetailList(mCateId, page, Constant.AUTH_EXCLUSIVE, Constant.AUTH_TOKEN);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())  //回到主线程去处理请求登录的结果
