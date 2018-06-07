@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingLeft="@dimen/dp_10"
+              android:paddingRight="@dimen/dp_10"
+              android:background="@color/light_gray"
+    >
+
+    <LinearLayout
+                  android:orientation="vertical" android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:gravity="center_horizontal"
+                  >
+
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:src="@drawable/timeline_header"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"/>
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:background="@color/font"
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+<!--<LinearLayout
+              android:orientation="vertical" android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="@dimen/dp_10"
+              android:background="@color/white"
+              android:layout_margin="@dimen/dp_10"
+    >-->
+
+    <android.support.v7.widget.CardView
+        app:cardCornerRadius="@dimen/dp_8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/dp_8"
+        android:layout_margin="@dimen/dp_10"
+        android:padding="@dimen/dp_10"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/dp_10"
+            android:padding="@dimen/dp_10"
+            >
+
+    <TextView
+        android:id="@+id/item_audio_time"
+        android:text="00:00"
+        style="@style/Text_Small_Gray"
+        android:textSize="@dimen/sp_12"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:layout_marginLeft="@dimen/dp_10"
+        android:id="@+id/item_audio_title"
+        android:text="111111"
+        style="@style/Text_Normal_Black"
+        android:textSize="@dimen/sp_14"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+
+    <ImageView
+        android:id="@+id/iv_audio_back"
+        android:scaleType="fitCenter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_160" />
+
+
+    <TextView
+        android:id="@+id/item_tvdes"
+        android:text="xxxxxx"
+        style="@style/Text_Small_Gray"
+        android:textSize="@dimen/sp_12"
+        android:gravity="start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="100"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        >
+
+        <FrameLayout
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/iv_audio_source"
+                android:src="@drawable/ic_source"
+                android:scaleType="centerCrop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:src="@drawable/ic_listen"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+<!--</LinearLayout>-->
+
+</LinearLayout>

@@ -336,6 +336,7 @@ public class HomeActivity extends BaseActivity implements BannerListner {
                     String url = "https://www.g-cores.com/api/originals/" + topId + "/html_content?auth_exclusive=" + Constant.AUTH_EXCLUSIVE + "&quickdownload=1&auth_token=" + Constant.AUTH_TOKEN;
                     Intent intent = new Intent(HomeActivity.this, DetailActvity.class);
                     intent.putExtra("url", url);
+                    intent.putExtra("volumeid",itemBanner.getOriginal_id());
                     startActivity(intent);
                 }
             });

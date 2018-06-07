@@ -36,11 +36,14 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
     private TextView tvCommentNum;
     private String currentUserid;
 
+    private int volumeid;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         url = getIntent().getStringExtra("url");
+        volumeid = getIntent().getIntExtra("volumeid",0);
         commentnum = getIntent().getIntExtra("commentnum", 0);
         currentUserid = getIntent().getIntExtra("userid", 0) + "";
         mContent = findViewById(R.id.web_content);
@@ -102,6 +105,14 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
                                               //播放视频
                                               return true;
                                           }
+
+                                          //播放音频
+                                          if(requstUrl.equals("ios://playAudio")){
+                                              Intent intent = new Intent(DetailActvity.this, AudioDetailActvity.class);
+                                              intent.putExtra("volumeid", volumeid);
+                                              startActivity(intent);
+                                              return true;
+                                          }
                                           if (requstUrl.startsWith("ios://showAuthor")) {
                                               //用户中心
                                               /*String[] arr =  requstUrl.split("/");
@@ -157,27 +168,47 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
 
                                       @Override
                                       public boolean shouldOverrideUrlLoading(WebView view, String requstUrl) {
-//                                          String requstUrl = request.getUrl().toString();
                                           if (requstUrl.equals("ios://pageLoadComplete")) {
+                                              //加载完毕
                                               return true;
                                           }
                                           if (requstUrl.equals("ios://playedVideo")) {
                                               Log.e("111", "playvideo");
+                                              //播放视频
                                               return true;
+                                          }
+
+                                          //播放音频
+                                          if(requstUrl.equals("ios://playedAudio")){
+
+                                             return true;
                                           }
                                           if (requstUrl.startsWith("ios://showAuthor")) {
                                               //用户中心
-                                              String[] arr = requstUrl.split("/");
-
-                                              if (arr[arr.length - 1].length() == 0) {
+                                              /*String[] arr =  requstUrl.split("/");
+                                              String userid;
+                                              if (arr[arr.length-1].length()==0){
                                                   //当前用户
-
-                                              } else {
-
+                                                  userid = currentUserid;
+                                              }else{
                                                   //其他用户
-                                                  String userid = arr[arr.length - 1];
+                                                  userid = arr[arr.length-1];
+                                              }*/
+                                              String url = "https://www.g-cores.com/api/users/" + currentUserid + "/show_page?auth_exclusive=" + Constant.AUTH_EXCLUSIVE;
+                                              Intent intent = new Intent(DetailActvity.this, UserInfoActivity.class);
+                                              intent.putExtra("url", url);
+                                              startActivity(intent);
+                                              return true;
+                                          }
 
-                                              }
+                                          if (requstUrl.startsWith("ios://showUser")) {
+                                              //用户中心
+                                              String[] arr = requstUrl.split("/");
+                                              String userid = arr[arr.length - 1];
+                                              String url = "https://www.g-cores.com/api/users/" + userid + "/show_page?auth_exclusive=" + Constant.AUTH_EXCLUSIVE;
+                                              Intent intent = new Intent(DetailActvity.this, UserInfoActivity.class);
+                                              intent.putExtra("url", url);
+                                              startActivity(intent);
                                               return true;
                                           }
                                           if (requstUrl.startsWith("ios://showOriginal")) {
@@ -185,7 +216,10 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
                                               String[] arr = requstUrl.split("/");
                                               //其他文章
                                               String articleid = arr[arr.length - 1];
-
+                                              String url = "https://www.g-cores.com/api/originals/" + articleid + "/html_content?auth_exclusive=" + Constant.AUTH_EXCLUSIVE + "&auth_token=" + Constant.AUTH_TOKEN;
+                                              Intent intent = new Intent(DetailActvity.this, DetailActvity.class);
+                                              intent.putExtra("url", url);
+                                              startActivity(intent);
                                               return true;
                                           }
 
@@ -194,11 +228,12 @@ public class DetailActvity extends BaseActivity implements OnRefreshListener {
                                               String[] arr = requstUrl.split("/");
                                               //其他分类
                                               String cateid = arr[arr.length - 1];
-
+                                              Intent intent = new Intent(DetailActvity.this, CateDetailActvity.class);
+                                              intent.putExtra("cateid", Integer.parseInt(cateid));
+                                              startActivity(intent);
                                               return true;
                                           }
                                           return false;
-
                                       }
                                   }
 

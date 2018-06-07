@@ -129,6 +129,7 @@ public class RadioFragment extends AppFragment implements OnRefreshListener, OnL
                 intent.putExtra("url",url);
                 intent.putExtra("commentnum",itemRadio.getComments_num());
                 intent.putExtra("userid",itemRadio.getUser().getId());
+                intent.putExtra("volumeid",itemRadio.getId());
                 startActivity(intent);
             }
         });
