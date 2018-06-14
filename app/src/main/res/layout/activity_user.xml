@@ -57,7 +57,7 @@
                         android:layout_toRightOf="@id/iv_backtop"
                         android:text="返回"
                         android:textColor="@color/font"
-                        android:textSize="@dimen/sp_20"
+                        android:textSize="@dimen/sp_16"
                         android:visibility="visible" />
 
                 </LinearLayout>
@@ -72,7 +72,8 @@
                     android:layout_gravity="center_vertical"
                     android:text="用户中心"
                     android:textColor="@color/font"
-                    android:textSize="@dimen/sp_20"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold"
                     android:visibility="visible" />
 
 

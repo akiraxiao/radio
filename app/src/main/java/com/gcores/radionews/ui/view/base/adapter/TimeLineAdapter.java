@@ -58,7 +58,7 @@ public class TimeLineAdapter extends BaseQuickAdapter<TimeLine,BaseViewHolder> {
         ivSource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mTimeLineListener.onSourceClick(item.getQuote_href());
+                mTimeLineListener.onSourceClick(item.getQuote_href(),item.getTitle());
             }
         });
         ivListen.setOnClickListener(new View.OnClickListener() {

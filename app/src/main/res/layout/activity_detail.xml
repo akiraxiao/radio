@@ -55,7 +55,7 @@
                             android:textColor="@color/font"
                             android:layout_centerVertical="true"
                             android:text="返回"
-                            android:textSize="@dimen/sp_20"
+                            android:textSize="@dimen/sp_16"
                             android:visibility="visible" />
 
                     </LinearLayout>

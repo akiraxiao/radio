@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.gcores.radionews.R;
 import com.gcores.radionews.ui.view.base.BaseActivity;
-import com.gcores.radionews.ui.wedget.TouchiableWebview;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -27,7 +26,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 public class UrlActicity extends BaseActivity implements OnRefreshListener {
 
     private String url;
-    private TouchiableWebview mContent;
+    private WebView mContent;
     private SmartRefreshLayout smartRefreshLayout;
 
     private LinearLayout llBackTop;
@@ -36,14 +35,16 @@ public class UrlActicity extends BaseActivity implements OnRefreshListener {
 
     ImageView ivBottom;
     TextView tvTitleCenter;
+    String title;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_url);
         url = getIntent().getStringExtra("url");
-
+        title = getIntent().getStringExtra("title");
         mContent = findViewById(R.id.web_content);
         tvTitleCenter = findViewById(R.id.txt_title_center);
+        tvTitleCenter.setText(title);
         smartRefreshLayout = findViewById(R.id.refreshLayout);
         llBackTop = findViewById(R.id.ll_backtop);
         llBackTop.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +77,7 @@ public class UrlActicity extends BaseActivity implements OnRefreshListener {
 
                                       @Override
                                       public void onPageFinished(WebView view, String url) {
-                                          tvTitleCenter.setText(view.getTitle());
+//                                          tvTitleCenter.setText(view.getTitle());
                                           super.onPageFinished(view, url);
 
                                       }

@@ -7,7 +7,10 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     >
-
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -55,7 +58,7 @@
                             android:textColor="@color/font"
                             android:layout_centerVertical="true"
                             android:text="返回"
-                            android:textSize="@dimen/sp_20"
+                            android:textSize="@dimen/sp_16"
                             android:visibility="visible" />
 
 
@@ -72,7 +75,8 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:textColor="@color/font"
-                        android:textSize="@dimen/sp_20"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold"
                         android:maxWidth="@dimen/dp_200"
                         android:maxLines="1"
                         android:ellipsize="end"
@@ -102,26 +106,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        >
-
-
-    <com.gcores.radionews.ui.wedget.TouchiableWebview
-        android:id="@+id/web_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbarStyle="insideOverlay"
-        ></com.gcores.radionews.ui.wedget.TouchiableWebview>
 
 
 
+        <WebView
+            android:id="@+id/web_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbarStyle="insideOverlay"></WebView>
 
 
-    </android.support.v4.widget.NestedScrollView>
+
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

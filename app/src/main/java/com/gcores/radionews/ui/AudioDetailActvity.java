@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,12 +24,15 @@ import com.gcores.radionews.ui.api.UrlPath;
 import com.gcores.radionews.ui.inter.TimeLineListener;
 import com.gcores.radionews.ui.model.TimeLine;
 import com.gcores.radionews.ui.resmoel.TimeLineRes;
+import com.gcores.radionews.ui.utils.Gutil;
 import com.gcores.radionews.ui.view.base.BaseActivity;
 import com.gcores.radionews.ui.view.base.adapter.TimeLineAdapter;
 import com.gcores.radionews.ui.wedget.BackImageView;
+import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -52,6 +56,8 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -113,11 +119,33 @@ public class AudioDetailActvity extends BaseActivity implements OnRefreshListene
     private TextView tvCommentNum;
 
     private Long currentTime= 0l;
+    private TextView tvPlayState;
+    private TextView tvPlayTime;
+    private boolean durationSet  = false;
+    private SeekBar mSeekBar;
+
+    private TimerTask mTimerTask = new TimerTask() {
+        @Override
+        public void run() {
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tvPlayTime.setText(Gutil.convertToSencondAudio((int) (player.getContentPosition()/1000))+"/"+Gutil.convertToSencondAudio((int) (player.getDuration()/1000)));
+                    mSeekBar.setProgress((int) player.getContentPosition());
+                }
+            });
+        }
+    };
+    private Timer mTimer ;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audiodetail);
         mContext = AudioDetailActvity.this;
+        mTimer = new Timer();
+        mTimer.scheduleAtFixedRate(mTimerTask,1000,1000);
         volumeId = getIntent().getIntExtra("volumeid",0);
         radiotitle =    getIntent().getStringExtra("radiotitle");
         imageUrl = getIntent().getStringExtra("imageurl");
@@ -169,6 +197,25 @@ public class AudioDetailActvity extends BaseActivity implements OnRefreshListene
 
         tvCommentNum = findViewById(R.id.tv_comment_num);
         tvCommentNum.setText(commentnum);
+        tvPlayState = findViewById(R.id.tv_play_state);
+        tvPlayTime = findViewById(R.id.tv_timeplay);
+        mSeekBar = findViewById(R.id.seek_bar_aduio);
+        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                player.seekTo(seekBar.getProgress());
+            }
+        });
         Glide.with(this).load(imageUrl).into(ivImage);
         tvAudioTitle.setText(radiotitle);
         if (Constant.PLAYER!=null){
@@ -179,7 +226,10 @@ public class AudioDetailActvity extends BaseActivity implements OnRefreshListene
             //        mDefaultRenderersFactory = new DefaultRenderersFactory(getApplicationContext());
             mDefaultBandwidthMeter = new DefaultBandwidthMeter(); //Provides estimates of the currently available bandwidth.
             trackSelectionFactory = new AdaptiveTrackSelection.Factory(mDefaultBandwidthMeter);
+
             mTrackSelector = new DefaultTrackSelector(trackSelectionFactory);
+
+            LoadControl loadControl = new DefaultLoadControl();
 
             // Measures bandwidth during playback. Can be null if not required.
             DefaultBandwidthMeter defaultBandwidthMeter = new DefaultBandwidthMeter();
@@ -190,7 +240,8 @@ public class AudioDetailActvity extends BaseActivity implements OnRefreshListene
             // This is the MediaSource representing the media to be played.
             MediaSource videoSource = new ExtractorMediaSource(Uri.parse(audioUrl), dataSourceFactory, extractorsFactory, null, null);
             // SimpleExoPlayer
-            player = ExoPlayerFactory.newSimpleInstance(this, mTrackSelector);
+            player = ExoPlayerFactory.newSimpleInstance(this, mTrackSelector,loadControl);
+
             player.prepare(videoSource);
        /* }else{
             player = Constant.PLAYER;
@@ -201,6 +252,7 @@ public class AudioDetailActvity extends BaseActivity implements OnRefreshListene
             }
         }*/
         player.addListener(this);
+
         if (player.getPlayWhenReady()){
             ivPlay.setImageResource(R.drawable.ic_pause);
         }else{
@@ -289,64 +341,66 @@ public class AudioDetailActvity extends BaseActivity implements OnRefreshListene
 
     @Override
     public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
-
     }
 
     @Override
     public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
     }
 
     @Override
     public void onLoadingChanged(boolean isLoading) {
-
     }
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+
+        if (playbackState == Player.STATE_READY&& !durationSet) {
+//            long realDurationMillis = player.getDuration();
+            durationSet = true;
+            mSeekBar.setMax((int) player.getDuration());
+            tvPlayTime.setText("00:00/"+Gutil.convertToSencondAudio((int) (player.getDuration()/1000)));
+        }
             if (playWhenReady){
                 ivPlay.setImageResource(R.drawable.ic_pause);
+                tvPlayState.setText("播放中");
             }else{
                 ivPlay.setImageResource(R.drawable.ic_play);
+                tvPlayState.setText("暂停播放");
             }
+//        tvPlayTime.setText(Gutil.convertToSencondAudio((int) (player.getContentPosition()/1000))+"/"+Gutil.convertToSencondAudio((int) (player.getDuration()/1000)));
     }
 
     @Override
     public void onRepeatModeChanged(int repeatMode) {
-
     }
 
     @Override
     public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
-
     }
 
     @Override
     public void onPlayerError(ExoPlaybackException error) {
-
     }
 
     @Override
     public void onPositionDiscontinuity(int reason) {
-
     }
 
     @Override
     public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
-
     }
 
     @Override
     public void onSeekProcessed() {
-
     }
 
     @Override
-    public void onSourceClick(String link) {
+    public void onSourceClick(String link,String radiotitle) {
         //点击链接
         //其他文章
         Intent intent = new Intent(AudioDetailActvity.this, UrlActicity.class);
         intent.putExtra("url", link);
+        intent.putExtra("title",radiotitle);
         startActivity(intent);
     }
 

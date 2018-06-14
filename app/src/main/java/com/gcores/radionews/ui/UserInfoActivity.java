@@ -1,12 +1,14 @@
 package com.gcores.radionews.ui;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
@@ -28,12 +30,14 @@ public class UserInfoActivity extends BaseActivity implements OnRefreshListener 
     private WebView mContent;
     private SmartRefreshLayout smartRefreshLayout;
     private LinearLayout llBackTop;
+    private CoordinatorLayout parent;
 //    private int commentnum;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         url = getIntent().getStringExtra("url");
+        parent = findViewById(R.id.coordinator);
         mContent = findViewById(R.id.web_content);
         smartRefreshLayout = findViewById(R.id.refreshLayout);
         llBackTop = findViewById(R.id.ll_backtop);
@@ -74,90 +78,145 @@ public class UserInfoActivity extends BaseActivity implements OnRefreshListener 
                                               //加载完毕
                                               return true;
                                           }
-                                          if (requstUrl.equals("ios://playedVideo")){
-                                              Log.e("111","playvideo");
-                                              //播放视频
+
+                                          if (requstUrl.startsWith("https://miiverse.nintendo.net")){
+                                              Intent intent = new Intent(UserInfoActivity.this,UrlActicity.class);
+                                              intent.putExtra("title","miiverse");
+                                              intent.putExtra("url",requstUrl);
+                                              startActivity(intent);
+                                              return true;
+
+                                          }
+                                         if (requstUrl.startsWith("https://account.xbox.com")){
+                                              Intent intent = new Intent(UserInfoActivity.this,UrlActicity.class);
+                                              intent.putExtra("title","XBOX");
+                                              intent.putExtra("url",requstUrl);
+                                              startActivity(intent);
+                                              return true;
+                                         }
+
+                                          if (requstUrl.startsWith("http://psnprofiles.com")){
+                                              Intent intent = new Intent(UserInfoActivity.this,UrlActicity.class);
+                                              intent.putExtra("title","PSN");
+                                              intent.putExtra("url",requstUrl);
+                                              startActivity(intent);
                                               return true;
                                           }
-                                          if (requstUrl.startsWith("ios://showAuthor")){
-                                              //用户中心
-                                              String[] arr =  requstUrl.split("/");
 
-                                              if (arr[arr.length-1].length()==0){
-                                                  //当前用户
-
-                                              }else{
-
-                                                  //其他用户
-                                                  String userid = arr[arr.length-1];
-
-                                              }
+                                          if (requstUrl.startsWith("https://alioss.g-cores.com/assets/user_social")){
+                                              Intent intent = new Intent(UserInfoActivity.this,UrlActicity.class);
+                                              intent.putExtra("title","QQ");
+                                              intent.putExtra("url",requstUrl);
+                                              startActivity(intent);
                                               return true;
                                           }
+
+                                          if (requstUrl.startsWith("http://steamcommunity.com")){
+                                              Intent intent = new Intent(UserInfoActivity.this,UrlActicity.class);
+                                              intent.putExtra("title","STEAM");
+                                              intent.putExtra("url",requstUrl);
+                                              startActivity(intent);
+                                              return true;
+                                          }
+
+                                          if (requstUrl.startsWith("http://weibo.com")){
+                                              Intent intent = new Intent(UserInfoActivity.this,UrlActicity.class);
+                                              intent.putExtra("title","个人微博");
+                                              intent.putExtra("url",requstUrl);
+                                              startActivity(intent);
+                                              return true;
+                                          }
+
                                           if (requstUrl.startsWith("ios://showOriginal")){
                                               //文章
-                                              String[] arr =  requstUrl.split("/");
+                                              String[] arr = requstUrl.split("/");
                                               //其他文章
-                                              String articleid = arr[arr.length-1];
-
+                                              String articleid = arr[arr.length - 1];
+                                              String url = "https://www.g-cores.com/api/originals/" + articleid + "/html_content?auth_exclusive=" + Constant.AUTH_EXCLUSIVE + "&auth_token=" + Constant.AUTH_TOKEN;
+                                              Intent intent = new Intent(UserInfoActivity.this, DetailActvity.class);
+                                              intent.putExtra("url", url);
+                                              intent.putExtra("orginid",Integer.parseInt(articleid));
+                                              startActivity(intent);
+                                              return true;
+                                          }
+                                          if (requstUrl.startsWith("ios://showSocial")){
+                                              Snackbar.make(parent, "QQ", Snackbar.LENGTH_SHORT).show();
                                               return true;
                                           }
 
-                                          if (requstUrl.startsWith("ios://showCategory")){
-                                              //分类
-                                              String[] arr =  requstUrl.split("/");
-                                              //其他分类
-                                              String cateid = arr[arr.length-1];
-
-                                              return true;
-                                          }
                                           return false;
                                       }
 
                                       @Override
                                       public boolean shouldOverrideUrlLoading(WebView view, String requstUrl) {
-//                                          String requstUrl = request.getUrl().toString();
                                           if (requstUrl.equals("ios://pageLoadComplete")){
+                                              //加载完毕
                                               return true;
                                           }
-                                          if (requstUrl.equals("ios://playedVideo")){
-                                              Log.e("111","playvideo");
+
+                                          if (requstUrl.startsWith("https://miiverse.nintendo.net")){
+                                              Intent intent = new Intent(UserInfoActivity.this,UrlActicity.class);
+                                              intent.putExtra("title","miiverse");
+                                              intent.putExtra("url",requstUrl);
+                                              startActivity(intent);
+                                              return true;
+
+                                          }
+                                          if (requstUrl.startsWith("https://account.xbox.com")){
+                                              Intent intent = new Intent(UserInfoActivity.this,UrlActicity.class);
+                                              intent.putExtra("title","XBOX");
+                                              intent.putExtra("url",requstUrl);
+                                              startActivity(intent);
                                               return true;
                                           }
-                                          if (requstUrl.startsWith("ios://showAuthor")){
-                                              //用户中心
-                                              String[] arr =  requstUrl.split("/");
 
-                                              if (arr[arr.length-1].length()==0){
-                                                  //当前用户
-
-                                              }else{
-
-                                                  //其他用户
-                                                  String userid = arr[arr.length-1];
-
-                                              }
+                                          if (requstUrl.startsWith("http://psnprofiles.com")){
+                                              Intent intent = new Intent(UserInfoActivity.this,UrlActicity.class);
+                                              intent.putExtra("title","PSN");
+                                              intent.putExtra("url",requstUrl);
+                                              startActivity(intent);
                                               return true;
                                           }
+
+                                          if (requstUrl.startsWith("https://alioss.g-cores.com/assets/user_social")){
+                                              Intent intent = new Intent(UserInfoActivity.this,UrlActicity.class);
+                                              intent.putExtra("title","QQ");
+                                              intent.putExtra("url",requstUrl);
+                                              startActivity(intent);
+                                              return true;
+                                          }
+
+                                          if (requstUrl.startsWith("http://steamcommunity.com")){
+                                              Intent intent = new Intent(UserInfoActivity.this,UrlActicity.class);
+                                              intent.putExtra("title","STEAM");
+                                              intent.putExtra("url",requstUrl);
+                                              startActivity(intent);
+                                              return true;
+                                          }
+
+                                          if (requstUrl.startsWith("http://weibo.com")){
+                                              Intent intent = new Intent(UserInfoActivity.this,UrlActicity.class);
+                                              intent.putExtra("title","个人微博");
+                                              intent.putExtra("url",requstUrl);
+                                              startActivity(intent);
+                                              return true;
+                                          }
+
                                           if (requstUrl.startsWith("ios://showOriginal")){
                                               //文章
-                                              String[] arr =  requstUrl.split("/");
+                                              String[] arr = requstUrl.split("/");
                                               //其他文章
-                                              String articleid = arr[arr.length-1];
-
+                                              String articleid = arr[arr.length - 1];
+                                              String url = "https://www.g-cores.com/api/originals/" + articleid + "/html_content?auth_exclusive=" + Constant.AUTH_EXCLUSIVE + "&auth_token=" + Constant.AUTH_TOKEN;
+                                              Intent intent = new Intent(UserInfoActivity.this, DetailActvity.class);
+                                              intent.putExtra("url", url);
+                                              intent.putExtra("orginid",Integer.parseInt(articleid));
+                                              startActivity(intent);
                                               return true;
                                           }
 
-                                          if (requstUrl.startsWith("ios://showCategory")){
-                                              //分类
-                                              String[] arr =  requstUrl.split("/");
-                                              //其他分类
-                                              String cateid = arr[arr.length-1];
 
-                                              return true;
-                                          }
                                           return false;
-
                                       }
                                   }
 

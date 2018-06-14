@@ -57,7 +57,7 @@
                         android:textColor="@color/font"
                         android:layout_centerVertical="true"
                         android:text="返回"
-                        android:textSize="@dimen/sp_20"
+                        android:textSize="@dimen/sp_16"
                         android:visibility="visible" />
 
                 </LinearLayout>
@@ -93,13 +93,43 @@
 
 
     </android.support.design.widget.AppBarLayout>
-        <LinearLayout
+        <RelativeLayout
             android:orientation="horizontal"
             android:id="@+id/ll_header_timeline"
             android:layout_below="@id/appbar"
             android:background="@color/light_gray"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_30"></LinearLayout>
+            android:layout_height="@dimen/dp_30">
+
+            <TextView
+                android:id="@+id/tv_play_state"
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/font"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="播放中"
+                android:textSize="@dimen/sp_12"
+                android:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/tv_timeplay"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:text="00:00/00:00"
+                android:textSize="@dimen/sp_14"
+                android:visibility="visible" />
+
+
+        </RelativeLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:layout_below="@id/ll_header_timeline"
         android:id="@+id/refreshLayout"
@@ -130,7 +160,17 @@
                 android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 <!--        </LinearLayout>-->
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        <SeekBar
+            android:id="@+id/seek_bar_aduio"
+            android:layout_above="@id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_20"
+            android:background="@color/white"
+            >
+        </SeekBar>
         <LinearLayout
+            android:id="@+id/ll_bottom"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"

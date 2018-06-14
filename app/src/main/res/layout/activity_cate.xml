@@ -53,7 +53,7 @@
                         android:textColor="@color/font"
                         android:layout_centerVertical="true"
                         android:text="返回"
-                        android:textSize="@dimen/sp_20"
+                        android:textSize="@dimen/sp_16"
                         android:visibility="visible" />
 
                 </LinearLayout>
@@ -67,7 +67,8 @@
                     android:textColor="@color/font"
                     android:layout_centerVertical="true"
                     android:text="栏目分类"
-                    android:textSize="@dimen/sp_20"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold"
                     android:visibility="visible" />
 
             </RelativeLayout>
