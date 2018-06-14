@@ -20,6 +20,9 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -91,6 +94,8 @@ public class HomeActivity extends BaseActivity implements BannerListner {
     private NewsPageAdapter newsPageAdapter;
     private NewsApi newsApi;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
+
+    ImageView ivBottom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +171,39 @@ public class HomeActivity extends BaseActivity implements BannerListner {
 //        navigationView.setNavigationItemSelectedListener(this);
 
 //        getLogin();
+        ivBottom = findViewById(R.id.iv_player_bottom);
+        ivBottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, AudioDetailActvity.class);
+                intent.putExtra("volumeid", Integer.parseInt(Constant.VOLUMEID));
+                intent.putExtra("radiotitle", Constant.RADIOTITLE);
+                intent.putExtra("imageurl", Constant.imageurl);
+                intent.putExtra("audiourl", Constant.ADUIOURL);
+                intent.putExtra("commentnum", Constant.COMMENTNUM);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Animation operatingAnim = AnimationUtils.loadAnimation(this, R.anim.cricleplayer);
+        LinearInterpolator lin = new LinearInterpolator();
+        operatingAnim.setInterpolator(lin);
+        Glide.with(this).load(Constant.imageurl).into(ivBottom);
+        if (Constant.PLAYER != null) {
+            ivBottom.setVisibility(View.VISIBLE);
+        } else {
+            ivBottom.setVisibility(View.GONE);
+        }
+
+        if (Constant.playState) {
+            ivBottom.startAnimation(operatingAnim);
+        } else {
+            ivBottom.clearAnimation();
+        }
     }
 
     public void fectchBannerList(NewsApi newsApi) {
@@ -335,8 +373,10 @@ public class HomeActivity extends BaseActivity implements BannerListner {
                     int topId = itemBanner.getOriginal_id();
                     String url = "https://www.g-cores.com/api/originals/" + topId + "/html_content?auth_exclusive=" + Constant.AUTH_EXCLUSIVE + "&quickdownload=1&auth_token=" + Constant.AUTH_TOKEN;
                     Intent intent = new Intent(HomeActivity.this, DetailActvity.class);
+                    intent.putExtra("orginid",topId);
                     intent.putExtra("url", url);
                     intent.putExtra("volumeid",itemBanner.getOriginal_id());
+                    intent.putExtra("isRadio",true);
                     startActivity(intent);
                 }
             });

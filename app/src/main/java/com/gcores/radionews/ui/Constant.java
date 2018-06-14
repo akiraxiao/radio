@@ -1,5 +1,7 @@
 package com.gcores.radionews.ui;
 
+import com.google.android.exoplayer2.SimpleExoPlayer;
+
 public class Constant {
 
 //    https://www.g-cores.com/api/app_start_pages/active_page?auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw
@@ -29,8 +31,17 @@ public class Constant {
 //    https://www.g-cores.com/api/originals/102?auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw
     public static final String AUTH_EXCLUSIVE = "dpkynzs2q0wm9o5gi1r83fcabthl4eu";
     public static final String AUTH_TOKEN = "LTxNSzIS5kWskwT-jGW0Fw";
+    public static  String COMMENTNUM = "";
+    public static  String ADUIOURL = "";
+    public static  SimpleExoPlayer PLAYER = null;
 
 
+    public static boolean playState = false;
+    public static String imageurl;
+    public static  String VOLUMEID = "";
+    public static  String RADIOTITLE = "";
+
+//    https://www.g-cores.com/api/originals/99058?auth_exclusive=dpkynzs2q0wm9o5gi1r83fcabthl4eu&auth_token=LTxNSzIS5kWskwT-jGW0Fw
 
 
 }

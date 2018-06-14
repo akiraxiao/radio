@@ -129,6 +129,7 @@ public class ArticleFragment extends AppFragment implements OnRefreshListener, O
                 intent.putExtra("url",url);
                 intent.putExtra("commentnum",results.getComments_num());
                 intent.putExtra("userid",results.getUser().getId());
+                intent.putExtra("orginid",topId);
                 startActivity(intent);
             }
         });

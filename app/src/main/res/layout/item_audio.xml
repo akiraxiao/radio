@@ -123,6 +123,7 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/iv_listen"
                 android:src="@drawable/ic_listen"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"

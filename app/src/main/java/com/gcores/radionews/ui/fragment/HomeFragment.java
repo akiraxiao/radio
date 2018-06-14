@@ -484,6 +484,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
         intent.putExtra("userid",results.getUser().getId());
         intent.putExtra("commentnum",results.getComments_num());
         intent.putExtra("volumeid",results.getId());
+        intent.putExtra("orginid",topId);
         startActivity(intent);
     }
 
@@ -494,6 +495,7 @@ public class HomeFragment extends AppFragment implements OnRefreshListener, OnLo
         intent.putExtra("url",url);
         intent.putExtra("userid",results.getData().getUser().getId());
         intent.putExtra("commentnum",results.getData().getComments_num());
+        intent.putExtra("orginid",topId);
         startActivity(intent);
     }
 

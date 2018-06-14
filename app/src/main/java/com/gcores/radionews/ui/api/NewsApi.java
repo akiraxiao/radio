@@ -6,6 +6,7 @@ import com.gcores.radionews.ui.resmoel.BannerRes;
 import com.gcores.radionews.ui.resmoel.CateMenuHeadRes;
 import com.gcores.radionews.ui.resmoel.CateRes;
 import com.gcores.radionews.ui.resmoel.NotificationRes;
+import com.gcores.radionews.ui.resmoel.OringinDetailRes;
 import com.gcores.radionews.ui.resmoel.RadioRes;
 import com.gcores.radionews.ui.resmoel.TopRes;
 import com.gcores.radionews.ui.resmoel.VideoRes;
@@ -65,4 +66,7 @@ public interface NewsApi {
     @GET("categories/{cateid}/originals")
     Observable<ArticleRes> getCateDetailList(@Path("cateid") int cateid, @Query("page") int page, @Query("auth_exclusive") String auth_exclusive, @Query("auth_token")String auth_token);
 
+
+    @GET("originals/{originid}")
+    Call<OringinDetailRes> getOringinDetail(@Path("originid") int originid, @Query("auth_exclusive") String auth_exclusive, @Query("auth_token")String auth_token);
 }

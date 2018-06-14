@@ -131,9 +131,67 @@
 <!--        </LinearLayout>-->
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
         <LinearLayout
-            android:background="@color/red"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_60"></LinearLayout>
+            android:layout_height="@dimen/dp_60"
+            android:weightSum="1"
+            android:background="@color/white"
+            >
+
+            <ImageView
+                android:id="@+id/iv_audio_image"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:id="@+id/tv_audio_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                style="@style/Text_Normal_Black"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:padding="@dimen/dp_5"
+                />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_5"
+                android:gravity="center"
+                >
+                <ImageView
+                    android:id="@+id/iv_play"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:src="@drawable/ic_play"
+                    android:layout_marginRight="@dimen/dp_10"
+                    />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:src="@drawable/ic_list"
+                    android:layout_marginRight="@dimen/dp_10"
+                    />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:src="@drawable/ic_download"
+                    android:layout_marginRight="@dimen/dp_10"
+                    />
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
